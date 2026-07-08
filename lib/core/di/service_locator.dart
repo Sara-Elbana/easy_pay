@@ -16,7 +16,6 @@ Future<void> setupDependencies() async {
   const secureStorage = SecureStorageService();
   getIt.registerSingleton<SecureStorageService>(secureStorage);
 
-  // Register network and connectivity
   getIt.registerSingleton<NetworkConnectivityService>(
     NetworkConnectivityService(),
   );

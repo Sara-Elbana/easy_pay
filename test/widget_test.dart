@@ -1,30 +1,38 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_pay_app/main.dart';
+import 'package:easy_pay_app/features/onboarding/presentation/pages/splash_screen.dart';
+
+import 'package:easy_pay_app/core/di/service_locator.dart';
+import 'package:easy_pay_app/core/services/shared_preferences_service.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  setUp(() async {
+    // Mock SharedPreferences values for the test environment
+    SharedPreferences.setMockInitialValues({});
+    
+    if (!getIt.isRegistered<SharedPreferencesService>()) {
+      final prefs = SharedPreferencesService();
+      await prefs.init();
+      getIt.registerSingleton<SharedPreferencesService>(prefs);
+    }
+  });
+
+  testWidgets('App renders SplashScreen initially and routes after delay', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that SplashScreen is mounted
+    expect(find.byType(SplashScreen), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Verify that a CircularProgressIndicator is present on the splash screen
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Advance the virtual clock by 2.5 seconds to trigger the navigation timer and avoid pending timer error
+    await tester.pump(const Duration(milliseconds: 2500));
+    
+    // Pump another frame to handle the transition animation
+    await tester.pumpAndSettle();
   });
 }

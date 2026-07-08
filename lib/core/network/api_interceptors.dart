@@ -112,8 +112,7 @@ class ErrorInterceptor extends Interceptor {
   /// Maps HTTP status codes to specific exceptions
   Exception _mapHttpException(DioException dioException) {
     final statusCode = dioException.response?.statusCode;
-    final message =
-        dioException.response?.data?['message'] as String? ??
+    final message = dioException.response?.data?['message'] as String? ??
         'HTTP Error $statusCode';
 
     switch (statusCode) {

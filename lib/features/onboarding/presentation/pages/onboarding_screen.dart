@@ -59,11 +59,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
 
         if (_pageController.hasClients &&
             (_pageController.page?.round() ?? 0) != state.pageIndex) {
-          _pageController.animateToPage(
-            state.pageIndex,
-            duration: const Duration(milliseconds: 350),
-            curve: Curves.easeInOut,
-          );
+          _pageController.jumpToPage(state.pageIndex);
         }
       },
       builder: (context, state) {

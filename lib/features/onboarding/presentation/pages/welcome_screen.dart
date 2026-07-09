@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/app_button.dart';
+import '../../../../core/widgets/custom_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
     final logoSize = screenWidth * 0.67;
 
     return Scaffold(
@@ -34,17 +34,17 @@ class WelcomeScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: AppButton(
+                    child: CustomButton(
                       text: 'Sign up',
-                      color: Colors.white,
+                      backgroundColor: Colors.white,
                       onPressed: () {},
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: AppButton(
+                    child: CustomButton(
                       text: 'Sign in',
-                      color: const Color(0xFFB7E65C),
+                      backgroundColor: const Color(0xFFB7E65C),
                       onPressed: () {},
                     ),
                   ),

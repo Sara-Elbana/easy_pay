@@ -19,9 +19,7 @@ class OnboardingIndicator extends StatelessWidget {
         (index) {
           final isActive = index == pageIndex;
 
-          return AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
+          return Container(
             margin: const EdgeInsets.symmetric(horizontal: 4),
             width: isActive ? 30 : 8,
             height: 8,

@@ -7,9 +7,7 @@ import '../services/services.dart';
 
 final getIt = GetIt.instance;
 
-/// Initialize all dependencies
 Future<void> setupDependencies() async {
-  // Initialize services first
   final prefs = SharedPreferencesService();
   await prefs.init();
   getIt.registerSingleton<SharedPreferencesService>(prefs);

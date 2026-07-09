@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app_button.dart';
+import '../../../../core/widgets/custom_button.dart';
 
 class OnboardingNavButtons extends StatelessWidget {
   final int pageIndex;
@@ -28,18 +28,18 @@ class OnboardingNavButtons extends StatelessWidget {
         children: [
           if (!isLastPage) ...[
             Expanded(
-              child: AppButton(
+              child: CustomButton(
                 text: 'Skip',
-                color: Colors.white,
+                backgroundColor: Colors.white,
                 onPressed: onSkip,
               ),
             ),
             const SizedBox(width: 16),
           ],
           Expanded(
-            child: AppButton(
+            child: CustomButton(
               text: isLastPage ? 'Get Started' : 'Next',
-              color: const Color(0xFFB7E65C),
+              backgroundColor: const Color(0xFFB7E65C),
               onPressed: isLastPage ? onGetStarted : onNext,
             ),
           ),

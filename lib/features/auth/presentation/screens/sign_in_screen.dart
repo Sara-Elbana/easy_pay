@@ -1,6 +1,6 @@
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
-import 'package:easy_pay_app/core/theme/text_styles.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';

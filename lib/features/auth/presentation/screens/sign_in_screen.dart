@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
@@ -37,6 +38,21 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
+      backgroundColor: AppColors.white,
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
@@ -47,18 +63,14 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_back),
-                ),
-                Text("Welcome",
+                Text("welcome".tr(),
                     style: AppTextStyles.titleLarge
                         .copyWith(color: AppColors.black)),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
                 Text(
-                  "Please enter your email and Password to sign in",
+                  "please_enter_your_email_and_password_to_sign_in".tr(),
                   style: AppTextStyles.bodyLarge
                       .copyWith(color: AppColors.gray800),
                 ),
@@ -66,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: size.height * 0.02,
                 ),
                 CustomTextField(
-                  hintText: "Your Email",
+                  hintText: "email_address".tr(),
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   validator: Validators.validateEmail,
@@ -76,7 +88,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                 ),
                 CustomTextField(
-                  hintText: "Your Password",
+                  hintText: "password".tr(),
                   keyboardType: TextInputType.visiblePassword,
                   isPassword: true,
                   controller: passwordController,
@@ -90,7 +102,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       width: 24,
                       height: 24,
                       child: Checkbox(
+                        checkColor: AppColors.white,
                         value: rememberMe,
+                        side: const BorderSide(
+                            color: AppColors.gray400, width: 1),
                         activeColor: AppColors.primary,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         onChanged: (value) {
@@ -104,7 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       width: size.width * 0.02,
                     ),
                     Text(
-                      "Remember me",
+                      "remember_me".tr(),
                       style: AppTextStyles.titleMedium.copyWith(
                         color: AppColors.black,
                       ),
@@ -120,14 +135,15 @@ class _SignInScreenState extends State<SignInScreen> {
                         showDialog(
                           context: context,
                           builder: (_) => CustomDialog(
-                            title: "Had very little!",
+                            title: "had_very_little".tr(),
                             supTitle:
-                                "Please enter your email and Password to sign in",
+                                "you_will_be_redirected_to_the_home_page_shortly"
+                                    .tr(),
                           ),
                         );
                       },
                       child: Text(
-                        "Forget Password?",
+                        "forget_password".tr(),
                         style: AppTextStyles.titleMedium
                             .copyWith(color: AppColors.primary),
                       )),
@@ -159,7 +175,7 @@ class _SignInScreenState extends State<SignInScreen> {
               width: double.infinity,
               height: 50,
               child: CustomButton(
-                text: "Sign In",
+                text: "sign_in".tr(),
                 isLoading: state is LoginLoading,
                 backgroundColor: Colors.green,
                 onPressed: () {

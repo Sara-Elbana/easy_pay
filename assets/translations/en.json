@@ -1,0 +1,24 @@
+{
+  "welcome": "Welcome",
+  "please_enter_your_email_and_password_to_sign_in": "Please enter your email and Password to sign in",
+  "email_address": "Email Address",
+  "password": "Password",
+  "remember_me": "Remember me",
+  "forget_password": "Forget Password?",
+  "had_very_little": "Had very little!",
+  "sign_in": "Sign In",
+  "you_will_be_redirected_to_the_home_page_shortly": "You will be redirected to the home page shortly",
+
+
+  "sign_up": "Sign up",
+  "skip": "Skip",
+  "get_started": "Get Started",
+  "next": "Next",
+  "send_money_to_the_other_party_easily": "Send Money to the other party easily",
+  "say_goodbye_to_costly_fees_and_complicated_processes_lets_get_started_on_simplifying_your_international_transactions": "Say Goodbye to costly fees and complicated processes. Let's get started on simplifying your international transactions!",
+  "safe_and_fast_transactions": "Safe and Fast Transactions",
+  "your_financial_data_is_encrypted_and_securely_protected_ensuring_your_money_is_always_safe": "Your financial data is encrypted and securely protected, ensuring your money is always safe.",
+  "manage_your_money_in_one_place": "Manage your money in one place",
+  "track_balances_transfer_money_pay_bills_and_manage_all_your_finances_easily": "Track balances, transfer money, pay bills and manage all your finances easily."
+
+}

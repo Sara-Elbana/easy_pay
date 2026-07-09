@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -72,24 +73,27 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                 controller: _pageController,
                 physics: const BouncingScrollPhysics(),
                 onPageChanged: cubit.setPage,
-                children: const [
+                children: [
                   OnboardingPageContent(
                     imagePath: 'assets/images/onboarding_balance.png',
-                    title: 'Send Money to the other party easily',
+                    title: "send_money_to_the_other_party_easily".tr(),
                     description:
-                        "Say Goodbye to costly fees and complicated processes. Let's get started on simplifying your international transactions!",
+                        "say_goodbye_to_costly_fees_and_complicated_processes_lets_get_started_on_simplifying_your_international_transactions"
+                            .tr(),
                   ),
                   OnboardingPageContent(
                     imagePath: 'assets/images/onboarding_success.png',
-                    title: 'Safe and Fast Transactions',
+                    title: "safe_and_fast_transactions".tr(),
                     description:
-                        'Your financial data is encrypted and securely protected, ensuring your money is always safe.',
+                        "your_financial_data_is_encrypted_and_securely_protected_ensuring_your_money_is_always_safe"
+                            .tr(),
                   ),
                   OnboardingPageContent(
                     imagePath: 'assets/images/onboarding_cards.png',
-                    title: 'Manage your money in one place',
+                    title: "manage_your_money_in_one_place".tr(),
                     description:
-                        'Track balances, transfer money, pay bills and manage all your finances easily.',
+                        "track_balances_transfer_money_pay_bills_and_manage_all_your_finances_easily"
+                            .tr(),
                   ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/core/core.dart';
 import 'package:easy_pay_app/core/routes/app_routes.dart';
+import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +22,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
       themeMode: ThemeMode.system,
-      initialRoute: AppRoutes.splash,
-      onGenerateRoute: AppRoutes.generateRoute,
+      initialRoute: AppRoutesName.splashScreen,
+      routes: AppRoutes.routes,
     );
   }
 }
+

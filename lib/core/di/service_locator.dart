@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../network/network.dart';
 import '../services/services.dart';
 
@@ -23,4 +24,9 @@ Future<void> setupDependencies() async {
   // Register Dio
   final dio = DioClient.createDioClient();
   getIt.registerSingleton<Dio>(dio);
+
+  // Cubits
+  getIt.registerFactory<OnboardingCubit>(
+    () => OnboardingCubit(totalPages: 3),
+  );
 }

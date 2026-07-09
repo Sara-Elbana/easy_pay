@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_pay_app/main.dart';
 import 'package:easy_pay_app/features/onboarding/presentation/pages/splash_screen.dart';
+import 'package:easy_pay_app/features/onboarding/presentation/cubit/onboarding_cubit.dart';
 
 import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/services/shared_preferences_service.dart';
@@ -16,6 +17,12 @@ void main() {
       final prefs = SharedPreferencesService();
       await prefs.init();
       getIt.registerSingleton<SharedPreferencesService>(prefs);
+    }
+
+    if (!getIt.isRegistered<OnboardingCubit>()) {
+      getIt.registerFactory<OnboardingCubit>(
+        () => OnboardingCubit(totalPages: 3),
+      );
     }
   });
 

@@ -1,6 +1,6 @@
 class AppConstants {
   // App Metadata
-  static const String appName = 'Task App';
+  static const String appName = 'ُEasy Pay';
   static const String appVersion = '1.0.0';
 
   // Cache Keys

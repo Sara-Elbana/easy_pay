@@ -127,7 +127,7 @@ class SignInScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
-                          AppRoutesName.resetPasswordScreen,
+                          AppRoutesName.forgotPasswordScreen,
                         );
                       },
                       child: Text(

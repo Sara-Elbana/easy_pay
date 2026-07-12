@@ -10,12 +10,12 @@ import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_st
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
+class ForgotPasswordScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   final codeController = TextEditingController();
 
-  ResetPasswordScreen({super.key});
+  ForgotPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

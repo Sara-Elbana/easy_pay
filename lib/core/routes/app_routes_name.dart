@@ -4,7 +4,7 @@ class AppRoutesName {
   static const String welcomeScreen = '/welcome';
   static const String signInScreen = "signInScreen";
   static const String homeScreen = "homeScreen";
-  static const String resetPasswordScreen = "resetPasswordScreen";
+  static const String forgotPasswordScreen = "forgotPasswordScreen";
   static const String changePasswordScreen = "changePasswordScreen";
   static const String changePasswordSuccessScreen = "changePasswordSuccessScreen";
 }

@@ -1,6 +1,6 @@
 import 'package:easy_pay_app/features/auth/presentation/cubit/sign_in_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/pages/sign_in_screen.dart';
-import 'package:easy_pay_app/features/auth/presentation/pages/reset_password_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/pages/forgot_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/pages/change_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/pages/change_password_success_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
@@ -27,9 +27,9 @@ class AppRoutes {
       child: SignInScreen(),
     ),
     AppRoutesName.homeScreen: (_) => const HomeScreen(),
-    AppRoutesName.resetPasswordScreen: (_) => BlocProvider(
+    AppRoutesName.forgotPasswordScreen: (_) => BlocProvider(
           create: (_) => getIt<ForgotPasswordCubit>(),
-          child: ResetPasswordScreen(),
+          child: ForgotPasswordScreen(),
         ),
     AppRoutesName.changePasswordScreen: (_) => ChangePasswordScreen(),
     AppRoutesName.changePasswordSuccessScreen: (_) => const ChangePasswordSuccessScreen(),

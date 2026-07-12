@@ -60,8 +60,8 @@ class PasswordValidator {
 class PhoneValidator {
   /// Validates phone number (basic format)
   static bool isValid(String phone) {
-    final cleanPhone = phone.replaceAll(RegExp(r'[^\d]'), '');
-    return cleanPhone.length >= 10 && cleanPhone.length <= 15;
+    final regex = RegExp(r'^\(\+[0-9]+\)\s*[0-9]{10}$');
+    return regex.hasMatch(phone.trim());
   }
 
   static String? validate(String phone) {
@@ -69,7 +69,7 @@ class PhoneValidator {
       return 'Phone number is required';
     }
     if (!isValid(phone)) {
-      return 'Enter a valid phone number';
+      return 'Phone number must start with country code in parentheses e.g. (+20) followed by 10 digits';
     }
     return null;
   }

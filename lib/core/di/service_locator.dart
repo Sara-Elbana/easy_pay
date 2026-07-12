@@ -8,9 +8,12 @@ import 'package:easy_pay_app/features/auth/domain/use_cases/biometric_usecase.da
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_in_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_up_usecase.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../../features/auth/presentation/cubit/forgot_password_cubit.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../network/network.dart';
 import '../services/services.dart';
@@ -60,14 +63,7 @@ Future<void> setupDependencies() async {
     ),
   );
 
-// Auth Cubit
-  getIt.registerFactory(
-    () => AuthCubit(
-      signInUseCase: getIt(),
-      signUpUseCase: getIt(),
-      biometricUseCase: getIt(),
-    ),
-  );
+
 
   const secureStorage = SecureStorageService();
   getIt.registerSingleton<SecureStorageService>(secureStorage);
@@ -83,5 +79,15 @@ Future<void> setupDependencies() async {
   // Cubits
   getIt.registerFactory<OnboardingCubit>(
     () => OnboardingCubit(totalPages: 3),
+  );
+  getIt.registerFactory<AuthCubit>(
+    () => AuthCubit(
+      signInUseCase: getIt(),
+      signUpUseCase: getIt(),
+      biometricUseCase: getIt(),
+    ),
+  );
+  getIt.registerFactory<ForgotPasswordCubit>(
+    () => ForgotPasswordCubit(),
   );
 }

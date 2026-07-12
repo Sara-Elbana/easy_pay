@@ -1,6 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
-import 'package:easy_pay_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialog extends StatelessWidget {
@@ -14,12 +14,13 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return AlertDialog(
+      backgroundColor: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
       title: Center(
         child: Text(
-          "Had very little!",
+          "had_very_little".tr(),
           style: AppTextStyles.titleLarge.copyWith(color: AppColors.black),
         ),
       ),

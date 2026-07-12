@@ -46,13 +46,13 @@ class _SplashScreenState extends State<SplashScreen> {
                           Theme.of(context).scaffoldBackgroundColor,
                           Theme.of(context)
                               .scaffoldBackgroundColor
-                              .withOpacity(0.95),
+                              .withAlpha(95),
                         ]
                       : [
                           Theme.of(context).scaffoldBackgroundColor,
                           Theme.of(context)
                               .scaffoldBackgroundColor
-                              .withOpacity(0.95),
+                              .withAlpha(95),
                         ],
                 ),
               ),

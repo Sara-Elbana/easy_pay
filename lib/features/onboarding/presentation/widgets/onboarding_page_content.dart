@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'onboarding_header.dart';
@@ -33,10 +34,12 @@ class OnboardingPageContent extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
-                color: Color(0xff1B1B1B),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : const Color(0xff1B1B1B),
                 height: 1.25,
               ),
             ),
@@ -50,10 +53,12 @@ class OnboardingPageContent extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                color: Color(0xff8E8E8E),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.gray300
+                    : const Color(0xff8E8E8E),
                 height: 1.7,
               ),
             ),

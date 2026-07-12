@@ -154,7 +154,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                              // Forgot password logic
+                              Navigator.pushNamed(context, AppRoutesName.forgotPasswordScreen);
                             },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,

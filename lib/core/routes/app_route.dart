@@ -1,8 +1,12 @@
-import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
-import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:easy_pay_app/features/home/presentation/screens/home_Screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/pages/forgot_password_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/pages/change_password_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/pages/change_password_success_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
+import 'package:easy_pay_app/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
@@ -15,19 +19,24 @@ class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
     AppRoutesName.splashScreen: (_) => const SplashScreen(),
     AppRoutesName.onboardingScreen: (_) => BlocProvider(
-          create: (_) => getIt<OnboardingCubit>(),
-          child: const OnboardingScreen(),
-        ),
+      create: (_) => getIt<OnboardingCubit>(),
+      child: const OnboardingScreen(),
+    ),
     AppRoutesName.welcomeScreen: (_) => const WelcomeScreen(),
     AppRoutesName.signInScreen: (context) => BlocProvider(
-          create: (_) => getIt<AuthCubit>(),
-          child: const SignInScreen(),
-        ),
+      create: (_) => getIt<AuthCubit>(),
+      child: const SignInScreen(),
+    ),
     AppRoutesName.signUpScreen: (context) => BlocProvider(
       create: (_) => getIt<AuthCubit>(),
       child: const SignUpScreen(),
     ),
-
-    AppRoutesName.homeScreen: (_) => const HomeScreen(),
+    AppRoutesName.forgotPasswordScreen: (_) => BlocProvider(
+      create: (_) => getIt<ForgotPasswordCubit>(),
+      child: ForgotPasswordScreen(),
+    ),
+    AppRoutesName.changePasswordScreen: (_) => ChangePasswordScreen(),
+    AppRoutesName.changePasswordSuccessScreen: (_) => const ChangePasswordSuccessScreen(),
+    AppRoutesName.homeScreen:(_) => const HomeScreen(),
   };
 }

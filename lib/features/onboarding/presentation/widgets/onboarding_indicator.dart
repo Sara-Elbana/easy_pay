@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingIndicator extends StatelessWidget {
@@ -25,7 +26,7 @@ class OnboardingIndicator extends StatelessWidget {
             height: 8,
             decoration: BoxDecoration(
               color:
-                  isActive ? const Color(0xffB8E95A) : const Color(0xffD9D9D9),
+                  isActive ? AppColors.primary : const Color(0xffD9D9D9),
               borderRadius: BorderRadius.circular(20),
             ),
           );

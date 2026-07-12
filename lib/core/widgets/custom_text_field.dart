@@ -2,19 +2,26 @@ import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
-  final TextEditingController controller;
   final String hintText;
   final bool isPassword;
   final TextInputType keyboardType;
-  final ValueChanged<String>? onChanged;
-
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final TextInputAction textInputAction;
+  final FocusNode? focusNode;
+  final void Function(String)? onFieldSubmitted;
+  final void Function(String)? onChanged;
   const CustomTextField({
     super.key,
-    required this.controller,
     required this.hintText,
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
-    this.onChanged,
+    required this.controller,
+    this.validator,
+    this.textInputAction = TextInputAction.next,
+    this.focusNode,
+    this.onFieldSubmitted,
+    this.onChanged
   });
 
   @override

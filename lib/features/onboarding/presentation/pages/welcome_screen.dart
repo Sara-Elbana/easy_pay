@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
-import 'package:easy_pay_app/core/widgets/custom_dialog.dart';
+import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/custom_button.dart';
@@ -14,7 +14,6 @@ class WelcomeScreen extends StatelessWidget {
     final logoSize = screenWidth * 0.67;
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -39,7 +38,12 @@ class WelcomeScreen extends StatelessWidget {
                   Expanded(
                     child: CustomButton(
                       text: 'sign_up'.tr(),
-                      backgroundColor: Colors.white,
+                      backgroundColor: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.gray800
+                          : Colors.white,
+                      foregroundColor: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.white
+                          : AppColors.black,
                       onPressed: () {},
                     ),
                   ),

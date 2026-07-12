@@ -1,6 +1,5 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
-import 'package:easy_pay_app/core/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -17,8 +16,8 @@ class CustomButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.isLoading = false,
-    this.backgroundColor = Colors.green,
-    this.foregroundColor = AppColors.white,
+    this.backgroundColor = const Color(0xFFB7E65C),
+    this.foregroundColor = AppColors.black,
     this.height = 50,
     this.borderRadius = 12,
   });
@@ -38,13 +37,13 @@ class CustomButton extends StatelessWidget {
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading
-            ? const CircularProgressIndicator(
-                color: AppColors.white,
+            ? CircularProgressIndicator(
+                color: foregroundColor,
               )
             : Text(
                 text,
                 style: AppTextStyles.titleMedium.copyWith(
-                  color: AppColors.black,
+                  color: foregroundColor,
                 ),
               ),
       ),

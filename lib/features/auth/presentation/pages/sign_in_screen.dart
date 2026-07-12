@@ -37,16 +37,17 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.white,
+        backgroundColor: theme.scaffoldBackgroundColor,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back,
-            color: AppColors.black,
+            color: theme.iconTheme.color ?? AppColors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -54,25 +55,25 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.03, vertical: size.height * 0.03),
-        child: Form(
-          key: _formKey,
-          child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.03, vertical: size.height * 0.03),
+          child: Form(
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("welcome".tr(),
                     style: AppTextStyles.titleLarge
-                        .copyWith(color: AppColors.black)),
+                        .copyWith(color: theme.textTheme.titleLarge?.color)),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
                 Text(
                   "please_enter_your_email_and_password_to_sign_in".tr(),
                   style: AppTextStyles.bodyLarge
-                      .copyWith(color: AppColors.gray800),
+                      .copyWith(color: theme.textTheme.bodyLarge?.color),
                 ),
                 SizedBox(
                   height: size.height * 0.02,
@@ -121,7 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Text(
                       "remember_me".tr(),
                       style: AppTextStyles.titleMedium.copyWith(
-                        color: AppColors.black,
+                        color: theme.textTheme.titleMedium?.color,
                       ),
                     ),
                   ],
@@ -171,29 +172,24 @@ class _SignInScreenState extends State<SignInScreen> {
             }
           },
           builder: (context, state) {
-            return SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: CustomButton(
-                text: "sign_in".tr(),
-                isLoading: state is LoginLoading,
-                backgroundColor: Colors.green,
-                onPressed: () {
-                  FocusScope.of(context).unfocus();
+            return CustomButton(
+              text: "sign_in".tr(),
+              isLoading: state is LoginLoading,
+              onPressed: () {
+                FocusScope.of(context).unfocus();
 
-                  if (rememberMe) {
-                    // Save email and password to shared preferences or secure storage
-                    if (_formKey.currentState!.validate()) {
-                      context.read<SignInCubit>().login(
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                          );
-                    } else {
-                      print('accept terms and conditions');
-                    }
+                if (rememberMe) {
+                  // Save email and password to shared preferences or secure storage
+                  if (_formKey.currentState!.validate()) {
+                    context.read<SignInCubit>().login(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim(),
+                        );
+                  } else {
+                    debugPrint('accept terms and conditions');
                   }
-                },
-              ),
+                }
+              },
             );
           },
         ),

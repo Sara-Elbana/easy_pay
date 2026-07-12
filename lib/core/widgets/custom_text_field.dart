@@ -45,17 +45,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
             controller: widget.controller,
             validator: widget.validator,
             decoration: InputDecoration(
-              fillColor: AppColors.gray200,
+              fillColor: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.gray800
+                  : AppColors.gray200,
               filled: true,
               hintText: widget.hintText,
-              hintStyle: const TextStyle(
-                color: AppColors.gray600,
+              hintStyle: TextStyle(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.gray400
+                    : AppColors.gray600,
               ),
               suffixIcon: widget.isPassword
                   ? IconButton(
                       icon: Icon(
                         isObscure ? Icons.visibility : Icons.visibility_off,
-                        color: AppColors.gray600,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.gray400
+                            : AppColors.gray600,
                       ),
                       onPressed: () {
                         setState(() {

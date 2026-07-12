@@ -24,14 +24,19 @@ class OnboardingHeader extends StatelessWidget {
           Container(
             height: 310,
             width: double.infinity,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xffDDF8DF),
-                  Color(0xffF8FFF8),
-                ],
+                colors: Theme.of(context).brightness == Brightness.dark
+                    ? [
+                        const Color(0xff0E2E14),
+                        Theme.of(context).scaffoldBackgroundColor,
+                      ]
+                    : const [
+                        Color(0xffDDF8DF),
+                        Color(0xffF8FFF8),
+                      ],
               ),
             ),
           ),
@@ -45,7 +50,7 @@ class OnboardingHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.black.withOpacity(0.25),
+                      color: AppColors.black.withValues(alpha: 0.25),
                       blurRadius: 35,
                       offset: const Offset(0, 18),
                     ),
@@ -60,7 +65,21 @@ class OnboardingHeader extends StatelessWidget {
             ),
           ),
 
-          /// White Arc (Above Phone)
+          /// Black Arc
+          Positioned(
+            bottom: 3,
+            left: -30,
+            right: -30,
+            child: ClipPath(
+              clipper: CustomArcClipper(),
+              child: Container(
+                height: 180,
+                color: AppColors.black,
+              ),
+            ),
+          ),
+
+          /// White Arc (Theme-responsive Background Arc)
           Positioned(
             bottom: 0,
             left: -30,
@@ -69,7 +88,7 @@ class OnboardingHeader extends StatelessWidget {
               clipper: CustomArcClipper(),
               child: Container(
                 height: 180,
-                color: Colors.white,
+                color: Theme.of(context).scaffoldBackgroundColor,
               ),
             ),
           ),

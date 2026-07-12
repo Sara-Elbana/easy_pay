@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/auth/presentation/cubit/sign_in_cubit.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../network/network.dart';
 import '../services/services.dart';
@@ -26,5 +27,8 @@ Future<void> setupDependencies() async {
   // Cubits
   getIt.registerFactory<OnboardingCubit>(
     () => OnboardingCubit(totalPages: 3),
+  );
+  getIt.registerFactory<SignInCubit>(
+    () => SignInCubit(),
   );
 }

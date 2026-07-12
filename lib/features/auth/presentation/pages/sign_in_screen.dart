@@ -5,34 +5,19 @@ import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
-import 'package:easy_pay_app/core/widgets/custom_dialog.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/sign_in_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
-
-  @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
+class SignInScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
-  bool rememberMe = false;
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    emailFocusNode.dispose();
-    passwordFocusNode.dispose();
-    super.dispose();
-  }
+
+  SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +50,11 @@ class _SignInScreenState extends State<SignInScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("welcome".tr(),
-                    style: AppTextStyles.titleLarge
-                        .copyWith(color: theme.textTheme.titleLarge?.color)),
+                    style: AppTextStyles.titleLarge.copyWith(
+                      color: theme.textTheme.titleLarge?.color,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                    )),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
@@ -97,35 +85,39 @@ class _SignInScreenState extends State<SignInScreen> {
                   focusNode: passwordFocusNode,
                   textInputAction: TextInputAction.done,
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        checkColor: AppColors.white,
-                        value: rememberMe,
-                        side: const BorderSide(
-                            color: AppColors.gray400, width: 1),
-                        activeColor: AppColors.primary,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        onChanged: (value) {
-                          setState(() {
-                            rememberMe = value!;
-                          });
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: size.width * 0.02,
-                    ),
-                    Text(
-                      "remember_me".tr(),
-                      style: AppTextStyles.titleMedium.copyWith(
-                        color: theme.textTheme.titleMedium?.color,
-                      ),
-                    ),
-                  ],
+                BlocBuilder<SignInCubit, LoginState>(
+                  buildWhen: (previous, current) => previous.rememberMe != current.rememberMe,
+                  builder: (context, state) {
+                    final cubit = context.read<SignInCubit>();
+                    return Row(
+                      children: [
+                        SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: Checkbox(
+                            checkColor: AppColors.white,
+                            value: state.rememberMe,
+                            side: const BorderSide(
+                                color: AppColors.gray400, width: 1),
+                            activeColor: AppColors.primary,
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) {
+                              cubit.toggleRememberMe(value ?? false);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.02,
+                        ),
+                        Text(
+                          "remember_me".tr(),
+                          style: AppTextStyles.titleMedium.copyWith(
+                            color: theme.textTheme.titleMedium?.color,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 SizedBox(
                   height: size.height * 0.02,
@@ -133,14 +125,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 Center(
                   child: TextButton(
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (_) => CustomDialog(
-                            title: "had_very_little".tr(),
-                            supTitle:
-                                "you_will_be_redirected_to_the_home_page_shortly"
-                                    .tr(),
-                          ),
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutesName.resetPasswordScreen,
                         );
                       },
                       child: Text(
@@ -157,36 +144,36 @@ class _SignInScreenState extends State<SignInScreen> {
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.all(16),
         child: BlocConsumer<SignInCubit, LoginState>(
+          listenWhen: (previous, current) => previous.isSuccess != current.isSuccess || previous.errorMessage != current.errorMessage,
           listener: (context, state) {
-            if (state is LoginSuccess) {
+            if (state.isSuccess) {
               Navigator.pushNamed(
                 context,
                 AppRoutesName.homeScreen,
               );
             }
 
-            if (state is LoginError) {
+            if (state.errorMessage != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
+                SnackBar(content: Text(state.errorMessage!)),
               );
             }
           },
           builder: (context, state) {
             return CustomButton(
               text: "sign_in".tr(),
-              isLoading: state is LoginLoading,
+              isLoading: state.isLoading,
               onPressed: () {
                 FocusScope.of(context).unfocus();
 
-                if (rememberMe) {
-                  // Save email and password to shared preferences or secure storage
+                if (state.rememberMe) {
                   if (_formKey.currentState!.validate()) {
                     context.read<SignInCubit>().login(
                           email: emailController.text.trim(),
                           password: passwordController.text.trim(),
                         );
                   } else {
-                    debugPrint('accept terms and conditions');
+                    debugPrint('Validation failed');
                   }
                 }
               },

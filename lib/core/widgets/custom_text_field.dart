@@ -10,6 +10,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputAction textInputAction;
   final FocusNode? focusNode;
   final void Function(String)? onFieldSubmitted;
+  final void Function(String)? onChanged;
   const CustomTextField(
       {super.key,
       required this.hintText,
@@ -19,7 +20,8 @@ class CustomTextField extends StatefulWidget {
       this.validator,
       this.textInputAction = TextInputAction.next,
       this.focusNode,
-      this.onFieldSubmitted});
+      this.onFieldSubmitted,
+      this.onChanged});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -44,6 +46,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             obscureText: widget.isPassword ? isObscure : false,
             controller: widget.controller,
             validator: widget.validator,
+            onChanged: widget.onChanged,
             decoration: InputDecoration(
               fillColor: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.gray800

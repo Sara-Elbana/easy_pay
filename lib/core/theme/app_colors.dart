@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary Colors
-  static const Color primary = Color(0xFF2563EB); // Blue
+  static const Color primary = Color(0xFF3629B7); // Indigo
   static const Color primaryDark = Color(0xFF1E40AF);
   static const Color primaryLight = Color(0xFFDBEAFE);
 

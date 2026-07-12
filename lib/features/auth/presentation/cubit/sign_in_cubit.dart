@@ -2,15 +2,19 @@ import 'package:easy_pay_app/features/auth/presentation/cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignInCubit extends Cubit<LoginState> {
-  SignInCubit() : super(LoginInitial());
+  SignInCubit() : super(const LoginState());
+
+  void toggleRememberMe(bool value) {
+    emit(state.copyWith(rememberMe: value));
+  }
 
   Future<void> login({required String email, required String password}) async {
-    emit(LoginLoading());
+    emit(state.copyWith(isLoading: true, errorMessage: null, isSuccess: false));
     await Future.delayed(const Duration(seconds: 2));
     if (email == "sara@gmail.com" && password == "123456") {
-      emit(LoginSuccess());
+      emit(state.copyWith(isLoading: false, isSuccess: true));
     } else {
-      emit(LoginError("Invalid email or password"));
+      emit(state.copyWith(isLoading: false, errorMessage: "Invalid email or password"));
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import 'package:easy_pay_app/core/theme/app_colors.dart';
 import '../../../../core/widgets/custom_button.dart';
 
 class OnboardingNavButtons extends StatelessWidget {
@@ -32,6 +33,7 @@ class OnboardingNavButtons extends StatelessWidget {
               child: CustomButton(
                 text: 'skip'.tr(),
                 backgroundColor: Colors.white,
+                foregroundColor: AppColors.black,
                 onPressed: onSkip,
               ),
             ),
@@ -40,7 +42,8 @@ class OnboardingNavButtons extends StatelessWidget {
           Expanded(
             child: CustomButton(
               text: isLastPage ? "get_started".tr() : "next".tr(),
-              backgroundColor: const Color(0xFFB7E65C),
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
               onPressed: isLastPage ? onGetStarted : onNext,
             ),
           ),

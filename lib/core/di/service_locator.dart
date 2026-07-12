@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../features/auth/presentation/cubit/sign_in_cubit.dart';
+import '../../features/auth/presentation/cubit/forgot_password_cubit.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../network/network.dart';
 import '../services/services.dart';
@@ -30,5 +31,8 @@ Future<void> setupDependencies() async {
   );
   getIt.registerFactory<SignInCubit>(
     () => SignInCubit(),
+  );
+  getIt.registerFactory<ForgotPasswordCubit>(
+    () => ForgotPasswordCubit(),
   );
 }

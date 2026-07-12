@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  AppColors._(); // Private constructor to prevent instantiation
   // Primary Colors
-  static const Color primary = Color(0xFF2563EB); // Blue
+ // static const Color primary = Color(0xFF2563EB); // Blue
+  static const Color primary = Color(0xFF3D30A2);
   static const Color primaryDark = Color(0xFF1E40AF);
   static const Color primaryLight = Color(0xFFDBEAFE);
+
+  // Background and UI elements
+  static const Color background = Colors.white;
+  static const Color textDark = Color(0xFF343434);
+  static const Color textLight = Color(0xFFCACACA);
+  static const Color inputBorder = Color(0xFFCBCBCB);
+  static const Color inputBackground = Colors.white;
+  static const Color circleBackdrop = Color(0xFFEBEAFC);
+
+  // Floating dots colors
+  static const Color dotPink = Color(0xFFFF2D87);
+  static const Color dotOrange = Color(0xFFFFA500);
+  static const Color dotTeal = Color(0xFF00F0FF);
+  static const Color dotBlue = Color(0xFF0077FF);
+
+  // Button States
+  static const Color buttonDisabled = Color(0xFFECECFB);
+  static const Color textDisabled = Color(0xFFB9B7E8);
 
   // Secondary Colors
   static const Color secondary = Color(0xFF7C3AED); // Purple

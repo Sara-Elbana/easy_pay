@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
-import 'package:easy_pay_app/core/services/biometric_service.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
@@ -10,36 +8,41 @@ import 'package:easy_pay_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/auth_illustration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _agreeToTerms = false;
   bool _isFormValid = false;
 
   @override
   void initState() {
     super.initState();
+    _nameController.addListener(_validateForm);
     _usernameController.addListener(_validateForm);
     _passwordController.addListener(_validateForm);
   }
 
   void _validateForm() {
     setState(() {
-      _isFormValid = _usernameController.text.trim().isNotEmpty &&
-          _passwordController.text.trim().isNotEmpty;
+      _isFormValid = _nameController.text.trim().isNotEmpty &&
+          _usernameController.text.trim().isNotEmpty &&
+          _passwordController.text.trim().isNotEmpty &&
+          _agreeToTerms;
     });
   }
 
   @override
   void dispose() {
+    _nameController.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -48,7 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final biometricService = BiometricService();
+
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: BlocConsumer<AuthCubit, AuthState>(
@@ -56,7 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Welcome back, ${state.user.name}!'),
+                content: Text('Account created for ${state.user.name}!'),
                 backgroundColor: Colors.green,
               ),
             );
@@ -93,8 +96,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       },
                     ),
                     const SizedBox(width: 4),
-                     Text(
-                      "sign_in".tr(),
+                    Text(
+                      "sign_up".tr(),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -108,7 +111,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
@@ -121,24 +124,29 @@ class _SignInScreenState extends State<SignInScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 24),
-                         Text(
-                          "welcome_back".tr(),
+                        Text(
+                          "welcome_to_us".tr(),
                           style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primary,
                           ),
                         ),
-                         Text(
-                          "hello_there_sign_in_to_continue".tr(),
+                        Text(
+                          "hello_there_create_new_account".tr(),
                           style: const TextStyle(
                             fontSize: 15,
                             color: AppColors.textDark,
                           ),
                         ),
                         const Center(
-                          child: AuthIllustration(isSignIn: true),
+                          child: AuthIllustration(isSignIn: false),
                         ),
+                        CustomTextField(
+                          controller: _nameController,
+                          hintText: "name".tr(),
+                        ),
+                        const SizedBox(height: 16),
                         CustomTextField(
                           controller: _usernameController,
                           hintText: "text_input".tr(),
@@ -149,76 +157,110 @@ class _SignInScreenState extends State<SignInScreen> {
                           hintText: "password".tr(),
                           isPassword: true,
                         ),
-                        const SizedBox(height: 12),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              // Forgot password logic
-                            },
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        const SizedBox(height: 16),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              value: _agreeToTerms,
+                              fillColor:
+                                  WidgetStateProperty.resolveWith((states) {
+                                return Colors.white;
+                              }),
+                              checkColor: AppColors.primary,
+                              activeColor: AppColors.primary,
+                              side: WidgetStateBorderSide.resolveWith((states) {
+                                return BorderSide(
+                                  color: states.contains(WidgetState.selected)
+                                      ? AppColors.primary
+                                      : Colors.grey,
+                                  width: 1.4,
+                                );
+                              }),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              onChanged: isLoading
+                                  ? null
+                                  : (value) {
+                                      setState(() {
+                                        _agreeToTerms = value ?? false;
+                                        _validateForm();
+                                      });
+                                    },
                             ),
-                            child:  Text(
-                              "forgot_your_password".tr(),
-                              style:const TextStyle(
-                                  fontSize: 13,
-                                  color: AppColors.textLight,
-                                  fontWeight: FontWeight.w500),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: isLoading
+                                    ? null
+                                    : () {
+                                        setState(() {
+                                          _agreeToTerms = !_agreeToTerms;
+                                          _validateForm();
+                                        });
+                                      },
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w400,
+                                      //height: 1.3,
+                                      color: AppColors.black,
+                                      fontFamily: 'Lato',
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            "by_creating_an_account_you_agree_to_our"
+                                                .tr(),
+                                      ),
+                                      TextSpan(
+                                        text: "terms_and_conditions".tr(),
+                                        style: const TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                         const SizedBox(height: 24),
                         CustomButton(
-                          text: "sign_in".tr(),
+                          text: "sign_up".tr(),
                           isEnabled: _isFormValid && !isLoading,
                           isLoading: isLoading,
                           onPressed: () {
-                            context.read<AuthCubit>().signIn(
-                              _usernameController.text.trim(),
-                              _passwordController.text,
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        Center(
-                          child: InkWell(
-                            onTap:() {
-                              context.read<AuthCubit>().biometricLogin();
-                              if(state is BiometricSuccess){
-                                Navigator.pushNamed(
-                                  context,
-                                  AppRoutesName.homeScreen,
+                            context.read<AuthCubit>().signUp(
+                                  _nameController.text.trim(),
+                                  _usernameController.text.trim(),
+                                  _passwordController.text,
                                 );
-
-                              }
-                            },
-                            child:  SvgPicture.asset(
-                              AppAssets.fingerprint,
-                            )
-                          ),
+                          },
                         ),
                         const SizedBox(height: 24),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                                Text(
-                                "dont_have_an_account".tr(),
-                                style:const TextStyle(
+                              Text(
+                                "have_an_account".tr(),
+                                style: const TextStyle(
                                   color: AppColors.textDark,
                                   fontSize: 14,
                                 ),
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacementNamed(context, AppRoutesName.signUpScreen);
+                                  Navigator.pushReplacementNamed(
+                                      context, AppRoutesName.signInScreen);
                                 },
                                 child: Text(
-                                  "sign_up".tr(),
-                                  style:const TextStyle(
+                                  "sign_in".tr(),
+                                  style: const TextStyle(
                                     color: AppColors.primary,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,

@@ -1,5 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:easy_pay_app/features/auth/data/data_source/auth_remote_datasource.dart';
+import 'package:easy_pay_app/features/auth/data/repository_impl/auth_repository_impl.dart';
+import 'package:easy_pay_app/features/auth/data/repository_impl/biometric_repository_impl.dart';
+import 'package:easy_pay_app/features/auth/domain/repository_interface/auth_repository.dart';
+import 'package:easy_pay_app/features/auth/domain/repository_interface/biometric_repository.dart';
+import 'package:easy_pay_app/features/auth/domain/use_cases/biometric_usecase.dart';
+import 'package:easy_pay_app/features/auth/domain/use_cases/sign_in_usecase.dart';
+import 'package:easy_pay_app/features/auth/domain/use_cases/sign_up_usecase.dart';
+import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'package:local_auth/local_auth.dart';
 
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../network/network.dart';
@@ -11,6 +21,53 @@ Future<void> setupDependencies() async {
   final prefs = SharedPreferencesService();
   await prefs.init();
   getIt.registerSingleton<SharedPreferencesService>(prefs);
+  // Data Source
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(),
+  );
+
+// Repository
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: getIt(),
+    ),
+  );
+
+// Use Cases
+  getIt.registerLazySingleton(
+    () => SignInUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton(
+    () => SignUpUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton(
+        () => LocalAuthentication(),
+  );
+
+
+  getIt.registerLazySingleton<BiometricRepository>(
+        () => BiometricRepositoryImpl(
+      getIt(),
+    ),
+  );
+
+
+  getIt.registerLazySingleton(
+        () => BiometricUseCase(
+      getIt(),
+    ),
+  );
+
+// Auth Cubit
+  getIt.registerFactory(
+    () => AuthCubit(
+      signInUseCase: getIt(),
+      signUpUseCase: getIt(),
+      biometricUseCase: getIt(),
+    ),
+  );
 
   const secureStorage = SecureStorageService();
   getIt.registerSingleton<SecureStorageService>(secureStorage);

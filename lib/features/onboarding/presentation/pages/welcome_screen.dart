@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
+import 'package:easy_pay_app/core/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/custom_button.dart';
@@ -36,16 +38,18 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomButton(
-                      text: 'Sign up',
-                      backgroundColor: Colors.white,
-                      onPressed: () {},
+                      text: 'sign_up'.tr(),
+                     // backgroundColor: Colors.white,
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutesName.signUpScreen);
+                      },
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: CustomButton(
-                      text: 'Sign in',
-                      backgroundColor: const Color(0xFFB7E65C),
+                      text: 'sign_in'.tr(),
+                    //  backgroundColor: const Color(0xFFB7E65C),
                       onPressed: () {
                         Navigator.pushNamed(context, AppRoutesName.signInScreen);
                       },

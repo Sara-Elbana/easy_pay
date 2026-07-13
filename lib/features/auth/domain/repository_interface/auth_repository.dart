@@ -1,30 +1,27 @@
 import 'package:easy_pay_app/features/auth/domain/entities/user_entity.dart';
 
 abstract class AuthRepository {
-  Future<UserEntity> signIn(String username, String password);
-  Future<UserEntity> signUp(String name, String username, String password);
+  Future<UserEntity> signIn(String phoneNumber, String password);
+  Future<UserEntity> signUp(String name, String phoneNumber, String password);
 }
+
 class FakeAuthRepository implements AuthRepository {
   @override
-  Future<UserEntity> signIn(String username, String password) async {
+  Future<UserEntity> signIn(String phoneNumber, String password) async {
     return UserEntity(
-      id: '1',
-      name: 'Sara',
-      username: username,
-      password: '123456'
-    );
+        id: '1', name: 'Sara', phoneNumber: phoneNumber, password: '123456');
   }
 
   @override
   Future<UserEntity> signUp(
-      String name,
-      String username,
-      String password,
-      ) async {
+    String name,
+    String phoneNumber,
+    String password,
+  ) async {
     return UserEntity(
       id: '1',
       name: name,
-      username: username,
+      phoneNumber: phoneNumber,
       password: password,
     );
   }

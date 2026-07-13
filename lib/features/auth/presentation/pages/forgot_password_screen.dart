@@ -8,6 +8,7 @@ import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
@@ -119,10 +120,13 @@ class ForgotPasswordScreen extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         CustomTextField(
-          hintText: "e.g. (+20) 1234567890",
+          hintText: "e.g. +201012345678",
           controller: phoneController,
-          keyboardType: TextInputType.text,
+          keyboardType: TextInputType.phone,
           validator: Validators.validatePhone,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9+]')),
+          ],
           onChanged: (val) {
             cubit.updatePhoneNumber(val);
           },
@@ -181,6 +185,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 },
               ),
             ),
+            const SizedBox(width: 12),
             Padding(
               padding: EdgeInsets.symmetric(
                 vertical: size.height * 0.02,

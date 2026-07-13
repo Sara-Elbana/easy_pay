@@ -1,5 +1,6 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -11,6 +12,7 @@ class CustomTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final void Function(String)? onFieldSubmitted;
   final void Function(String)? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -21,7 +23,8 @@ class CustomTextField extends StatefulWidget {
     this.textInputAction = TextInputAction.next,
     this.focusNode,
     this.onFieldSubmitted,
-    this.onChanged
+    this.onChanged,
+    this.inputFormatters,
   });
 
   @override
@@ -32,11 +35,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
       obscureText: widget.isPassword ? _obscureText : false,
       keyboardType: widget.keyboardType,
       onChanged: widget.onChanged,
+      validator: widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      inputFormatters: widget.inputFormatters,
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
@@ -59,6 +65,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+        ),
+        errorStyle: const TextStyle(
+          color: AppColors.error,
+          fontSize: 12,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

@@ -4,9 +4,11 @@ import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
+import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final isButtonEnabled = ValueNotifier<bool>(false);
@@ -56,10 +58,12 @@ class ChangePasswordScreen extends StatelessWidget {
             horizontal: size.width * 0.05,
             vertical: size.height * 0.02,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: size.height * 0.01),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: size.height * 0.01),
               Card(
                 color: theme.brightness == Brightness.dark
                     ? AppColors.gray800
@@ -87,6 +91,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         isPassword: true,
                         controller: newPasswordController,
                         textInputAction: TextInputAction.next,
+                        validator: Validators.validatePassword,
                       ),
                       const SizedBox(height: 16),
                       Text(
@@ -102,6 +107,10 @@ class ChangePasswordScreen extends StatelessWidget {
                         isPassword: true,
                         controller: confirmPasswordController,
                         textInputAction: TextInputAction.done,
+                        validator: (value) => Validators.validateConfirmPassword(
+                          value,
+                          newPasswordController.text,
+                        ),
                       ),
                       const SizedBox(height: 24),
                       ValueListenableBuilder<bool>(
@@ -111,13 +120,15 @@ class ChangePasswordScreen extends StatelessWidget {
                             text: "change_password".tr(),
                             onPressed: enabled
                                 ? () {
-                                    FocusScope.of(context).unfocus();
-                                    // Navigate to success screen
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      AppRoutesName.changePasswordSuccessScreen,
-                                      (route) => false,
-                                    );
+                                    if (_formKey.currentState?.validate() ?? false) {
+                                      FocusScope.of(context).unfocus();
+                                      // Navigate to success screen
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        AppRoutesName.changePasswordSuccessScreen,
+                                        (route) => false,
+                                      );
+                                    }
                                   }
                                 : null,
                           );
@@ -129,6 +140,7 @@ class ChangePasswordScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

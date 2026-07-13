@@ -40,9 +40,9 @@ class Validators{
     if (value == null || value.trim().isEmpty) {
       return 'Please enter your phone number';
     }
-    final regex = RegExp(r'^\(\+[0-9]+\)\s*[0-9]{10}$');
+    final regex = RegExp(r'^\+[0-9]{9,15}$');
     if (!regex.hasMatch(value.trim())) {
-      return 'Phone number must start with country code in parentheses e.g. (+20) followed by 10 digits';
+      return 'Phone number must start with + followed by country code and phone number (e.g. +201012345678)';
     }
     return null;
   }

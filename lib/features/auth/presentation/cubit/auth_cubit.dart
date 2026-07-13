@@ -15,33 +15,35 @@ class AuthCubit extends Cubit<AuthState> {
     required this.biometricUseCase,
   }) : super(const AuthInitial());
 
-  Future<void> signIn(String username, String password) async {
+  Future<void> signIn(String phoneNumber, String password) async {
     emit(const AuthLoading());
     try {
-      final user = await signInUseCase(username, password);
+      final user = await signInUseCase(phoneNumber, password);
       emit(AuthSuccess(user));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }
   }
 
+
   Future<void> biometricLogin() async {
-
     emit(const AuthLoading());
-
-    final success = await biometricUseCase();
-
-    if(success){
-      emit(const BiometricSuccess());
-    }else{
-      emit(const AuthFailure('Biometric authentication failed'));
+    try {
+      final success = await biometricUseCase();
+      if (success) {
+        emit(const BiometricSuccess());
+      } else {
+        emit(const AuthFailure('Biometric authentication failed'));
+      }
+    } catch (e) {
+      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
     }
   }
 
-  Future<void> signUp(String name, String username, String password) async {
+  Future<void> signUp(String name, String phoneNumber, String password) async {
     emit(const AuthLoading());
     try {
-      final user = await signUpUseCase(name, username, password);
+      final user = await signUpUseCase(name, phoneNumber, password);
       emit(AuthSuccess(user));
     } catch (e) {
       emit(AuthFailure(e.toString()));

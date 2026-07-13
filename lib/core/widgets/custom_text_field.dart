@@ -32,11 +32,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
+      validator: widget.validator,
       obscureText: widget.isPassword ? _obscureText : false,
       keyboardType: widget.keyboardType,
       onChanged: widget.onChanged,
+      textInputAction: widget.textInputAction,
+      focusNode: widget.focusNode,
+      onFieldSubmitted: widget.onFieldSubmitted,
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,

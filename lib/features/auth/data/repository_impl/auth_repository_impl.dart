@@ -6,9 +6,9 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   AuthRepositoryImpl({required this.remoteDataSource});
   @override
-  Future<UserEntity> signIn(String username, String password) async {
+  Future<UserEntity> signIn(String phoneNumber, String password) async {
     try {
-      return await remoteDataSource.signIn(username, password);
+      return await remoteDataSource.signIn(phoneNumber, password);
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
     }
@@ -16,9 +16,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<UserEntity> signUp(
-      String name, String username, String password) async {
+      String name, String phoneNumber, String password) async {
     try {
-      return await remoteDataSource.signUp(name, username, password);
+      return await remoteDataSource.signUp(name, phoneNumber, password);
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
     }

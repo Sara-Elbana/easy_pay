@@ -1,11 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_state.dart';
+import 'package:easy_pay_app/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/auth_illustration.dart';
+import 'package:easy_pay_app/features/auth/presentation/widgets/header_widget.dart';
+import 'package:easy_pay_app/features/auth/presentation/widgets/terms_and_conditions_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,41 +22,46 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final _nameFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
+  final _phoneFocusNode = FocusNode();
   bool _agreeToTerms = false;
   bool _isFormValid = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController.addListener(_validateForm);
-    _usernameController.addListener(_validateForm);
-    _passwordController.addListener(_validateForm);
-  }
 
   void _validateForm() {
     setState(() {
       _isFormValid = _nameController.text.trim().isNotEmpty &&
-          _usernameController.text.trim().isNotEmpty &&
+          _phoneController.text.trim().isNotEmpty &&
           _passwordController.text.trim().isNotEmpty &&
           _agreeToTerms;
     });
+  }
+  @override
+  void initState() {
+    super.initState();
+
+    _nameController.addListener(_validateForm);
+    _phoneController.addListener(_validateForm);
+    _passwordController.addListener(_validateForm);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
-    _usernameController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
+    _nameFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    _phoneFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: BlocConsumer<AuthCubit, AuthState>(
@@ -59,7 +69,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Account created for ${state.user.name}!'),
+                content: Text(
+                  "account_created".tr(args: [state.user.name]),
+                ),
                 backgroundColor: Colors.green,
               ),
             );
@@ -76,37 +88,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           final bool isLoading = state is AuthLoading;
           return Column(
             children: [
-              Container(
-                padding: EdgeInsets.only(
-                  top: statusBarHeight + 10,
-                  bottom: 20,
-                  left: 10,
-                  right: 20,
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      "sign_up".tr(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              HeaderWidget(
+                  title: "sign_up".tr(),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -117,160 +103,94 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       topRight: Radius.circular(30),
                     ),
                   ),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 24),
-                        Text(
-                          "welcome_to_us".tr(),
-                          style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
+                  child: Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 24),
+                          Text(
+                            "welcome_to_us".tr(),
+                            style: AppTextStyles.titleLarge
+                                .copyWith(color: AppColors.primary),
                           ),
-                        ),
-                        Text(
-                          "hello_there_create_new_account".tr(),
-                          style: const TextStyle(
-                            fontSize: 15,
-                            color: AppColors.textDark,
+                          Text(
+                            "hello_there_create_new_account".tr(),
+                            style: AppTextStyles.titleSmall
+                                .copyWith(color: AppColors.textDark),
                           ),
-                        ),
-                        const Center(
-                          child: AuthIllustration(isSignIn: false),
-                        ),
-                        CustomTextField(
-                          controller: _nameController,
-                          hintText: "name".tr(),
-                        ),
-                        const SizedBox(height: 16),
-                        CustomTextField(
-                          controller: _usernameController,
-                          hintText: "text_input".tr(),
-                        ),
-                        const SizedBox(height: 16),
-                        CustomTextField(
-                          controller: _passwordController,
-                          hintText: "password".tr(),
-                          isPassword: true,
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                              value: _agreeToTerms,
-                              fillColor:
-                                  WidgetStateProperty.resolveWith((states) {
-                                return Colors.white;
-                              }),
-                              checkColor: AppColors.primary,
-                              activeColor: AppColors.primary,
-                              side: WidgetStateBorderSide.resolveWith((states) {
-                                return BorderSide(
-                                  color: states.contains(WidgetState.selected)
-                                      ? AppColors.primary
-                                      : Colors.grey,
-                                  width: 1.4,
-                                );
-                              }),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              onChanged: isLoading
-                                  ? null
-                                  : (value) {
-                                      setState(() {
-                                        _agreeToTerms = value ?? false;
-                                        _validateForm();
-                                      });
-                                    },
-                            ),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: isLoading
-                                    ? null
-                                    : () {
-                                        setState(() {
-                                          _agreeToTerms = !_agreeToTerms;
-                                          _validateForm();
-                                        });
-                                      },
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w400,
-                                      //height: 1.3,
-                                      color: AppColors.black,
-                                      fontFamily: 'Lato',
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text:
-                                            "by_creating_an_account_you_agree_to_our"
-                                                .tr(),
-                                      ),
-                                      TextSpan(
-                                        text: "terms_and_conditions".tr(),
-                                        style: const TextStyle(
-                                          color: AppColors.primary,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 24),
-                        CustomButton(
-                          text: "sign_up".tr(),
-                          isEnabled: _isFormValid && !isLoading,
-                          isLoading: isLoading,
-                          onPressed: () {
-                            context.read<AuthCubit>().signUp(
-                                  _nameController.text.trim(),
-                                  _usernameController.text.trim(),
-                                  _passwordController.text,
-                                );
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "have_an_account".tr(),
-                                style: const TextStyle(
-                                  color: AppColors.textDark,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, AppRoutesName.signInScreen);
-                                },
-                                child: Text(
-                                  "sign_in".tr(),
-                                  style: const TextStyle(
-                                    color: AppColors.primary,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
+                          const Center(
+                            child: AuthIllustration(isSignIn: false),
                           ),
-                        ),
-                      ],
+                          CustomTextField(
+                            controller: _nameController,
+                            hintText: "name".tr(),
+                            textInputAction: TextInputAction.next,
+                            validator: Validators.validateName,
+                            focusNode: _nameFocusNode,
+                            onFieldSubmitted: (_) {
+                              _phoneFocusNode.requestFocus();
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          CustomTextField(
+                            controller: _phoneController,
+                            hintText: "text_input".tr(),
+                            focusNode: _phoneFocusNode,
+                            keyboardType: TextInputType.phone,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(context)
+                                  .requestFocus(_passwordFocusNode);
+                            },
+                            validator: Validators.validatePhone,
+                          ),
+                          const SizedBox(height: 16),
+                          CustomTextField(
+                            controller: _passwordController,
+                            hintText: "password".tr(),
+                            isPassword: true,
+                            focusNode: _passwordFocusNode,
+                            textInputAction: TextInputAction.done,
+                            validator: Validators.validatePassword,
+                          ),
+                          const SizedBox(height: 16),
+                          TermsAndConditionsWidget(
+                            normalText: "by_creating_an_account_you_agree_to_our".tr(),
+                            highlightedText: "terms_and_conditions".tr(),
+                            value: _agreeToTerms,
+                            enabled: !isLoading,
+                            onChanged: (value) {
+                              setState(() {
+                                _agreeToTerms = value;
+                                _validateForm();
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 24),
+                          CustomButton(
+                            text: "sign_up".tr(),
+                            isEnabled: _isFormValid && !isLoading,
+                            isLoading: isLoading,
+                            onPressed: () {
+                              context.read<AuthCubit>().signUp(
+                                    _nameController.text.trim(),
+                                    _phoneController.text.trim(),
+                                    _passwordController.text,
+                                  );
+                            },
+                          ),
+                          const SizedBox(height: 24),
+                          AuthFooter(
+                            title: "have_an_account".tr(),
+                            actionText: "sign_in".tr(),
+                            routeName: AppRoutesName.signInScreen,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

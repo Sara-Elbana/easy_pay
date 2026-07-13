@@ -188,7 +188,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 right: size.width * 0.02,
               ),
               child: SizedBox(
-                width: 110,
+                width: 100,
                 child: CustomButton(
                   text: "resend".tr(),
                   onPressed: () {

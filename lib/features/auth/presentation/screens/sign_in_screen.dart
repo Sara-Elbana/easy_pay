@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
-import 'package:easy_pay_app/core/services/biometric_service.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
@@ -48,7 +47,6 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final biometricService = BiometricService();
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: BlocConsumer<AuthCubit, AuthState>(
@@ -93,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       },
                     ),
                     const SizedBox(width: 4),
-                     Text(
+                    Text(
                       "sign_in".tr(),
                       style: const TextStyle(
                         color: Colors.white,
@@ -121,7 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 24),
-                         Text(
+                        Text(
                           "welcome_back".tr(),
                           style: const TextStyle(
                             fontSize: 28,
@@ -129,7 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             color: AppColors.primary,
                           ),
                         ),
-                         Text(
+                        Text(
                           "hello_there_sign_in_to_continue".tr(),
                           style: const TextStyle(
                             fontSize: 15,
@@ -154,16 +152,17 @@ class _SignInScreenState extends State<SignInScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, AppRoutesName.forgotPasswordScreen);
+                              Navigator.pushNamed(
+                                  context, AppRoutesName.forgotPasswordScreen);
                             },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
                               minimumSize: Size.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child:  Text(
+                            child: Text(
                               "forgot_your_password".tr(),
-                              style:const TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   color: AppColors.textLight,
                                   fontWeight: FontWeight.w500),
@@ -177,48 +176,47 @@ class _SignInScreenState extends State<SignInScreen> {
                           isLoading: isLoading,
                           onPressed: () {
                             context.read<AuthCubit>().signIn(
-                              _usernameController.text.trim(),
-                              _passwordController.text,
-                            );
+                                  _usernameController.text.trim(),
+                                  _passwordController.text,
+                                );
                           },
                         ),
                         const SizedBox(height: 24),
                         Center(
                           child: InkWell(
-                            onTap:() {
-                              context.read<AuthCubit>().biometricLogin();
-                              if(state is BiometricSuccess){
-                                Navigator.pushNamed(
-                                  context,
-                                  AppRoutesName.homeScreen,
-                                );
-
-                              }
-                            },
-                            child:  SvgPicture.asset(
-                              AppAssets.fingerprint,
-                            )
-                          ),
+                              onTap: () {
+                                context.read<AuthCubit>().biometricLogin();
+                                if (state is BiometricSuccess) {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutesName.homeScreen,
+                                  );
+                                }
+                              },
+                              child: SvgPicture.asset(
+                                AppAssets.fingerprint,
+                              )),
                         ),
                         const SizedBox(height: 24),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                                Text(
+                              Text(
                                 "dont_have_an_account".tr(),
-                                style:const TextStyle(
+                                style: const TextStyle(
                                   color: AppColors.textDark,
                                   fontSize: 14,
                                 ),
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacementNamed(context, AppRoutesName.signUpScreen);
+                                  Navigator.pushReplacementNamed(
+                                      context, AppRoutesName.signUpScreen);
                                 },
                                 child: Text(
                                   "sign_up".tr(),
-                                  style:const TextStyle(
+                                  style: const TextStyle(
                                     color: AppColors.primary,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,

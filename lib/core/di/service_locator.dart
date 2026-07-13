@@ -8,8 +8,6 @@ import 'package:easy_pay_app/features/auth/domain/use_cases/biometric_usecase.da
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_in_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_up_usecase.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 

@@ -44,28 +44,30 @@ Future<void> setupDependencies() async {
   );
 
   getIt.registerLazySingleton(
-        () => LocalAuthentication(),
+    () => LocalAuthentication(),
   );
-
-
-  getIt.registerLazySingleton<BiometricRepository>(
-        () => BiometricRepositoryImpl(
-      getIt(),
-    ),
-  );
-
 
   getIt.registerLazySingleton(
-        () => BiometricUseCase(
+    () => BiometricService(getIt()),
+  );
+
+//// Biometric
+  getIt.registerLazySingleton<BiometricRepository>(
+    () => BiometricRepositoryImpl(
+      getIt(),
+    ),
+  );
+  getIt.registerLazySingleton(
+    () => BiometricUseCase(
       getIt(),
     ),
   );
 
-
-
+  /// secure storage
   const secureStorage = SecureStorageService();
   getIt.registerSingleton<SecureStorageService>(secureStorage);
 
+  /// NetworkConnectivityService
   getIt.registerSingleton<NetworkConnectivityService>(
     NetworkConnectivityService(),
   );

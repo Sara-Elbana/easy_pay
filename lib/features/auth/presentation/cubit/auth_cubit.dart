@@ -26,15 +26,16 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> biometricLogin() async {
-
     emit(const AuthLoading());
-
-    final success = await biometricUseCase();
-
-    if(success){
-      emit(const BiometricSuccess());
-    }else{
-      emit(const AuthFailure('Biometric authentication failed'));
+    try {
+      final success = await biometricUseCase();
+      if (success) {
+        emit(const BiometricSuccess());
+      } else {
+        emit(const AuthFailure('Biometric authentication failed'));
+      }
+    } catch (e) {
+      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
     }
   }
 

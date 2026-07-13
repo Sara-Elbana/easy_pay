@@ -1,7 +1,7 @@
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
-import 'package:easy_pay_app/features/auth/presentation/pages/forgot_password_screen.dart';
-import 'package:easy_pay_app/features/auth/presentation/pages/change_password_screen.dart';
-import 'package:easy_pay_app/features/auth/presentation/pages/change_password_success_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/screens/forgot_password_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/screens/change_password_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/screens/change_password_success_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:easy_pay_app/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';

@@ -58,6 +58,21 @@ class _SignInScreenState extends State<SignInScreen> {
                 backgroundColor: Colors.green,
               ),
             );
+            Navigator.pushReplacementNamed(
+              context,
+              AppRoutesName.homeScreen,
+            );
+          } else if (state is BiometricSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Welcome back!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.pushReplacementNamed(
+              context,
+              AppRoutesName.homeScreen,
+            );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -184,18 +199,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: 24),
                         Center(
                           child: InkWell(
-                              onTap: () {
-                                context.read<AuthCubit>().biometricLogin();
-                                if (state is BiometricSuccess) {
-                                  Navigator.pushNamed(
-                                    context,
-                                    AppRoutesName.homeScreen,
-                                  );
-                                }
-                              },
-                              child: SvgPicture.asset(
-                                AppAssets.fingerprint,
-                              )),
+                            onTap: () {
+                              context.read<AuthCubit>().biometricLogin();
+                            },
+                            child: SvgPicture.asset(
+                              AppAssets.fingerprint,
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 24),
                         Center(

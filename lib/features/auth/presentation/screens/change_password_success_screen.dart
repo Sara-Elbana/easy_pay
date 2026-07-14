@@ -27,7 +27,7 @@ class ChangePasswordSuccessScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              AppRoutesName.homeScreen,
+              AppRoutesName.mainScreen,
               (route) => false,
             );
           },
@@ -77,7 +77,7 @@ class ChangePasswordSuccessScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    AppRoutesName.homeScreen,
+                    AppRoutesName.mainScreen,
                     (route) => false,
                   );
                 },

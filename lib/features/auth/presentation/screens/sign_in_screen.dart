@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
@@ -14,7 +13,6 @@ import 'package:easy_pay_app/features/auth/presentation/widgets/biometric_button
 import 'package:easy_pay_app/core/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -65,13 +63,19 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("welcome_user".tr(args: [state.user.name])),
                 backgroundColor: Colors.green,
               ),
+            );
+            await Future.delayed(const Duration(seconds: 1));
+            if (!context.mounted) return;
+            Navigator.pushReplacementNamed(
+              context,
+              AppRoutesName.mainScreen,
             );
           } else if (state is BiometricSuccess) {
             Navigator.pushReplacementNamed(

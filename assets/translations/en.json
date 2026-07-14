@@ -46,5 +46,18 @@
   "code_expiry_notice": "This code will expire 10 minutes after this message. If you don't get a message.",
   "change_password_success": "Change password successfully!",
   "change_password_success_msg": "You have successfully change password. Please use the new password when Sign in.",
-  "ok": "Ok"
+  "ok": "Ok",
+  "account_and_card": "Account and Card",
+  "transfer": "Transfer",
+  "withdraw": "Withdraw",
+  "mobile_prepaid": "Mobile prepaid",
+  "pay_the_bill": "Pay the\nbill",
+  "save_online": "Save\nonline",
+  "credit_card": "Credit\ncard",
+  "transaction_report": "Transaction report",
+  "beneficiary": "Beneficiary",
+  "home": "Home",
+  "search": "Search",
+  "email": "Email",
+  "setting": "Setting"
 }

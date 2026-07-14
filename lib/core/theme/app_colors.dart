@@ -4,7 +4,7 @@ class AppColors {
   AppColors._(); // Private constructor to prevent instantiation
   // Primary Colors
  // static const Color primary = Color(0xFF2563EB); // Blue
-  static const Color primary = Color(0xFF3D30A2);
+  static const Color primary = Color(0xFF3629B7);
   static const Color primaryDark = Color(0xFF1E40AF);
   static const Color primaryLight = Color(0xFFDBEAFE);
 
@@ -60,6 +60,7 @@ class AppColors {
   static const Color black = Color(0xFF000000);
 
   // Gray Scale
+  static const Color gray = Color(0xFF979797);
   static const Color gray50 = Color(0xFFFAFAFA);
   static const Color gray100 = Color(0xFFF3F4F6);
   static const Color gray200 = Color(0xFFE5E7EB);

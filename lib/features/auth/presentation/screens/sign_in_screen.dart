@@ -11,7 +11,7 @@ import 'package:easy_pay_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/auth_illustration.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/biometric_button.dart';
-import 'package:easy_pay_app/features/auth/presentation/widgets/header_widget.dart';
+import 'package:easy_pay_app/core/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -76,7 +76,7 @@ class _SignInScreenState extends State<SignInScreen> {
           } else if (state is BiometricSuccess) {
             Navigator.pushReplacementNamed(
               context,
-              AppRoutesName.homeScreen,
+              AppRoutesName.mainScreen,
             );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -93,9 +93,13 @@ class _SignInScreenState extends State<SignInScreen> {
             children: [
               HeaderWidget(
                 title: "sign_in".tr(),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                leading: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  ),
+                ),
               ),
               Expanded(
                 child: Container(

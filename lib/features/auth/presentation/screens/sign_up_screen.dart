@@ -9,7 +9,7 @@ import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/auth_illustration.dart';
-import 'package:easy_pay_app/features/auth/presentation/widgets/header_widget.dart';
+import 'package:easy_pay_app/core/widgets/header_widget.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/terms_and_conditions_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _agreeToTerms;
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -65,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -74,6 +75,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 backgroundColor: Colors.green,
               ),
+            );
+            await Future.delayed(const Duration(seconds: 1));
+            if (!context.mounted) return;
+            Navigator.pushReplacementNamed(
+              context,
+              AppRoutesName.mainScreen,
             );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -89,10 +96,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return Column(
             children: [
               HeaderWidget(
-                  title: "sign_up".tr(),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
+                title: "sign_up".tr(),
+                leading: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -159,7 +171,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           const SizedBox(height: 16),
                           TermsAndConditionsWidget(
-                            normalText: "by_creating_an_account_you_agree_to_our".tr(),
+                            normalText:
+                                "by_creating_an_account_you_agree_to_our".tr(),
                             highlightedText: "terms_and_conditions".tr(),
                             value: _agreeToTerms,
                             enabled: !isLoading,

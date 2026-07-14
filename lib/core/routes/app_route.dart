@@ -3,7 +3,8 @@ import 'package:easy_pay_app/features/auth/presentation/pages/forgot_password_sc
 import 'package:easy_pay_app/features/auth/presentation/pages/change_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/pages/change_password_success_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
-import 'package:easy_pay_app/features/home/presentation/screens/home_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/home/presentation/screens/home_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
@@ -38,5 +39,6 @@ class AppRoutes {
     AppRoutesName.changePasswordScreen: (_) => ChangePasswordScreen(),
     AppRoutesName.changePasswordSuccessScreen: (_) => const ChangePasswordSuccessScreen(),
     AppRoutesName.homeScreen:(_) => const HomeScreen(),
+    AppRoutesName.mainScreen:(_) => const MainScreen()
   };
 }

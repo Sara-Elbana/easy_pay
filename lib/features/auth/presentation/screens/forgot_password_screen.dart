@@ -171,6 +171,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
+        const SizedBox(height: 8),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -185,30 +186,24 @@ class ForgotPasswordScreen extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(width: 12),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.02,
-              ).copyWith(
-                right: size.width * 0.02,
-              ),
-              child: SizedBox(
-                width: 100,
-                child: CustomButton(
-                  text: "resend".tr(),
-                  onPressed: () {
-                    cubit.sendCode();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Code resent successfully!".tr()),
-                      ),
-                    );
-                  },
-                ),
+            const SizedBox(width: 16),
+            SizedBox(
+              width: 100,
+              child: CustomButton(
+                text: "resend".tr(),
+                onPressed: () {
+                  cubit.sendCode();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Code resent successfully!".tr()),
+                    ),
+                  );
+                },
               ),
             ),
           ],
         ),
+        const SizedBox(height: 12),
         RichText(
           text: TextSpan(
             style: AppTextStyles.bodyMedium.copyWith(

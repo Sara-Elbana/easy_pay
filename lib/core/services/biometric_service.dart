@@ -21,7 +21,8 @@ class BiometricService {
 
       final enrolledBiometrics = await _auth.getAvailableBiometrics();
       if (enrolledBiometrics.isEmpty) {
-        throw Exception('No biometrics enrolled. Please set up biometrics in settings.');
+        throw Exception(
+            'No biometrics enrolled. Please set up biometrics in settings.');
       }
 
       return await _auth.authenticate(
@@ -38,11 +39,14 @@ class BiometricService {
       } else if (e.code == auth_error.notEnrolled) {
         throw Exception('No biometrics enrolled on this device.');
       } else if (e.code == auth_error.lockedOut) {
-        throw Exception('Biometric authentication is locked out due to too many attempts.');
+        throw Exception(
+            'Biometric authentication is locked out due to too many attempts.');
       } else if (e.code == auth_error.permanentlyLockedOut) {
-        throw Exception('Biometric authentication is permanently locked. Please use screen lock passcode.');
+        throw Exception(
+            'Biometric authentication is permanently locked. Please use screen lock passcode.');
       } else {
-        throw Exception('Biometric authentication error: ${e.message ?? e.code}');
+        throw Exception(
+            'Biometric authentication error: ${e.message ?? e.code}');
       }
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));

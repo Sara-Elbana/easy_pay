@@ -1,6 +1,5 @@
 import 'package:easy_pay_app/core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_pay_app/core/theme/app_colors.dart';
 
 class TermsAndConditionsWidget extends StatelessWidget {
   final bool value;

@@ -13,6 +13,12 @@ import 'package:local_auth/local_auth.dart';
 
 import '../../features/auth/presentation/cubit/forgot_password_cubit.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
+import '../../features/transfer/domain/repositories/transfer_repository.dart';
+import '../../features/transfer/data/repositories/transfer_repository_impl.dart';
+import '../../features/transfer/domain/usecases/get_cards_usecase.dart';
+import '../../features/transfer/domain/usecases/get_beneficiaries_usecase.dart';
+import '../../features/transfer/domain/usecases/execute_transfer_usecase.dart';
+import '../../features/transfer/presentation/cubit/transfer_cubit.dart';
 import '../network/network.dart';
 import '../services/services.dart';
 
@@ -89,5 +95,27 @@ Future<void> setupDependencies() async {
   );
   getIt.registerFactory<ForgotPasswordCubit>(
     () => ForgotPasswordCubit(),
+  );
+
+  // Transfer Feature
+  getIt.registerLazySingleton<TransferRepository>(
+    () => TransferRepositoryImpl(),
+  );
+  getIt.registerLazySingleton(
+    () => GetCardsUseCase(getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => GetBeneficiariesUseCase(getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => ExecuteTransferUseCase(getIt()),
+  );
+  getIt.registerFactory<TransferCubit>(
+    () => TransferCubit(
+      getCardsUseCase: getIt(),
+      getBeneficiariesUseCase: getIt(),
+      executeTransferUseCase: getIt(),
+      biometricService: getIt(),
+    ),
   );
 }

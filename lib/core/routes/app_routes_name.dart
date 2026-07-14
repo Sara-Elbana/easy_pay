@@ -8,4 +8,7 @@ class AppRoutesName {
   static const String forgotPasswordScreen = "forgotPasswordScreen";
   static const String changePasswordScreen = "changePasswordScreen";
   static const String changePasswordSuccessScreen = "changePasswordSuccessScreen";
+  static const String transferScreen = "transferScreen";
+  static const String confirmScreen = "confirmScreen";
+  static const String successTransferScreen = "successTransferScreen";
 }

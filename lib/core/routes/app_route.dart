@@ -14,6 +14,10 @@ import 'package:easy_pay_app/features/onboarding/presentation/cubit/onboarding_c
 import 'package:easy_pay_app/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:easy_pay_app/features/onboarding/presentation/pages/splash_screen.dart';
 import 'package:easy_pay_app/features/onboarding/presentation/pages/welcome_screen.dart';
+import 'package:easy_pay_app/features/transfer/presentation/screens/transfer_screen.dart';
+import 'package:easy_pay_app/features/transfer/presentation/screens/confirm_screen.dart';
+import 'package:easy_pay_app/features/transfer/presentation/screens/success_transfer_screen.dart';
+import 'package:easy_pay_app/features/transfer/presentation/cubit/transfer_cubit.dart';
 
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -38,5 +42,11 @@ class AppRoutes {
     AppRoutesName.changePasswordScreen: (_) => ChangePasswordScreen(),
     AppRoutesName.changePasswordSuccessScreen: (_) => const ChangePasswordSuccessScreen(),
     AppRoutesName.homeScreen:(_) => const HomeScreen(),
+    AppRoutesName.transferScreen: (_) => BlocProvider(
+      create: (_) => getIt<TransferCubit>(),
+      child: TransferScreen(),
+    ),
+    AppRoutesName.confirmScreen: (_) => ConfirmScreen(),
+    AppRoutesName.successTransferScreen: (_) => const SuccessTransferScreen(),
   };
 }

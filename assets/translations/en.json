@@ -1,5 +1,4 @@
 {
-
   "sign_in": "Sign In",
   "welcome_back": "Welcome Back",
   "hello_there_sign_in_to_continue": "Hello there, sign in to continue!",
@@ -12,7 +11,6 @@
   "network_error": "No internet connection",
   "something_went_wrong": "Something went wrong",
   "sign_up": "Sign Up",
-
   "welcome_to_us": "Welcome to us,",
   "hello_there_create_new_account": "Hello there, create a new account",
   "name": "Name",
@@ -46,5 +44,29 @@
   "code_expiry_notice": "This code will expire 10 minutes after this message. If you don't get a message.",
   "change_password_success": "Change password successfully!",
   "change_password_success_msg": "You have successfully change password. Please use the new password when Sign in.",
-  "ok": "Ok"
+  "ok": "Ok",
+  "transfer": "Transfer",
+  "choose_account_card": "Choose account / card",
+  "choose_transaction": "Choose transaction",
+  "transfer_via_card_number": "Transfer via\ncard number",
+  "transfer_to_same_bank": "Transfer to\nthe same bank",
+  "transfer_to_another_bank": "Transfer to\nanother bank",
+  "choose_beneficiary": "Choose beneficiary",
+  "find_beneficiary": "Find beneficiary",
+  "confirm_transaction_information": "Confirm transaction information",
+  "from": "From",
+  "to": "To",
+  "card_number_label": "Card number",
+  "transaction_fee_label": "Transaction fee",
+  "content_label": "Content",
+  "amount_label": "Amount",
+  "save_to_directory": "Save to directory of beneficiary",
+  "get_otp_to_verify": "Get OTP to verify transaction",
+  "get_otp": "Get OTP",
+  "confirm_label": "Confirm",
+  "transfer_successful": "Transfer Successful",
+  "transfer_success_msg": "Your transaction of ${} to {} has been completed successfully.",
+  "back_to_home": "Back to Home",
+  "transfer_via_phone": "Transfer via\nphone number",
+  "transfer_via_email": "Transfer via\nemail"
 }

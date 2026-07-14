@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,8 @@ class SuccessTransferScreen extends StatelessWidget {
           builder: (context, state) {
             return SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 20.0),
                 child: Column(
                   children: [
                     const Spacer(),
@@ -74,12 +76,14 @@ class SuccessTransferScreen extends StatelessWidget {
                           height: 1.4,
                         ),
                         children: [
-                          const TextSpan(text: 'You have successfully transferred '),
+                          const TextSpan(
+                              text: 'You have successfully transferred '),
                           TextSpan(
                             text: '\$${state.amount}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.error, // Pink/red accent for amount
+                              color:
+                                  AppColors.error, // Pink/red accent for amount
                             ),
                           ),
                           const TextSpan(text: ' to '),
@@ -87,7 +91,8 @@ class SuccessTransferScreen extends StatelessWidget {
                             text: state.name,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primary, // Dark blue accent for name
+                              color: AppColors
+                                  .primary, // Dark blue accent for name
                             ),
                           ),
                           const TextSpan(text: '!'),
@@ -101,8 +106,8 @@ class SuccessTransferScreen extends StatelessWidget {
                         text: 'confirm_label'.tr(),
                         onPressed: () {
                           cubit.reset();
-                          // Pop back all the way to Home Screen
-                          Navigator.popUntil(context, (route) => route.isFirst);
+                          Navigator.pushNamed(
+                              context, AppRoutesName.homeScreen);
                         },
                       ),
                     ),

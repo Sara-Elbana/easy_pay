@@ -40,7 +40,7 @@ class TransactionTypeCard extends StatelessWidget {
     }
 
     final Color contentColor = !isEnabled
-        ? AppColors.textLight.withValues(alpha: 0.5)
+        ? AppColors.textLight.withAlpha(50)
         : (useSolidFill
             ? Colors.white
             : (useOutline ? AppColors.primary : AppColors.textLight));
@@ -59,7 +59,7 @@ class TransactionTypeCard extends StatelessWidget {
           boxShadow: useSolidFill
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.3),
+                    color: AppColors.primary.withAlpha(30),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   )

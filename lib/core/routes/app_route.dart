@@ -3,7 +3,7 @@ import 'package:easy_pay_app/features/auth/presentation/screens/forgot_password_
 import 'package:easy_pay_app/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/change_password_success_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
-import 'package:easy_pay_app/features/home/presentation/screens/home_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
@@ -18,6 +18,7 @@ import 'package:easy_pay_app/features/transfer/presentation/screens/transfer_scr
 import 'package:easy_pay_app/features/transfer/presentation/screens/confirm_screen.dart';
 import 'package:easy_pay_app/features/transfer/presentation/screens/success_transfer_screen.dart';
 import 'package:easy_pay_app/features/transfer/presentation/cubit/transfer_cubit.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/main_screen.dart';
 
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -48,5 +49,6 @@ class AppRoutes {
     ),
     AppRoutesName.confirmScreen: (_) => ConfirmScreen(),
     AppRoutesName.successTransferScreen: (_) => const SuccessTransferScreen(),
+    AppRoutesName.mainScreen:(_) => const MainScreen()
   };
 }

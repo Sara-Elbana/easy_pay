@@ -107,7 +107,7 @@ class SuccessTransferScreen extends StatelessWidget {
                         onPressed: () {
                           cubit.reset();
                           Navigator.pushNamed(
-                              context, AppRoutesName.homeScreen);
+                              context, AppRoutesName.mainScreen);
                         },
                       ),
                     ),

@@ -92,7 +92,7 @@ class OTPVerificationWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: isBiometricVerified
-                      ? Colors.green.withValues(alpha: 0.1)
+                      ? Colors.green.withAlpha(10)
                       : AppColors.gray100,
                   shape: BoxShape.circle,
                   border: Border.all(

@@ -55,14 +55,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
         filled: true,
         fillColor: widget.enabled
             ? AppColors.inputBackground
-            : AppColors.gray100.withValues(alpha: 0.5),
+            : AppColors.gray100.withAlpha(50),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         hintText: widget.hintText,
         hintStyle: TextStyle(
           color: widget.enabled
               ? AppColors.textLight
-              : AppColors.textLight.withValues(alpha: 0.5),
+              : AppColors.textLight.withAlpha(50),
           fontSize: 15,
           fontWeight: FontWeight.w400,
         ),
@@ -74,7 +74,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide:
-              BorderSide(color: AppColors.inputBorder.withValues(alpha: 0.5), width: 1.5),
+              BorderSide(color: AppColors.inputBorder.withAlpha(50), width: 1.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

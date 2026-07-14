@@ -11,4 +11,6 @@ class AppRoutesName {
   static const String transferScreen = "transferScreen";
   static const String confirmScreen = "confirmScreen";
   static const String successTransferScreen = "successTransferScreen";
+  static const String mainScreen = "mainScreen";
+
 }

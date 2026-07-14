@@ -73,7 +73,7 @@ class BeneficiaryItem extends StatelessWidget {
               fontWeight: isSelected && isEnabled ? FontWeight.bold : FontWeight.w500,
               color: isSelected && isEnabled
                   ? AppColors.primary
-                  : (isEnabled ? AppColors.textDark : AppColors.textLight.withValues(alpha: 0.5)),
+                  : (isEnabled ? AppColors.textDark : AppColors.textLight.withAlpha(50)),
             ),
           ),
         ],

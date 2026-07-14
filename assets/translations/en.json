@@ -68,5 +68,19 @@
   "transfer_success_msg": "Your transaction of ${} to {} has been completed successfully.",
   "back_to_home": "Back to Home",
   "transfer_via_phone": "Transfer via\nphone number",
-  "transfer_via_email": "Transfer via\nemail"
+  "transfer_via_email": "Transfer via\nemail",
+  "ok": "Ok",
+  "account_and_card": "Account and Card",
+  "transfer": "Transfer",
+  "withdraw": "Withdraw",
+  "mobile_prepaid": "Mobile prepaid",
+  "pay_the_bill": "Pay the\nbill",
+  "save_online": "Save\nonline",
+  "credit_card": "Credit\ncard",
+  "transaction_report": "Transaction report",
+  "beneficiary": "Beneficiary",
+  "home": "Home",
+  "search": "Search",
+  "email": "Email",
+  "setting": "Setting"
 }

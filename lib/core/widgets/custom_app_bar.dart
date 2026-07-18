@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       if (onBackPressed != null || canPop) {
         leadingWidget = IconButton(
           icon: Icon(
-            leadingIcon ?? Icons.arrow_back,
+            leadingIcon ?? Icons.arrow_back_ios_new,
             color: theme.iconTheme.color ?? AppColors.textDark,
             size: leadingIconSize,
           ),
@@ -43,7 +43,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
 
     return AppBar(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.white,
       elevation: 0,
       scrolledUnderElevation: 0,
       leading: leadingWidget,

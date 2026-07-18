@@ -120,5 +120,10 @@
   "to": "To",
   "select_currency": "Select the currency",
   "currency_rate": "Currency rate",
-  "exchange_success": "Exchange transaction completed successfully!"
+  "exchange_success": "Exchange transaction completed successfully!",
+  "message": "Message",
+  "setting": "Setting",
+  "exchange_transaction_in_progress": "Exchange transaction in progress",
+  "waiting_for_currency_rate": "Waiting for currency rate",
+  "error_msg_waiting_for_rate": "The exchange rate has not been updated yet. Please try again later or refresh the page to continue the transaction."
 }

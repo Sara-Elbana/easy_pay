@@ -44,9 +44,10 @@ class WelcomeScreen extends StatelessWidget {
                   Expanded(
                     child: CustomButton(
                       text: 'sign_up'.tr(),
-                     // backgroundColor: Colors.white,
+                      // backgroundColor: Colors.white,
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutesName.signUpScreen);
+                        Navigator.pushNamed(
+                            context, AppRoutesName.signUpScreen);
                       },
                     ),
                   ),
@@ -54,9 +55,10 @@ class WelcomeScreen extends StatelessWidget {
                   Expanded(
                     child: CustomButton(
                       text: 'sign_in'.tr(),
-                    //  backgroundColor: const Color(0xFFB7E65C),
+                      //  backgroundColor: const Color(0xFFB7E65C),
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutesName.signInScreen);
+                        Navigator.pushNamed(
+                            context, AppRoutesName.signInScreen);
                       },
                     ),
                   ),

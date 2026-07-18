@@ -18,7 +18,7 @@ class HeaderWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(
         top: statusBarHeight + 10,
-        bottom: 20,
+        bottom: 16,
         left: 16,
         right: 16,
       ),

@@ -29,7 +29,7 @@ class CustomBottomNavBar extends StatelessWidget {
     BottomNavItem(
       icon: AppAssets.emailIcon,
       activeIcon: AppAssets.emailActiveIcon,
-      title: "email",
+      title: "message",
     ),
     BottomNavItem(
       icon: AppAssets.settingIcon,

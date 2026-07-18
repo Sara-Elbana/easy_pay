@@ -71,11 +71,13 @@ Future<void> setupDependencies() async {
       getIt(),
     ),
   );
+
   getIt.registerLazySingleton(
     () => BiometricUseCase(
       getIt(),
     ),
   );
+
 
   /// secure storage
   const secureStorage = SecureStorageService();

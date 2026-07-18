@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import 'package:easy_pay_app/core/theme/app_colors.dart';
 import '../../../../core/widgets/custom_button.dart';
 
 class OnboardingNavButtons extends StatelessWidget {

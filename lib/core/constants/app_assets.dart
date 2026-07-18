@@ -7,6 +7,8 @@ class AppAssets {
   static const String userImage = 'assets/images/user_image.svg';
   static const String avatarImage = 'assets/images/Avatar.png';
   static const String multiCardBank = 'assets/images/multiCardBank.png';
+  static const String bankCardYellow = 'assets/images/bankCardYellow.png';
+  static const String bankCardBlue = 'assets/images/bankCardBlue.png';
 
   // Icons
   static const String fingerprint = 'assets/icons/fingerPrint.svg';
@@ -27,4 +29,8 @@ class AppAssets {
   static const String searchActiveIcon = 'assets/icons/searchActiveIcon.svg';
   static const String emailActiveIcon = 'assets/icons/emailActiveIcon.svg';
   static const String settingActiveIcon = 'assets/icons/settingActiveIcon.svg';
+  static const String bankIcon = 'assets/icons/bank_icon.svg';
+  static const String accountIcon = 'assets/icons/account_icon.svg';
+  static const String alertIcon = 'assets/icons/alert_icon.svg';
+  static const String paypalIcon = 'assets/icons/paypal_icon.svg';
 }

@@ -8,8 +8,6 @@ import 'package:easy_pay_app/features/auth/domain/use_cases/biometric_usecase.da
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_in_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_up_usecase.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -46,24 +44,20 @@ Future<void> setupDependencies() async {
   );
 
   getIt.registerLazySingleton(
-        () => LocalAuthentication(),
+    () => LocalAuthentication(),
   );
-
 
   getIt.registerLazySingleton<BiometricRepository>(
-        () => BiometricRepositoryImpl(
+    () => BiometricRepositoryImpl(
       getIt(),
     ),
   );
-
 
   getIt.registerLazySingleton(
-        () => BiometricUseCase(
+    () => BiometricUseCase(
       getIt(),
     ),
   );
-
-
 
   const secureStorage = SecureStorageService();
   getIt.registerSingleton<SecureStorageService>(secureStorage);

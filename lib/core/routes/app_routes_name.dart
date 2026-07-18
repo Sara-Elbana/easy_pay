@@ -9,4 +9,10 @@ class AppRoutesName {
   static const String changePasswordScreen = "changePasswordScreen";
   static const String changePasswordSuccessScreen = "changePasswordSuccessScreen";
   static const String mainScreen = "mainScreen";
+  static const String settingScreen = "settingScreen";
+  static const String appInformationScreen = "appInformationScreen";
+  static const String accountScreen = "accountScreen";
+  static const String chatScreen = "chatScreen";
+  static const String cardDetailsScreen = "cardDetailsScreen";
+
 }

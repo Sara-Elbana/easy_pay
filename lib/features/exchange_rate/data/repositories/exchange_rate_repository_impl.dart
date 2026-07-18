@@ -10,7 +10,8 @@ class ExchangeRateRepositoryImpl implements ExchangeRateRepository {
 
   @override
   Future<List<ExchangeRate>> getLiveExchangeRates() async {
-    final List<Future<ExchangeRate>> futures = supportedCountries.map((config) async {
+    final List<Future<ExchangeRate>> futures =
+        supportedCountries.map((config) async {
       final liveRate = await remoteDataSource.fetchLiveRate(
         from: 'USD',
         to: config.code,

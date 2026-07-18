@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
-import 'package:easy_pay_app/features/bottomNav/home/presentation/widgets/grid_menu_item.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/widgets/grid_menu_item.dart';
 import 'package:flutter/material.dart';
 
 class HomeMenuGrid extends StatelessWidget {

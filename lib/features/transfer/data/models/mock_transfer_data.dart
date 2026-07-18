@@ -40,3 +40,23 @@ final List<Beneficiary> mockBeneficiaries = [
     avatarUrl: 'https://i.pravatar.cc/150?img=44',
   ),
 ];
+
+const List<String> mockBanks = [
+  "Fifth Third",
+  "Bank of the West",
+  "Wells Fargo",
+  "JP Morgan Chae",
+  "US bank",
+  "HSBS bank",
+  "Citibank",
+  "Ame Express",
+];
+
+const List<String> mockBranches = [
+  "New York",
+  "California",
+  "Chicago",
+  "Houston",
+  "Phoenix",
+  "Philadelphia",
+];

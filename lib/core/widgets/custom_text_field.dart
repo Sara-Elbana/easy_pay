@@ -14,6 +14,7 @@ class CustomTextField extends StatefulWidget {
   final void Function(String)? onChanged;
   final List<TextInputFormatter>? inputFormatters;
   final bool enabled;
+  final Widget? prefixIcon;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -27,6 +28,7 @@ class CustomTextField extends StatefulWidget {
     this.onChanged,
     this.inputFormatters,
     this.enabled = true,
+    this.prefixIcon,
   });
 
   @override
@@ -66,6 +68,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           fontSize: 15,
           fontWeight: FontWeight.w400,
         ),
+        prefixIcon: widget.prefixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide:

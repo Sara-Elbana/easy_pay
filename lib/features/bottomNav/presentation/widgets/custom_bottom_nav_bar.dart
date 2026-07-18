@@ -46,12 +46,13 @@ class CustomBottomNavBar extends StatelessWidget {
         vertical: 20,
       ),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
+            AppColors.background,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha(5),
             blurRadius: 10,
-            offset: const Offset(0,-2),
+            offset: const Offset(0, -2),
           )
         ],
       ),

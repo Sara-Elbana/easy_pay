@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -95,14 +96,14 @@ class _TransferFormSectionState extends State<TransferFormSection> {
       children: [
         CustomTextField(
           controller: widget.nameController,
-          hintText: 'Name',
+          hintText: 'name'.tr(),
           enabled: widget.isEnabled,
           onChanged: widget.onNameChanged,
         ),
         const SizedBox(height: 16),
         CustomTextField(
           controller: widget.cardController,
-          hintText: 'Card number',
+          hintText: 'card_number_label'.tr(),
           enabled: widget.isEnabled,
           keyboardType: TextInputType.number,
           onChanged: widget.onCardChanged,
@@ -110,18 +111,18 @@ class _TransferFormSectionState extends State<TransferFormSection> {
         const SizedBox(height: 16),
         CustomTextField(
           controller: widget.amountController,
-          hintText: 'Amount',
+          hintText: 'amount_label'.tr(),
           enabled: widget.isEnabled,
           keyboardType: TextInputType.number,
           onChanged: widget.onAmountChanged,
         ),
         if (widget.isAmountExceeded) ...[
           const SizedBox(height: 6),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Text(
-              'Amount exceeds available balance',
-              style: TextStyle(
+              'amount_exceeds_balance'.tr(),
+              style: const TextStyle(
                 color: AppColors.error,
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -132,7 +133,7 @@ class _TransferFormSectionState extends State<TransferFormSection> {
         const SizedBox(height: 16),
         CustomTextField(
           controller: widget.contentController,
-          hintText: 'Content',
+          hintText: 'content_label'.tr(),
           enabled: widget.isEnabled,
           onChanged: widget.onContentChanged,
         ),

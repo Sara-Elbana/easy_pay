@@ -3,7 +3,7 @@ import 'package:easy_pay_app/features/auth/presentation/screens/forgot_password_
 import 'package:easy_pay_app/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/change_password_success_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
-import 'package:easy_pay_app/features/bottomNav/home/presentation/screens/home_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
@@ -19,6 +19,10 @@ import 'package:easy_pay_app/features/transfer/presentation/screens/confirm_scre
 import 'package:easy_pay_app/features/transfer/presentation/screens/success_transfer_screen.dart';
 import 'package:easy_pay_app/features/transfer/presentation/cubit/transfer_cubit.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/screens/main_screen.dart';
+import 'package:easy_pay_app/features/exchange_rate/presentation/screens/exchange_rate_screen.dart';
+import 'package:easy_pay_app/features/exchange_rate/presentation/cubit/exchange_rate_cubit.dart';
+import 'package:easy_pay_app/features/exchange/presentation/screens/exchange_screen.dart';
+import 'package:easy_pay_app/features/exchange/presentation/cubit/exchange_cubit.dart';
 
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -49,6 +53,14 @@ class AppRoutes {
     ),
     AppRoutesName.confirmScreen: (_) => ConfirmScreen(),
     AppRoutesName.successTransferScreen: (_) => const SuccessTransferScreen(),
-    AppRoutesName.mainScreen:(_) => const MainScreen()
+    AppRoutesName.mainScreen:(_) => const MainScreen(),
+    AppRoutesName.exchangeRateScreen: (_) => BlocProvider(
+      create: (_) => getIt<ExchangeRateCubit>()..getExchangeRates(),
+      child: const ExchangeRateScreen(),
+    ),
+    AppRoutesName.exchangeScreen: (_) => BlocProvider(
+      create: (_) => getIt<ExchangeCubit>(),
+      child: const ExchangeScreen(),
+    ),
   };
 }

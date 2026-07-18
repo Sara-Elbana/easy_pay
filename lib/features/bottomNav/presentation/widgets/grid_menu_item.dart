@@ -1,4 +1,5 @@
 import 'package:easy_pay_app/core/core.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,17 +17,19 @@ class GridMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double radius = context.scaleWidth(16);
+
     return InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(radius),
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(context.scaleWidth(8)),
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(radius),
           boxShadow: [
             BoxShadow(
-              color: AppColors.gray.withOpacity(0.1),
+              color: AppColors.gray.withValues(alpha: 0.1),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
@@ -38,7 +41,7 @@ class GridMenuItem extends StatelessWidget {
             SvgPicture.asset(
               iconPath,
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: context.scaleHeight(6)),
             Text(
               title,
               textAlign: TextAlign.center,

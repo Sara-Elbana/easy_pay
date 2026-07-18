@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/transfer_cubit.dart';
@@ -18,45 +20,28 @@ class SuccessTransferScreen extends StatelessWidget {
     return BlocProvider.value(
       value: cubit,
       child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: theme.iconTheme.color ?? AppColors.textDark,
-              size: 20,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            'confirm_label'.tr(),
-            style: TextStyle(
-              color: theme.textTheme.titleLarge?.color ?? AppColors.textDark,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          centerTitle: false,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: CustomAppBar(
+          title: 'confirm_label'.tr(),
+          leadingIcon: Icons.arrow_back_ios_new,
+          leadingIconSize: 20,
+          backgroundColor: theme.scaffoldBackgroundColor,
         ),
         body: BlocBuilder<TransferCubit, TransferState>(
           builder: (context, state) {
             return SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0, vertical: 20.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: context.padHigh, vertical: context.scaleHeight(20.0)),
                 child: Column(
                   children: [
                     const Spacer(),
                     Image.asset(
                       'assets/images/success_illustration.png',
-                      height: 220,
+                      height: context.scaleHeight(220),
                       fit: BoxFit.contain,
                     ),
-                    const SizedBox(height: 40),
+                    SizedBox(height: context.scaleHeight(40)),
                     Text(
                       'transfer_successful'.tr(),
                       style: const TextStyle(
@@ -66,7 +51,7 @@ class SuccessTransferScreen extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: context.scaleHeight(16)),
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
@@ -82,8 +67,7 @@ class SuccessTransferScreen extends StatelessWidget {
                             text: '\$${state.amount}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color:
-                                  AppColors.error, // Pink/red accent for amount
+                              color: AppColors.error,
                             ),
                           ),
                           const TextSpan(text: ' to '),
@@ -91,8 +75,7 @@ class SuccessTransferScreen extends StatelessWidget {
                             text: state.name,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: AppColors
-                                  .primary, // Dark blue accent for name
+                              color: AppColors.primary,
                             ),
                           ),
                           const TextSpan(text: '!'),

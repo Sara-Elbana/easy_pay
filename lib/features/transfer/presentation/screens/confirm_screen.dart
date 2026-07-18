@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
+import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/features/transfer/presentation/widgets/confirm_transaction_info_section.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,6 @@ import '../widgets/otp_verification_widget.dart';
 class ConfirmScreen extends StatelessWidget {
   final _otpController = TextEditingController();
 
-  // Form controllers for editing
   final _nameController = TextEditingController();
   final _cardController = TextEditingController();
   final _feeController = TextEditingController();
@@ -31,7 +32,6 @@ class ConfirmScreen extends StatelessWidget {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     final cubit = ModalRoute.of(context)!.settings.arguments as TransferCubit;
@@ -41,31 +41,12 @@ class ConfirmScreen extends StatelessWidget {
       value: cubit,
       child: Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: theme.scaffoldBackgroundColor,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: theme.iconTheme.color ?? AppColors.textDark,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            'confirm_label'.tr(),
-            style: TextStyle(
-              color: theme.textTheme.titleLarge?.color ?? AppColors.textDark,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+        appBar: CustomAppBar(
+          title: 'confirm_label'.tr(),
         ),
         body: BlocConsumer<TransferCubit, TransferState>(
           listener: _onStateChanged,
           builder: (context, state) {
-            // Initialize input field controllers with original states
             if (_nameController.text.isEmpty && state.name.isNotEmpty) {
               _nameController.text = state.name;
             }
@@ -79,23 +60,17 @@ class ConfirmScreen extends StatelessWidget {
               _amountController.text = state.amount;
             }
 
-            // Calculate dynamic transaction fee: 0.1% (0.001 factor) of amount, minimum is 0.5
-            final double amountVal = double.tryParse(state.amount.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0.0;
-            double feeVal = amountVal * 0.001;
-            if (feeVal < 0.5) {
-              feeVal = 0.5;
-            }
-            final String feeStr = '${feeVal.toStringAsFixed(2).replaceAll(RegExp(r'\.00$'), '')}\$';
+            final String feeStr =
+                '${state.fee.toStringAsFixed(2).replaceAll(RegExp(r'\.00$'), '')}\$';
             _feeController.text = feeStr;
 
-            // Verification satisfies if OTP is exactly '6789' or if biometric is verified
             final bool isVerified =
                 (state.otpMode && state.otpCode == '6789') ||
                     (!state.otpMode && state.isBiometricVerified);
 
             return SafeArea(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(context.padHigh),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -108,15 +83,14 @@ class ConfirmScreen extends StatelessWidget {
                       contentController: _contentController,
                       amountController: _amountController,
                     ),
-                    const SizedBox(height: 24),
-
-                    // Verification Mode Selector (Segmented control)
+                    SizedBox(height: context.scaleHeight(24)),
                     Container(
                       decoration: BoxDecoration(
                         color: AppColors.gray100,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius:
+                            BorderRadius.circular(context.scaleWidth(10)),
                       ),
-                      padding: const EdgeInsets.all(4),
+                      padding: EdgeInsets.all(context.scaleWidth(4)),
                       child: Row(
                         children: [
                           Expanded(
@@ -127,13 +101,14 @@ class ConfirmScreen extends StatelessWidget {
                                   color: state.otpMode
                                       ? Colors.white
                                       : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(
+                                      context.scaleWidth(8)),
                                 ),
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'OTP Code',
+                                  'otp_code_label'.tr(),
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -153,13 +128,14 @@ class ConfirmScreen extends StatelessWidget {
                                   color: !state.otpMode
                                       ? Colors.white
                                       : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(
+                                      context.scaleWidth(8)),
                                 ),
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Biometrics',
+                                  'biometrics_label'.tr(),
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -174,8 +150,7 @@ class ConfirmScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-
-                    const SizedBox(height: 24),
+                    SizedBox(height: context.scaleHeight(24)),
                     OTPVerificationWidget(
                       otpMode: state.otpMode,
                       otpController: _otpController,
@@ -185,8 +160,8 @@ class ConfirmScreen extends StatelessWidget {
                       onGetOtpPressed: () {
                         cubit.requestOtpCode();
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('OTP is sent'),
+                          SnackBar(
+                            content: Text('otp_sent_success'.tr()),
                             backgroundColor: Colors.green,
                           ),
                         );
@@ -194,7 +169,7 @@ class ConfirmScreen extends StatelessWidget {
                       onBiometricPressed: cubit.verifyBiometric,
                       onOtpChanged: cubit.updateOtpCode,
                     ),
-                    const SizedBox(height: 36),
+                    SizedBox(height: context.scaleHeight(36)),
                     CustomButton(
                       text: 'confirm_label'.tr(),
                       isEnabled: isVerified && !state.isLoading,

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_checkbox.dart';
 import 'package:easy_pay_app/features/transfer/presentation/widgets/choose_beneficiary_section.dart';
@@ -12,6 +13,8 @@ import '../cubit/transfer_state.dart';
 import '../utils/transfer_controllers_manager.dart';
 import '../widgets/account_dropdown.dart';
 import '../widgets/transfer_form_section.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
+import 'package:easy_pay_app/features/transfer/presentation/widgets/bank_branch_selector_widget.dart';
 
 class TransferScreen extends StatelessWidget {
   final _controllersManager = TransferControllersManager();
@@ -24,31 +27,12 @@ class TransferScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final cubit = context.read<TransferCubit>();
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: theme.iconTheme.color ?? AppColors.textDark,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text(
-          'transfer'.tr(),
-          style: TextStyle(
-            color: theme.textTheme.titleLarge?.color ?? AppColors.textDark,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+      backgroundColor: AppColors.background,
+      appBar: CustomAppBar(
+        title: 'transfer'.tr(),
       ),
       body: BlocConsumer<TransferCubit, TransferState>(
         listener: _onStateChanged,
@@ -62,12 +46,17 @@ class TransferScreen extends StatelessWidget {
           }
 
           final bool isTransactionTypeEnabled = state.selectedCard != null;
-          final bool isBeneficiaryEnabled = isTransactionTypeEnabled && state.selectedTransactionType != null;
-          final bool isFormFieldsEnabled = isBeneficiaryEnabled && (state.selectedBeneficiary != null || state.isManualBeneficiary);
+          final bool isBeneficiaryEnabled =
+              isTransactionTypeEnabled && state.selectedTransactionType != null;
+          final bool isFormFieldsEnabled = isBeneficiaryEnabled &&
+              (state.selectedBeneficiary != null || state.isManualBeneficiary);
 
           return SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              padding: EdgeInsets.symmetric(
+                horizontal: context.padHigh,
+                vertical: context.scaleHeight(16),
+              ),
               physics: const ClampingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,13 +68,13 @@ class TransferScreen extends StatelessWidget {
                       cubit.selectCard(card);
                     },
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: context.scaleHeight(24)),
                   ChooseTransactionSection(
                     selectedTransactionType: state.selectedTransactionType,
                     isEnabled: isTransactionTypeEnabled,
                     onTransactionTypeSelected: cubit.selectTransactionType,
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: context.scaleHeight(24)),
                   ChooseBeneficiarySection(
                     beneficiaries: state.beneficiaries,
                     selectedBeneficiary: state.selectedBeneficiary,
@@ -100,7 +89,51 @@ class TransferScreen extends StatelessWidget {
                     },
                     onSelectBeneficiary: cubit.selectBeneficiary,
                   ),
-                  const SizedBox(height: 24),
+                  if (state.selectedTransactionType == 2) ...[
+                    SizedBox(height: context.scaleHeight(16)),
+                    Text(
+                      'choose_bank'.tr(),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textLight,
+                      ),
+                    ),
+                    SizedBox(height: context.scaleHeight(6)),
+                    BankBranchSelectorWidget(
+                      label: 'choose_beneficiary_bank'.tr(),
+                      value: state.selectedBank,
+                      placeholder: 'choose_bank'.tr(),
+                      isEnabled: isFormFieldsEnabled,
+                      itemsProvider: (s) => s.filteredBanks,
+                      searchQueryProvider: (s) => s.bankSearchQuery,
+                      onSearchChanged: cubit.updateBankSearch,
+                      onSelected: cubit.selectBank,
+                      onDismissed: cubit.resetSearchQueries,
+                    ),
+                    SizedBox(height: context.scaleHeight(16)),
+                    Text(
+                      'choose_branch'.tr(),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textLight,
+                      ),
+                    ),
+                    SizedBox(height: context.scaleHeight(6)),
+                    BankBranchSelectorWidget(
+                      label: 'choose_beneficiary_branch'.tr(),
+                      value: state.selectedBranch,
+                      placeholder: 'choose_branch'.tr(),
+                      isEnabled: isFormFieldsEnabled && state.selectedBank.isNotEmpty,
+                      itemsProvider: (s) => s.filteredBranches,
+                      searchQueryProvider: (s) => s.branchSearchQuery,
+                      onSearchChanged: cubit.updateBranchSearch,
+                      onSelected: cubit.selectBranch,
+                      onDismissed: cubit.resetSearchQueries,
+                    ),
+                  ],
+                  SizedBox(height: context.scaleHeight(24)),
                   TransferFormSection(
                     nameController: _controllersManager.nameController,
                     cardController: _controllersManager.cardController,
@@ -113,7 +146,7 @@ class TransferScreen extends StatelessWidget {
                     isEnabled: isFormFieldsEnabled,
                     isAmountExceeded: state.isAmountExceeded,
                   ),
-                  const SizedBox(height: 16),
+                   SizedBox(height: context.scaleHeight(16)),
                   CustomCheckbox(
                     value: state.saveBeneficiary,
                     label: 'save_to_directory'.tr(),
@@ -122,10 +155,12 @@ class TransferScreen extends StatelessWidget {
                       cubit.toggleSaveBeneficiary(val ?? false);
                     },
                   ),
-                  const SizedBox(height: 32),
+                   SizedBox(height: context.scaleHeight(32)),
                   CustomButton(
                     text: 'confirm_label'.tr(),
-                    isEnabled: state.isFormValid && !state.isLoading,
+                    isEnabled: state.isFormValid &&
+                        state.saveBeneficiary &&
+                        !state.isLoading,
                     isLoading: state.isLoading,
                     onPressed: () {
                       Navigator.pushNamed(
@@ -135,7 +170,7 @@ class TransferScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(height: 24),
+                   SizedBox(height: context.scaleHeight(24)),
                 ],
               ),
             ),

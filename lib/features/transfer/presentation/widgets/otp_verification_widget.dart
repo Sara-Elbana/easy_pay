@@ -48,7 +48,7 @@ class OTPVerificationWidget extends StatelessWidget {
               Expanded(
                 child: CustomTextField(
                   controller: otpController,
-                  hintText: 'OTP',
+                  hintText: 'otp_hint'.tr(),
                   keyboardType: TextInputType.number,
                   onChanged: onOtpChanged,
                 ),

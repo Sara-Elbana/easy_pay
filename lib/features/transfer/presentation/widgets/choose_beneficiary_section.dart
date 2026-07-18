@@ -44,8 +44,8 @@ class ChooseBeneficiarySection extends StatelessWidget {
                 onTap: isEnabled
                     ? () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Opening Beneficiary Directory...'),
+                          SnackBar(
+                            content: Text('opening_beneficiary_directory'.tr()),
                           ),
                         );
                       }

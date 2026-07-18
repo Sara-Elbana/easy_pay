@@ -7,6 +7,27 @@ class AppAssets {
   static const String userImage = 'assets/images/user_image.svg';
   static const String avatarImage = 'assets/images/Avatar.png';
   static const String multiCardBank = 'assets/images/multiCardBank.png';
+  static const String cardBlue = 'assets/images/card_blue.png';
+  static const String cardGold = 'assets/images/card_gold.png';
+  static const String branchIllus = 'assets/images/branch_illus.png';
+  static const String interestIllus = 'assets/images/interest_illus.png';
+  static const String exchangeRateIllus = 'assets/images/exchange_rate_illus.png';
+  static const String exchangeIllus = 'assets/images/exchange_illus.png';
+
+  // Flags
+  static const String flagVn = 'assets/images/vn.png';
+  static const String flagNi = 'assets/images/ni.png';
+  static const String flagKr = 'assets/images/kr.png';
+  static const String flagRu = 'assets/images/ru.png';
+  static const String flagCn = 'assets/images/cn.png';
+  static const String flagPt = 'assets/images/pt.png';
+  static const String flagFr = 'assets/images/fr.png';
+  static const String flagAt = 'assets/images/at.png';
+  static const String flagAr = 'assets/images/ar.png';
+  static const String flagUa = 'assets/images/ua.png';
+  static const String flagGb = 'assets/images/gb.png';
+  static const String flagJp = 'assets/images/jp.png';
+  static const String flagIn = 'assets/images/in.png';
 
   // Icons
   static const String fingerprint = 'assets/icons/fingerPrint.svg';

@@ -5,7 +5,6 @@ import 'package:easy_pay_app/core/constants/api_constants.dart';
 import '../errors/errors.dart';
 import '../services/logger_service.dart';
 
-/// Logging Interceptor - logs HTTP requests and responses in debug mode
 class LoggingInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -41,11 +40,14 @@ class AuthorizationInterceptor extends Interceptor {
   AuthorizationInterceptor({this.accessToken});
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     // Add authorization header if token exists
     final secureStorage = getIt<SecureStorageService>();
     final storedToken = await secureStorage.getAccessToken();
-    final token = (storedToken != null && storedToken.isNotEmpty) ? storedToken : accessToken;
+    final token = (storedToken != null && storedToken.isNotEmpty)
+        ? storedToken
+        : accessToken;
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }

@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordSuccessScreen extends StatelessWidget {
@@ -15,23 +17,14 @@ class ChangePasswordSuccessScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: theme.iconTheme.color ?? AppColors.black,
-          ),
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutesName.mainScreen,
-              (route) => false,
-            );
-          },
-        ),
+      appBar: CustomAppBar(
+        onBackPressed: () {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutesName.mainScreen,
+            (route) => false,
+          );
+        },
       ),
       body: SafeArea(
         child: Padding(
@@ -49,7 +42,7 @@ class ChangePasswordSuccessScreen extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: context.scaleHeight(24)),
               Text(
                 "change_password_success".tr(),
                 style: AppTextStyles.titleLarge.copyWith(
@@ -59,7 +52,7 @@ class ChangePasswordSuccessScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: context.scaleHeight(12)),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
@@ -71,7 +64,7 @@ class ChangePasswordSuccessScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: context.scaleHeight(32)),
               CustomButton(
                 text: "ok".tr(),
                 onPressed: () {

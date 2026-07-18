@@ -21,6 +21,14 @@ import '../../features/transfer/domain/usecases/execute_transfer_usecase.dart';
 import '../../features/transfer/presentation/cubit/transfer_cubit.dart';
 import '../network/network.dart';
 import '../services/services.dart';
+import 'package:easy_pay_app/features/exchange_rate/data/data_source/exchange_rate_remote_datasource.dart';
+import 'package:easy_pay_app/features/exchange_rate/data/repositories/exchange_rate_repository_impl.dart';
+import 'package:easy_pay_app/features/exchange_rate/domain/repositories/exchange_rate_repository.dart';
+import 'package:easy_pay_app/features/exchange_rate/presentation/cubit/exchange_rate_cubit.dart';
+import 'package:easy_pay_app/features/exchange/data/data_sources/exchange_remote_data_source.dart';
+import 'package:easy_pay_app/features/exchange/data/repositories/exchange_repository_impl.dart';
+import 'package:easy_pay_app/features/exchange/domain/repositories/exchange_repository.dart';
+import 'package:easy_pay_app/features/exchange/presentation/cubit/exchange_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -117,5 +125,27 @@ Future<void> setupDependencies() async {
       executeTransferUseCase: getIt(),
       biometricService: getIt(),
     ),
+  );
+
+  // Exchange Rate Feature
+  getIt.registerLazySingleton<ExchangeRateRemoteDataSource>(
+    () => ExchangeRateRemoteDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<ExchangeRateRepository>(
+    () => ExchangeRateRepositoryImpl(remoteDataSource: getIt()),
+  );
+  getIt.registerFactory<ExchangeRateCubit>(
+    () => ExchangeRateCubit(repository: getIt()),
+  );
+
+  // Exchange Feature
+  getIt.registerLazySingleton<ExchangeRemoteDataSource>(
+    () => ExchangeRemoteDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<ExchangeRepository>(
+    () => ExchangeRepositoryImpl(remoteDataSource: getIt()),
+  );
+  getIt.registerFactory<ExchangeCubit>(
+    () => ExchangeCubit(repository: getIt()),
   );
 }

@@ -55,6 +55,8 @@ class TransferCubit extends Cubit<TransferState> {
       cardNumber: '',
       amount: '',
       content: '',
+      selectedBank: '',
+      selectedBranch: '',
       saveBeneficiary: false,
     ));
   }
@@ -67,6 +69,8 @@ class TransferCubit extends Cubit<TransferState> {
       cardNumber: beneficiary.cardNumber,
       amount: '',
       content: '',
+      selectedBank: '',
+      selectedBranch: '',
       saveBeneficiary: false,
     ));
   }
@@ -79,6 +83,8 @@ class TransferCubit extends Cubit<TransferState> {
       cardNumber: '',
       amount: '',
       content: '',
+      selectedBank: '',
+      selectedBranch: '',
       saveBeneficiary: false,
     ));
   }
@@ -91,8 +97,30 @@ class TransferCubit extends Cubit<TransferState> {
       cardNumber: '',
       amount: '',
       content: '',
+      selectedBank: '',
+      selectedBranch: '',
       saveBeneficiary: false,
     ));
+  }
+
+  void selectBank(String bank) {
+    emit(state.copyWith(selectedBank: bank, bankSearchQuery: ''));
+  }
+
+  void selectBranch(String branch) {
+    emit(state.copyWith(selectedBranch: branch, branchSearchQuery: ''));
+  }
+
+  void updateBankSearch(String query) {
+    emit(state.copyWith(bankSearchQuery: query));
+  }
+
+  void updateBranchSearch(String query) {
+    emit(state.copyWith(branchSearchQuery: query));
+  }
+
+  void resetSearchQueries() {
+    emit(state.copyWith(bankSearchQuery: '', branchSearchQuery: ''));
   }
 
   void updateName(String name) {
@@ -121,7 +149,8 @@ class TransferCubit extends Cubit<TransferState> {
 
   Future<void> requestOtpCode() async {
     emit(state.copyWith(otpRequested: true));
-    await Future.delayed(const Duration(milliseconds: 600)); // Simulate sms delivery delay
+    await Future.delayed(
+        const Duration(milliseconds: 600)); // Simulate sms delivery delay
     emit(state.copyWith(otpCode: ''));
   }
 
@@ -152,7 +181,9 @@ class TransferCubit extends Cubit<TransferState> {
 
     emit(state.copyWith(isLoading: true, errorMessage: () => null));
     try {
-      final amt = double.tryParse(state.amount.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0.0;
+      final amt =
+          double.tryParse(state.amount.replaceAll(RegExp(r'[^0-9.]'), '')) ??
+              0.0;
       final result = await executeTransferUseCase(
         fromCardId: state.selectedCard!.id,
         beneficiaryName: state.name,
@@ -163,7 +194,6 @@ class TransferCubit extends Cubit<TransferState> {
       );
 
       if (result) {
-        // Reload data to fetch any newly added beneficiary
         final beneficiaries = await getBeneficiariesUseCase();
         emit(state.copyWith(
           beneficiaries: beneficiaries,
@@ -188,7 +218,7 @@ class TransferCubit extends Cubit<TransferState> {
     emit(TransferState(
       cards: state.cards,
       beneficiaries: state.beneficiaries,
-      selectedCard: state.selectedCard, // keep card selection for convenience
+      selectedCard: state.selectedCard,
     ));
   }
 }

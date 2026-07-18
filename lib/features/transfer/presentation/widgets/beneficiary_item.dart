@@ -47,22 +47,65 @@ class BeneficiaryItem extends StatelessWidget {
                       size: 32,
                     ),
                   )
-                : CircleAvatar(
-                    radius: 40,
-                    backgroundColor: AppColors.gray200,
-                    backgroundImage: beneficiary!.avatarUrl != null
-                        ? NetworkImage(beneficiary!.avatarUrl!)
-                        : null,
-                    child: beneficiary!.avatarUrl == null
-                        ? Text(
-                            beneficiary!.name.substring(0, 1).toUpperCase(),
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textDark,
-                            ),
+                : ClipOval(
+                    child: beneficiary!.avatarUrl != null
+                        ? Image.network(
+                            beneficiary!.avatarUrl!,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Container(
+                                width: 80,
+                                height: 80,
+                                color: AppColors.gray200,
+                                alignment: Alignment.center,
+                                child: const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.0,
+                                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                                  ),
+                                ),
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                width: 80,
+                                height: 80,
+                                color: AppColors.gray200,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  beneficiary!.name.isNotEmpty
+                                      ? beneficiary!.name.substring(0, 1).toUpperCase()
+                                      : '?',
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.textDark,
+                                  ),
+                                ),
+                              );
+                            },
                           )
-                        : null,
+                        : Container(
+                            width: 80,
+                            height: 80,
+                            color: AppColors.gray200,
+                            alignment: Alignment.center,
+                            child: Text(
+                              beneficiary!.name.isNotEmpty
+                                  ? beneficiary!.name.substring(0, 1).toUpperCase()
+                                  : '?',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textDark,
+                              ),
+                            ),
+                          ),
                   ),
           ),
           const SizedBox(height: 8),

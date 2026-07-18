@@ -2,8 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_state.dart';
@@ -25,28 +27,8 @@ class ForgotPasswordScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: theme.iconTheme.color ?? AppColors.black,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text(
-          "forgot_password_title".tr(),
-          style: AppTextStyles.titleLarge.copyWith(
-            color: theme.textTheme.titleLarge?.color,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: false,
+      appBar: CustomAppBar(
+        title: "forgot_password_title".tr(),
       ),
       body: SafeArea(
         child: BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
@@ -79,10 +61,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                       elevation: 4,
                       shadowColor: AppColors.gray200.withAlpha(50),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(context.scaleWidth(24)),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(24.0),
+                        padding: EdgeInsets.all(context.padHigh),
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 300),
                           child: !state.isCodeSent
@@ -118,9 +100,9 @@ class ForgotPasswordScreen extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: context.scaleHeight(8)),
         CustomTextField(
-          hintText: "e.g. +201012345678",
+          hintText: "phone_number_format_example".tr(),
           controller: phoneController,
           keyboardType: TextInputType.phone,
           validator: Validators.validatePhone,
@@ -131,14 +113,14 @@ class ForgotPasswordScreen extends StatelessWidget {
             cubit.updatePhoneNumber(val);
           },
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: context.scaleHeight(12)),
         Text(
           "we_texted_you_phone".tr(),
           style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.gray500,
           ),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: context.scaleHeight(24)),
         CustomButton(
           text: "send".tr(),
           onPressed: state.phoneNumber.trim().isNotEmpty
@@ -171,7 +153,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: context.scaleHeight(8)),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -186,16 +168,16 @@ class ForgotPasswordScreen extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: context.scaleWidth(16)),
             SizedBox(
-              width: 100,
+              width: context.scaleWidth(100),
               child: CustomButton(
                 text: "resend".tr(),
                 onPressed: () {
                   cubit.sendCode();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("Code resent successfully!".tr()),
+                      content: Text("code_resent_success".tr()),
                     ),
                   );
                 },
@@ -203,7 +185,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: context.scaleHeight(12)),
         RichText(
           text: TextSpan(
             style: AppTextStyles.bodyMedium.copyWith(
@@ -223,7 +205,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: context.scaleHeight(12)),
         Text(
           "code_expiry_notice".tr(),
           style: AppTextStyles.bodyMedium.copyWith(
@@ -232,7 +214,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             height: 1.4,
           ),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: context.scaleHeight(24)),
         CustomButton(
           text: "change_password".tr(),
           onPressed: state.verificationCode.trim().isNotEmpty
@@ -245,7 +227,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 }
               : null,
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: context.scaleHeight(16)),
         Center(
           child: TextButton(
             onPressed: () {

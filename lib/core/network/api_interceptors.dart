@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:easy_pay_app/core/di/service_locator.dart';
+import 'package:easy_pay_app/core/services/secure_storage_service.dart';
+import 'package:easy_pay_app/core/constants/api_constants.dart';
 import '../errors/errors.dart';
 import '../services/logger_service.dart';
 
-/// Logging Interceptor - logs HTTP requests and responses in debug mode
 class LoggingInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -38,25 +40,58 @@ class AuthorizationInterceptor extends Interceptor {
   AuthorizationInterceptor({this.accessToken});
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     // Add authorization header if token exists
-    if (accessToken != null && accessToken!.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $accessToken';
+    final secureStorage = getIt<SecureStorageService>();
+    final storedToken = await secureStorage.getAccessToken();
+    final token = (storedToken != null && storedToken.isNotEmpty)
+        ? storedToken
+        : accessToken;
+    if (token != null && token.isNotEmpty) {
+      options.headers['Authorization'] = 'Bearer $token';
     }
-    super.onRequest(options, handler);
+    handler.next(options);
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     // Handle 401 Unauthorized - Token expired or invalid
     if (err.response?.statusCode == 401) {
       logger.warning('⚠️ Token expired or invalid - 401 received');
-      // TODO: Implement token refresh logic
-      // - Attempt to refresh token
-      // - If refresh fails, redirect to login
-      // - Retry original request with new token
+      final secureStorage = getIt<SecureStorageService>();
+      final refreshToken = await secureStorage.getRefreshToken();
+      if (refreshToken != null && refreshToken.isNotEmpty) {
+        try {
+          // Attempt to refresh token using a new simple Dio instance
+          final response = await Dio().post(
+            '${ApiConstants.baseUrl}${ApiConstants.refreshTokenEndpoint}',
+            data: {'refresh_token': refreshToken},
+          );
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            final newAccessToken = response.data['access_token'] as String;
+            final newRefreshToken = response.data['refresh_token'] as String?;
+
+            await secureStorage.saveAccessToken(newAccessToken);
+            if (newRefreshToken != null) {
+              await secureStorage.saveRefreshToken(newRefreshToken);
+            }
+
+            // Retry the original request with new token
+            final options = err.requestOptions;
+            options.headers['Authorization'] = 'Bearer $newAccessToken';
+
+            final retryResponse = await Dio().fetch(options);
+            return handler.resolve(retryResponse);
+          }
+        } catch (e) {
+          logger.error('Token refresh failed: $e');
+          // If refresh fails, redirect to login / clear sensitive data
+          await secureStorage.clearSensitiveData();
+        }
+      }
     }
-    super.onError(err, handler);
+    handler.next(err);
   }
 }
 

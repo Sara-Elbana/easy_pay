@@ -1,4 +1,23 @@
 {
     "cmake.sourceDirectory": "C:/Users/ammar/Desktop/projects/Cubic Tasks/easy_pay/windows",
-    "java.configuration.updateBuildConfiguration": "disabled"
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "files.exclude": {
+        "**/.fvm": true,
+        "**/.dart_tool": true
+    },
+    "files.watcherExclude": {
+        "**/.fvm/**": true,
+        "**/.dart_tool/**": true
+    },
+    "java.import.exclusions": [
+        "**/node_modules/**",
+        "**/.metadata/**",
+        "**/archetype/**",
+        "**/META-INF/maven/**",
+        "**/.fvm/**",
+        "**/.dart_tool/**",
+        "**/build/**"
+    ],
+    "java.import.gradle.enabled": false,
+    "java.import.maven.enabled": false
 }

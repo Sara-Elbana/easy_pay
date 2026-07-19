@@ -18,7 +18,7 @@
 //         tertiary: AppColors.accent,
 //         error: AppColors.error,
 //         errorContainer: AppColors.errorLight,
-//         surface: AppColors.white,
+//         surface: AppColors.background,
 //         onSurface: AppColors.gray900,
 //         onPrimary: AppColors.white,
 //         onSecondary: AppColors.white,
@@ -27,7 +27,7 @@
 //       ),
 //
 //       // Scaffold Background
-//       scaffoldBackgroundColor: AppColors.gray50,
+//       scaffoldBackgroundColor: AppColors.background,
 //
 //       // App Bar Theme
 //       appBarTheme: AppBarTheme(
@@ -140,8 +140,8 @@
 //       ),
 //
 //       // Card Theme
-//       cardTheme: CardTheme(
-//         color: AppColors.white,
+//       cardTheme: CardThemeData(
+//         color: AppColors.background,
 //         elevation: 0,
 //         shape: RoundedRectangleBorder(
 //           borderRadius: BorderRadius.circular(12),
@@ -150,8 +150,8 @@
 //       ),
 //
 //       // Dialog Theme
-//       dialogTheme: DialogTheme(
-//         backgroundColor: AppColors.white,
+//       dialogTheme: DialogThemeData(
+//         backgroundColor: AppColors.background,
 //         elevation: 8,
 //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
 //         titleTextStyle: AppTextStyles.headlineSmall.copyWith(
@@ -178,7 +178,7 @@
 //
 //       // Bottom Sheet Theme
 //       bottomSheetTheme: const BottomSheetThemeData(
-//         backgroundColor: AppColors.white,
+//         backgroundColor: AppColors.background,
 //         shape: RoundedRectangleBorder(
 //           borderRadius: BorderRadius.only(
 //             topLeft: Radius.circular(16),
@@ -188,7 +188,7 @@
 //       ),
 //
 //       // Tab Bar Theme
-//       tabBarTheme: const TabBarTheme(
+//       tabBarTheme: const TabBarThemeData(
 //         labelColor: AppColors.primary,
 //         unselectedLabelColor: AppColors.gray600,
 //         labelStyle: AppTextStyles.labelLarge,
@@ -254,7 +254,7 @@
 //
 //       // Bottom Navigation Bar Theme
 //       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-//         backgroundColor: AppColors.white,
+//         backgroundColor: AppColors.background,
 //         selectedItemColor: AppColors.primary,
 //         unselectedItemColor: AppColors.gray500,
 //         elevation: 8,
@@ -384,7 +384,7 @@
 //           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
 //         ),
 //       ),
-//       cardTheme: CardTheme(
+//       cardTheme: CardThemeData(
 //         color: AppColors.gray800,
 //         elevation: 0,
 //         shape: RoundedRectangleBorder(
@@ -392,7 +392,7 @@
 //           side: const BorderSide(color: AppColors.gray700),
 //         ),
 //       ),
-//       dialogTheme: DialogTheme(
+//       dialogTheme: DialogThemeData(
 //         backgroundColor: AppColors.gray800,
 //         elevation: 8,
 //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -422,7 +422,7 @@
 //           ),
 //         ),
 //       ),
-//       tabBarTheme: const TabBarTheme(
+//       tabBarTheme: const TabBarThemeData(
 //         labelColor: AppColors.primaryLight,
 //         unselectedLabelColor: AppColors.gray300,
 //         labelStyle: AppTextStyles.labelLarge,

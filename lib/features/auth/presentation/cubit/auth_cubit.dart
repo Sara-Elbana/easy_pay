@@ -25,7 +25,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-
   Future<void> biometricLogin() async {
     emit(const AuthLoading());
     try {

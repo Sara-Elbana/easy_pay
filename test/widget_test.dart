@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,8 +11,10 @@ import 'package:easy_pay_app/core/services/shared_preferences_service.dart';
 
 void main() {
   setUp(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
     // Mock SharedPreferences values for the test environment
     SharedPreferences.setMockInitialValues({});
+    await EasyLocalization.ensureInitialized();
     
     if (!getIt.isRegistered<SharedPreferencesService>()) {
       final prefs = SharedPreferencesService();
@@ -28,7 +31,15 @@ void main() {
 
   testWidgets('App renders SplashScreen initially and routes after delay', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(
+      EasyLocalization(
+        supportedLocales: const [Locale('en')],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('en'),
+        child: const MyApp(),
+      ),
+    );
+    await tester.pump();
 
     // Verify that SplashScreen is mounted
     expect(find.byType(SplashScreen), findsOneWidget);

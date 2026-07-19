@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
@@ -63,13 +64,19 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("welcome_user".tr(args: [state.user.name])),
                 backgroundColor: Colors.green,
               ),
+            );
+            await Future.delayed(const Duration(seconds: 1));
+            if (!context.mounted) return;
+            Navigator.pushReplacementNamed(
+              context,
+              AppRoutesName.mainScreen,
             );
           } else if (state is BiometricSuccess) {
             Navigator.pushReplacementNamed(
@@ -102,22 +109,22 @@ class _SignInScreenState extends State<SignInScreen> {
               Expanded(
                 child: Container(
                   width: double.infinity,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(context.scaleWidth(30)),
+                      topRight: Radius.circular(context.scaleWidth(30)),
                     ),
                   ),
                   child: Form(
                     key: _formKey,
                     child: SingleChildScrollView(
                       physics: const ClampingScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      padding: EdgeInsets.symmetric(horizontal: context.padHigh),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 24),
+                          SizedBox(height: context.scaleHeight(24)),
                           Text(
                             "welcome_back".tr(),
                             style: AppTextStyles.titleLarge
@@ -143,7 +150,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             },
                             validator: Validators.validatePhone,
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: context.scaleHeight(16)),
                           CustomTextField(
                             controller: _passwordController,
                             hintText: "password".tr(),
@@ -152,7 +159,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             textInputAction: TextInputAction.done,
                             validator: Validators.validatePassword,
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: context.scaleHeight(12)),
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
@@ -172,7 +179,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: context.scaleHeight(24)),
                           CustomButton(
                             text: "sign_in".tr(),
                             isEnabled: _isFormValid && !isLoading,
@@ -186,13 +193,13 @@ class _SignInScreenState extends State<SignInScreen> {
                               }
                             },
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: context.scaleHeight(24)),
                           BiometricButton(
                             onTap: () {
                               context.read<AuthCubit>().biometricLogin();
                             },
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: context.scaleHeight(24)),
                           AuthFooter(
                             title: "dont_have_an_account".tr(),
                             actionText: "sign_up".tr(),

@@ -1,4 +1,5 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'onboarding_header.dart';
@@ -26,16 +27,16 @@ class OnboardingPageContent extends StatelessWidget {
             imagePath: imagePath,
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: context.scaleHeight(24)),
 
           /// Title
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
+            padding: EdgeInsets.symmetric(horizontal: context.scaleWidth(28)),
             child: Text(
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 30,
+                fontSize: context.scaleWidth(30),
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Colors.white
@@ -45,16 +46,16 @@ class OnboardingPageContent extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 18),
+          SizedBox(height: context.scaleHeight(18)),
 
           /// Description
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 34),
+            padding: EdgeInsets.symmetric(horizontal: context.scaleWidth(34)),
             child: Text(
               description,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: context.scaleWidth(15),
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? AppColors.gray300

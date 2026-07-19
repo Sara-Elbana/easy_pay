@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 
 import '../../../../core/routes/app_routes_name.dart';
 import '../cubit/onboarding_cubit.dart';
@@ -97,14 +98,14 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                 ],
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: context.scaleHeight(8)),
             OnboardingIndicator(
               pageIndex: state.pageIndex,
               totalPages: _totalPages,
             ),
-            const SizedBox(height: 28),
+            SizedBox(height: context.scaleHeight(28)),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: context.padHigh),
               child: OnboardingNavButtons(
                 pageIndex: state.pageIndex,
                 totalPages: _totalPages,
@@ -113,7 +114,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                 onGetStarted: cubit.finishOnboarding,
               ),
             ),
-            const SizedBox(height: 28),
+            SizedBox(height: context.scaleHeight(28)),
           ],
         );
       },

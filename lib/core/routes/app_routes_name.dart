@@ -7,8 +7,14 @@ class AppRoutesName {
   static const String homeScreen = "homeScreen";
   static const String forgotPasswordScreen = "forgotPasswordScreen";
   static const String changePasswordScreen = "changePasswordScreen";
-  static const String changePasswordSuccessScreen = "changePasswordSuccessScreen";
+  static const String changePasswordSuccessScreen =
+      "changePasswordSuccessScreen";
+  static const String transferScreen = "transferScreen";
+  static const String confirmScreen = "confirmScreen";
+  static const String successTransferScreen = "successTransferScreen";
   static const String mainScreen = "mainScreen";
+  static const String exchangeRateScreen = "exchangeRateScreen";
+  static const String exchangeScreen = "exchangeScreen";
   static const String settingScreen = "settingScreen";
   static const String appInformationScreen = "appInformationScreen";
   static const String accountScreen = "accountScreen";

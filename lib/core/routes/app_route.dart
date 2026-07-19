@@ -1,17 +1,10 @@
-import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
-import 'package:easy_pay_app/features/Branch/presentation/screens/map_search_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
-import 'package:easy_pay_app/features/auth/presentation/pages/forgot_password_screen.dart';
-import 'package:easy_pay_app/features/auth/presentation/pages/change_password_screen.dart';
-import 'package:easy_pay_app/features/auth/presentation/pages/change_password_success_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/screens/forgot_password_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/screens/change_password_screen.dart';
+import 'package:easy_pay_app/features/auth/presentation/screens/change_password_success_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
-import 'package:easy_pay_app/features/bottomNav/home/presentation/screens/home_screen.dart';
-import 'package:easy_pay_app/features/bottomNav/message/presentation/screens/account_screen.dart';
-import 'package:easy_pay_app/features/bottomNav/message/presentation/screens/card_details_screen.dart';
-import 'package:easy_pay_app/features/bottomNav/message/presentation/screens/chat_screen.dart';
-import 'package:easy_pay_app/features/bottomNav/presentation/screens/main_screen.dart';
-import 'package:easy_pay_app/features/bottomNav/setting/app_information/presentation/screens/app_information_screen.dart';
-import 'package:easy_pay_app/features/bottomNav/setting/presentation/screens/setting_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/home_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
@@ -22,40 +15,70 @@ import 'package:easy_pay_app/features/onboarding/presentation/cubit/onboarding_c
 import 'package:easy_pay_app/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:easy_pay_app/features/onboarding/presentation/pages/splash_screen.dart';
 import 'package:easy_pay_app/features/onboarding/presentation/pages/welcome_screen.dart';
+import 'package:easy_pay_app/features/transfer/presentation/screens/transfer_screen.dart';
+import 'package:easy_pay_app/features/transfer/presentation/screens/confirm_screen.dart';
+import 'package:easy_pay_app/features/transfer/presentation/screens/success_transfer_screen.dart';
+import 'package:easy_pay_app/features/transfer/presentation/cubit/transfer_cubit.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/main_screen.dart';
+import 'package:easy_pay_app/features/exchange_rate/presentation/screens/exchange_rate_screen.dart';
+import 'package:easy_pay_app/features/exchange_rate/presentation/cubit/exchange_rate_cubit.dart';
+import 'package:easy_pay_app/features/exchange/presentation/screens/exchange_screen.dart';
+import 'package:easy_pay_app/features/exchange/presentation/cubit/exchange_cubit.dart';
+import 'package:easy_pay_app/features/setting/app_information/presentation/screens/app_information_screen.dart';
+import 'package:easy_pay_app/features/message/presentation/screens/account_screen.dart';
+import 'package:easy_pay_app/features/message/presentation/screens/chat_screen.dart';
+import 'package:easy_pay_app/features/message/presentation/screens/card_details_screen.dart';
+import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
+import 'package:easy_pay_app/features/Branch/presentation/screens/map_search_screen.dart';
+
 
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
     AppRoutesName.splashScreen: (_) => const SplashScreen(),
     AppRoutesName.onboardingScreen: (_) => BlocProvider(
-          create: (_) => getIt<OnboardingCubit>(),
-          child: const OnboardingScreen(),
-        ),
+      create: (_) => getIt<OnboardingCubit>(),
+      child: const OnboardingScreen(),
+    ),
     AppRoutesName.welcomeScreen: (_) => const WelcomeScreen(),
     AppRoutesName.signInScreen: (context) => BlocProvider(
-          create: (_) => getIt<AuthCubit>(),
-          child: const SignInScreen(),
-        ),
+      create: (_) => getIt<AuthCubit>(),
+      child: const SignInScreen(),
+    ),
     AppRoutesName.signUpScreen: (context) => BlocProvider(
-          create: (_) => getIt<AuthCubit>(),
-          child: const SignUpScreen(),
-        ),
+      create: (_) => getIt<AuthCubit>(),
+      child: const SignUpScreen(),
+    ),
     AppRoutesName.forgotPasswordScreen: (_) => BlocProvider(
-          create: (_) => getIt<ForgotPasswordCubit>(),
-          child: ForgotPasswordScreen(),
-        ),
+      create: (_) => getIt<ForgotPasswordCubit>(),
+      child: ForgotPasswordScreen(),
+    ),
     AppRoutesName.changePasswordScreen: (_) => ChangePasswordScreen(),
     AppRoutesName.changePasswordSuccessScreen: (_) =>
-        const ChangePasswordSuccessScreen(),
+    const ChangePasswordSuccessScreen(),
     AppRoutesName.homeScreen: (_) => const HomeScreen(),
+    AppRoutesName.transferScreen: (_) => BlocProvider(
+      create: (_) => getIt<TransferCubit>(),
+      child: TransferScreen(),
+    ),
+    AppRoutesName.confirmScreen: (_) => ConfirmScreen(),
+    AppRoutesName.successTransferScreen: (_) => const SuccessTransferScreen(),
     AppRoutesName.mainScreen: (_) => const MainScreen(),
+    AppRoutesName.exchangeRateScreen: (_) => BlocProvider(
+      create: (_) => getIt<ExchangeRateCubit>()..getExchangeRates(),
+      child: const ExchangeRateScreen(),
+    ),
+    AppRoutesName.exchangeScreen: (_) => BlocProvider(
+      create: (_) => getIt<ExchangeCubit>(),
+      child: const ExchangeScreen(),
+    ),
     AppRoutesName.settingScreen: (_) => const SettingScreen(),
     AppRoutesName.appInformationScreen: (_) => const AppInformationScreen(),
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
     AppRoutesName.chatScreen: (_) => const ChatScreen(),
     AppRoutesName.cardDetailsScreen: (_) => const CardDetailsScreen(),
     AppRoutesName.mapSearchScreen: (_) => BlocProvider(
-          create: (context) => getIt<MapCubit>(),
-          child: const MapSearchScreen(),
-        ),
+      create: (context) => getIt<MapCubit>(),
+      child: const MapSearchScreen(),
+    ),
   };
 }

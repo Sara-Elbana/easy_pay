@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
@@ -108,22 +109,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Expanded(
                 child: Container(
                   width: double.infinity,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(context.scaleWidth(30)),
+                      topRight: Radius.circular(context.scaleWidth(30)),
                     ),
                   ),
                   child: Form(
                     key: _formKey,
                     child: SingleChildScrollView(
                       physics: const ClampingScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      padding: EdgeInsets.symmetric(horizontal: context.padHigh),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 24),
+                          SizedBox(height: context.scaleHeight(24)),
                           Text(
                             "welcome_to_us".tr(),
                             style: AppTextStyles.titleLarge
@@ -147,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _phoneFocusNode.requestFocus();
                             },
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: context.scaleHeight(16)),
                           CustomTextField(
                             controller: _phoneController,
                             hintText: "text_input".tr(),
@@ -160,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                             validator: Validators.validatePhone,
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: context.scaleHeight(16)),
                           CustomTextField(
                             controller: _passwordController,
                             hintText: "password".tr(),
@@ -169,7 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             textInputAction: TextInputAction.done,
                             validator: Validators.validatePassword,
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: context.scaleHeight(16)),
                           TermsAndConditionsWidget(
                             normalText:
                                 "by_creating_an_account_you_agree_to_our".tr(),
@@ -183,7 +184,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
                             },
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: context.scaleHeight(24)),
                           CustomButton(
                             text: "sign_up".tr(),
                             isEnabled: _isFormValid && !isLoading,
@@ -196,7 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   );
                             },
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: context.scaleHeight(24)),
                           AuthFooter(
                             title: "have_an_account".tr(),
                             actionText: "sign_in".tr(),

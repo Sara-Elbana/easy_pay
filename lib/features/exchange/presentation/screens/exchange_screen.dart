@@ -38,7 +38,7 @@ class ExchangeScreen extends StatelessWidget {
   ) {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.5),
+      barrierColor: Colors.black.withAlpha(50),
       builder: (dialogContext) {
         return CustomCurrencyDialog(
           currencies: _supportedCurrencies,
@@ -102,11 +102,11 @@ class ExchangeScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: const Color(0xFF3629B7).withValues(alpha: 0.07),
+                            color: AppColors.primary,
                             blurRadius: 30,
-                            offset: const Offset(0, 4),
+                            offset: Offset(0, 4),
                           ),
                         ],
                       ),

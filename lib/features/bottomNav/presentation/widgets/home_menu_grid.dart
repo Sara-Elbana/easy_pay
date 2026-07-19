@@ -46,7 +46,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.payTheBillIcon,
           title: "pay_the_bill".tr(),
-          onTap: () {},
+          onTap: () {
+              Navigator.pushNamed(context, AppRoutesName.payTheBillScreen);
+            },
         ),
         GridMenuItem(
           iconPath: AppAssets.onlineIcon,

@@ -22,7 +22,11 @@ class ExchangeRateScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const ExchangeRateHeader(),
+            const ExchangeRateHeader(
+              title1: 'country',
+              title2: 'buy',
+              title3: 'sell',
+            ),
             Expanded(
               child: BlocBuilder<ExchangeRateCubit, ExchangeRateState>(
                 builder: (context, state) {

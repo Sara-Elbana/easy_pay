@@ -27,7 +27,7 @@ class CreditCardStack extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
+                        color: Colors.black.withAlpha(10),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -51,7 +51,7 @@ class CreditCardStack extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.15),
+                        color: Colors.black.withAlpha(15),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -75,7 +75,7 @@ class CreditCardStack extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.2),
+                        color: Colors.black.withAlpha(20),
                         blurRadius: 15,
                         offset: const Offset(0, 10),
                       ),

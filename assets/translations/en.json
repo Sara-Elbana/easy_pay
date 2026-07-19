@@ -165,5 +165,17 @@
   "biometric_fallback_msg": "Do you want to proceed with standard verification instead?",
   "cancel": "Cancel",
   "proceed": "Proceed",
-  "show_standard": "Show Options"
+  "show_standard": "Show Options",
+  "Pay_the_bill": "Pay the bill",
+  "electric_bill": "Electric bill",
+  "electric_bill_subtitle": "Pay electric bill this month",
+  "water_bill": "Water bill",
+  "water_bill_subtitle": "Pay water bill this month",
+  "mobile_bill": "Mobile bill",
+  "mobile_bill_subtitle": "Pay mobile bill this month",
+  "internet_bill": "Internet bill",
+  "internet_bill_subtitle": "Pay internet bill this month",
+  "interest_kind": "Interest kind",
+  "deposit": "Deposit",
+  "rate": "Rate"
 }

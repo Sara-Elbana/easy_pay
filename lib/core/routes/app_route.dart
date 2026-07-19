@@ -1,9 +1,12 @@
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:easy_pay_app/features/interest_rate/presentation/screens/interest_rate_screen.dart';
+import 'package:easy_pay_app/features/pay_the_bill/presentation/screens/pay_the_bill_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/change_password_success_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/screens/home_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
@@ -23,13 +26,14 @@ import 'package:easy_pay_app/features/exchange_rate/presentation/screens/exchang
 import 'package:easy_pay_app/features/exchange_rate/presentation/cubit/exchange_rate_cubit.dart';
 import 'package:easy_pay_app/features/exchange/presentation/screens/exchange_screen.dart';
 import 'package:easy_pay_app/features/exchange/presentation/cubit/exchange_cubit.dart';
-import 'package:easy_pay_app/features/setting/presentation/screens/setting_screen.dart';
 import 'package:easy_pay_app/features/setting/app_information/presentation/screens/app_information_screen.dart';
 import 'package:easy_pay_app/features/message/presentation/screens/account_screen.dart';
 import 'package:easy_pay_app/features/message/presentation/screens/chat_screen.dart';
 import 'package:easy_pay_app/features/message/presentation/screens/card_details_screen.dart';
 import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_screen.dart';
 import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_success_screen.dart';
+import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
+import 'package:easy_pay_app/features/Branch/presentation/screens/map_search_screen.dart';
 
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -77,5 +81,11 @@ class AppRoutes {
     AppRoutesName.cardDetailsScreen: (_) => const CardDetailsScreen(),
     AppRoutesName.withdrawScreen: (_) => const WithdrawScreen(),
     AppRoutesName.withdrawSuccessScreen: (_) => const WithdrawSuccessScreen(),
+    AppRoutesName.mapSearchScreen: (_) => BlocProvider(
+          create: (_) => getIt<MapCubit>(),
+          child: const MapSearchScreen(),
+        ),
+    AppRoutesName.payTheBillScreen: (_) => const PayTheBillScreen(),
+    AppRoutesName.interestRateScreen: (_) => const InterestRateScreen(),
   };
 }

@@ -15,11 +15,14 @@ class AppRoutesName {
   static const String mainScreen = "mainScreen";
   static const String exchangeRateScreen = "exchangeRateScreen";
   static const String exchangeScreen = "exchangeScreen";
-  static const String settingScreen = "settingScreen";
+  static const String payTheBillScreen = "payTheBillScreen";
   static const String appInformationScreen = "appInformationScreen";
   static const String accountScreen = "accountScreen";
   static const String chatScreen = "chatScreen";
+  static const String settingScreen = "settingScreen";
   static const String cardDetailsScreen = "cardDetailsScreen";
   static const String withdrawScreen = "withdrawScreen";
   static const String withdrawSuccessScreen = "withdrawSuccessScreen";
+  static const String mapSearchScreen = "mapSearchScreen";
+  static const String interestRateScreen = "interestRateScreen";
 }

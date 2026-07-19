@@ -65,13 +65,13 @@ class _SearchCardWidgetState extends State<SearchCardWidget> {
             borderRadius: BorderRadius.circular(context.scaleWidth(16)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
+                color: Colors.black.withAlpha(4),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
               ),
             ],
             border: Border.all(
-              color: AppColors.gray200.withValues(alpha: 0.5),
+              color: AppColors.gray200.withAlpha(50),
               width: 1,
             ),
           ),

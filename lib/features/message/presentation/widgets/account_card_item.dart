@@ -22,7 +22,7 @@ class AccountCardItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(context.scaleWidth(24)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.05),
+            color: Colors.grey.withAlpha(500),
             spreadRadius: 2,
             blurRadius: 10,
             offset: const Offset(0, 4),

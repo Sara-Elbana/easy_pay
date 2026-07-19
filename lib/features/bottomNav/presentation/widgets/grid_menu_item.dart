@@ -29,7 +29,7 @@ class GridMenuItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius),
           boxShadow: [
             BoxShadow(
-              color: AppColors.gray.withValues(alpha: 0.1),
+              color: AppColors.gray.withAlpha(10),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),

@@ -32,7 +32,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.withdrawIcon,
           title: "withdraw".tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutesName.withdrawScreen);
+          },
         ),
         GridMenuItem(
           iconPath: AppAssets.prepaidIcon,

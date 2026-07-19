@@ -19,6 +19,10 @@ import '../../features/transfer/domain/usecases/get_cards_usecase.dart';
 import '../../features/transfer/domain/usecases/get_beneficiaries_usecase.dart';
 import '../../features/transfer/domain/usecases/execute_transfer_usecase.dart';
 import '../../features/transfer/presentation/cubit/transfer_cubit.dart';
+import 'package:easy_pay_app/features/withdraw/domain/repositories/withdraw_repository.dart';
+import 'package:easy_pay_app/features/withdraw/domain/usecases/execute_withdraw_usecase.dart';
+import 'package:easy_pay_app/features/withdraw/data/repositories/withdraw_repository_impl.dart';
+import 'package:easy_pay_app/features/withdraw/presentation/cubit/withdraw_cubit.dart';
 import '../network/network.dart';
 import '../services/services.dart';
 import 'package:easy_pay_app/features/exchange_rate/data/data_source/exchange_rate_remote_datasource.dart';
@@ -149,5 +153,18 @@ Future<void> setupDependencies() async {
   );
   getIt.registerFactory<ExchangeCubit>(
     () => ExchangeCubit(repository: getIt()),
+  );
+
+  // Withdraw Feature
+  getIt.registerLazySingleton<WithdrawRepository>(
+    () => WithdrawRepositoryImpl(),
+  );
+  getIt.registerLazySingleton(
+    () => ExecuteWithdrawUseCase(getIt()),
+  );
+  getIt.registerFactory<WithdrawCubit>(
+    () => WithdrawCubit(
+      executeWithdrawUseCase: getIt(),
+    ),
   );
 }

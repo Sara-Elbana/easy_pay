@@ -151,5 +151,17 @@
   "add_card": "Add card",
   "available_balance": "Available balance",
   "alert": "Alert",
-  "paypal": "Paypal"
+  "paypal": "Paypal",
+  "verify": "Verify",
+  "successful_withdrawal": "Successful withdrawal!",
+  "withdrawal_success_msg": "You have successfully withdrawn money! Please check the balance in the card management section.",
+  "choose_amount": "Choose amount",
+  "other": "Other",
+  "phone_number": "Phone number",
+  "biometric_failed": "Biometric authentication failed",
+  "biometric_verification": "Biometric Verification",
+  "biometric_fallback_msg": "Do you want to proceed with standard verification instead?",
+  "cancel": "Cancel",
+  "proceed": "Proceed",
+  "show_standard": "Show Options"
 }

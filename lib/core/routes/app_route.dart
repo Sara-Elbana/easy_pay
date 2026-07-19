@@ -28,6 +28,8 @@ import 'package:easy_pay_app/features/setting/app_information/presentation/scree
 import 'package:easy_pay_app/features/message/presentation/screens/account_screen.dart';
 import 'package:easy_pay_app/features/message/presentation/screens/chat_screen.dart';
 import 'package:easy_pay_app/features/message/presentation/screens/card_details_screen.dart';
+import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_screen.dart';
+import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_success_screen.dart';
 
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -73,5 +75,7 @@ class AppRoutes {
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
     AppRoutesName.chatScreen: (_) => const ChatScreen(),
     AppRoutesName.cardDetailsScreen: (_) => const CardDetailsScreen(),
+    AppRoutesName.withdrawScreen: (_) => const WithdrawScreen(),
+    AppRoutesName.withdrawSuccessScreen: (_) => const WithdrawSuccessScreen(),
   };
 }

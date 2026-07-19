@@ -20,7 +20,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.accountAndCardIcon,
           title: "account_and_card".tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutesName.accountScreen);
+          },
         ),
         GridMenuItem(
           iconPath: AppAssets.transferIcon,

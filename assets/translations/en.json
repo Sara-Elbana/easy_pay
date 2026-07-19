@@ -136,6 +136,8 @@
   "english": "English",
   "account": "Account",
   "card": "Card",
+  "account_tab": "Account",
+  "card_tab": "Card",
   "type_something": "Type something....",
   "card_holder_name": "Card holder name",
   "card_number": "Card number",

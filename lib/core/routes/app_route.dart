@@ -1,4 +1,6 @@
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:easy_pay_app/features/interest_rate/presentation/screens/interest_rate_screen.dart';
+import 'package:easy_pay_app/features/pay_the_bill/presentation/screens/pay_the_bill_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/change_password_success_screen.dart';
@@ -31,54 +33,55 @@ import 'package:easy_pay_app/features/message/presentation/screens/card_details_
 import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
 import 'package:easy_pay_app/features/Branch/presentation/screens/map_search_screen.dart';
 
-
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
     AppRoutesName.splashScreen: (_) => const SplashScreen(),
     AppRoutesName.onboardingScreen: (_) => BlocProvider(
-      create: (_) => getIt<OnboardingCubit>(),
-      child: const OnboardingScreen(),
-    ),
+          create: (_) => getIt<OnboardingCubit>(),
+          child: const OnboardingScreen(),
+        ),
     AppRoutesName.welcomeScreen: (_) => const WelcomeScreen(),
     AppRoutesName.signInScreen: (context) => BlocProvider(
-      create: (_) => getIt<AuthCubit>(),
-      child: const SignInScreen(),
-    ),
+          create: (_) => getIt<AuthCubit>(),
+          child: const SignInScreen(),
+        ),
     AppRoutesName.signUpScreen: (context) => BlocProvider(
-      create: (_) => getIt<AuthCubit>(),
-      child: const SignUpScreen(),
-    ),
+          create: (_) => getIt<AuthCubit>(),
+          child: const SignUpScreen(),
+        ),
     AppRoutesName.forgotPasswordScreen: (_) => BlocProvider(
-      create: (_) => getIt<ForgotPasswordCubit>(),
-      child: ForgotPasswordScreen(),
-    ),
+          create: (_) => getIt<ForgotPasswordCubit>(),
+          child: ForgotPasswordScreen(),
+        ),
     AppRoutesName.changePasswordScreen: (_) => ChangePasswordScreen(),
     AppRoutesName.changePasswordSuccessScreen: (_) =>
-    const ChangePasswordSuccessScreen(),
+        const ChangePasswordSuccessScreen(),
     AppRoutesName.homeScreen: (_) => const HomeScreen(),
     AppRoutesName.transferScreen: (_) => BlocProvider(
-      create: (_) => getIt<TransferCubit>(),
-      child: TransferScreen(),
-    ),
+          create: (_) => getIt<TransferCubit>(),
+          child: TransferScreen(),
+        ),
     AppRoutesName.confirmScreen: (_) => ConfirmScreen(),
     AppRoutesName.successTransferScreen: (_) => const SuccessTransferScreen(),
     AppRoutesName.mainScreen: (_) => const MainScreen(),
     AppRoutesName.exchangeRateScreen: (_) => BlocProvider(
-      create: (_) => getIt<ExchangeRateCubit>()..getExchangeRates(),
-      child: const ExchangeRateScreen(),
-    ),
+          create: (_) => getIt<ExchangeRateCubit>()..getExchangeRates(),
+          child: const ExchangeRateScreen(),
+        ),
     AppRoutesName.exchangeScreen: (_) => BlocProvider(
-      create: (_) => getIt<ExchangeCubit>(),
-      child: const ExchangeScreen(),
-    ),
+          create: (_) => getIt<ExchangeCubit>(),
+          child: const ExchangeScreen(),
+        ),
     AppRoutesName.settingScreen: (_) => const SettingScreen(),
     AppRoutesName.appInformationScreen: (_) => const AppInformationScreen(),
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
     AppRoutesName.chatScreen: (_) => const ChatScreen(),
     AppRoutesName.cardDetailsScreen: (_) => const CardDetailsScreen(),
     AppRoutesName.mapSearchScreen: (_) => BlocProvider(
-      create: (context) => getIt<MapCubit>(),
-      child: const MapSearchScreen(),
-    ),
+          create: (_) => getIt<MapCubit>(),
+          child: const MapSearchScreen(),
+        ),
+    AppRoutesName.payTheBillScreen: (_) => const PayTheBillScreen(),
+    AppRoutesName.interestRateScreen: (_) => const InterestRateScreen(),
   };
 }

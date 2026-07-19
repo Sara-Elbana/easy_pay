@@ -8,18 +8,21 @@ class AppAssets {
   static const String userImage = 'assets/images/user_image.svg';
   static const String avatarImage = 'assets/images/Avatar.png';
   static const String multiCardBank = 'assets/images/multiCardBank.png';
-
   static const String cardBlue = 'assets/images/card_blue.png';
   static const String cardGold = 'assets/images/card_gold.png';
-
   static const String bankCardYellow = 'assets/images/bankCardYellow.png';
   static const String bankCardBlue = 'assets/images/bankCardBlue.png';
-
   static const String branchIllus = 'assets/images/branch_illus.png';
   static const String interestIllus = 'assets/images/interest_illus.png';
   static const String exchangeRateIllus =
       'assets/images/exchange_rate_illus.png';
   static const String exchangeIllus = 'assets/images/exchange_illus.png';
+  static const String waterBillImage = 'assets/images/waterBillImage.png';
+  static const String internetBillImage = 'assets/images/internetBillImage.png';
+  static const String mobileBillImage = 'assets/images/mobileBillImage.png';
+  static const String electricBillImage = 'assets/images/electricBillImage.png';
+
+
 
   // Flags
   static const String flagVn = 'assets/images/vn.png';
@@ -36,13 +39,16 @@ class AppAssets {
   static const String flagJp = 'assets/images/jp.png';
   static const String flagIn = 'assets/images/in.png';
 
+
   // Icons
   static const String fingerprint = 'assets/icons/fingerPrint.svg';
   static const String beneficiaryIcon = 'assets/icons/beneficiaryIcon.svg';
   static const String creditCardIcon = 'assets/icons/creditCardIcon.svg';
   static const String onlineIcon = 'assets/icons/onlineIcon.svg';
-  static const String payTheBillIcon = 'assets/icons/payTheBillIcon.svg';
+  static const String payTheBillBanner =
+      'assets/images/pay_the_bill_banner.png';
   static const String prepaidIcon = 'assets/icons/prepaidIcon.svg';
+  static const String payTheBillIcon = 'assets/icons/payTheBillIcon.svg';
   static const String transactionReportIcon =
       'assets/icons/transactionReportIcon.svg';
   static const String transferIcon = 'assets/icons/transferIcon.svg';

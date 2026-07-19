@@ -29,13 +29,17 @@ class SearchScreen extends StatelessWidget {
               title: 'branch'.tr(),
               subtitle: 'search_for_branch'.tr(),
               imageAsset: AppAssets.branchIllus,
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutesName.mapSearchScreen);
+              },
             ),
             SearchCardWidget(
               title: 'interest_rate'.tr(),
               subtitle: 'search_for_interest_rate'.tr(),
               imageAsset: AppAssets.interestIllus,
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutesName.interestRateScreen);
+              },
             ),
             SearchCardWidget(
               title: 'exchange_rate'.tr(),

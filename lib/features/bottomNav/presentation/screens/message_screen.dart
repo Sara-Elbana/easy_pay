@@ -49,9 +49,7 @@ class MessageScreen extends StatelessWidget {
               title: 'alert'.tr(),
               subtitle: 'Your statement is ready for you to...',
               date: '11/10',
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutesName.mapSearchScreen);
-              },
+              onTap: () {},
             ),
             SizedBox(height: context.scaleHeight(20)),
             MessageCard(

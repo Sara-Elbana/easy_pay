@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'package:easy_pay_app/features/Branch/domain/usecases/get_autocomplete_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/usecases/get_autocomplete_usecase.dart';
 import 'map_state.dart';
 
 class MapCubit extends Cubit<MapState> {

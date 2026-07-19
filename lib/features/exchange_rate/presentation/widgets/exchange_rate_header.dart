@@ -4,7 +4,10 @@ import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
 class ExchangeRateHeader extends StatelessWidget {
-  const ExchangeRateHeader({super.key});
+  final String title1;
+  final String title2;
+  final String title3;
+  const ExchangeRateHeader({super.key, required this.title1, required this.title2, required this.title3});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class ExchangeRateHeader extends StatelessWidget {
           Expanded(
             flex: 5,
             child: Text(
-              'country'.tr(),
+              title1.tr(),
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: context.scaleWidth(14),
@@ -30,7 +33,7 @@ class ExchangeRateHeader extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Text(
-              'buy'.tr(),
+              title2.tr(),
               textAlign: TextAlign.right,
               style: TextStyle(
                 fontFamily: 'Poppins',
@@ -43,7 +46,7 @@ class ExchangeRateHeader extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Text(
-              'sell'.tr(),
+              title3.tr(),
               textAlign: TextAlign.right,
               style: TextStyle(
                 fontFamily: 'Poppins',

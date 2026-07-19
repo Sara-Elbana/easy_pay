@@ -1,7 +1,8 @@
-import 'package:easy_pay_app/features/bottomNav/message/presentation/screens/message_screen.dart';
+import 'package:easy_pay_app/features/message/presentation/screens/message_screen.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/screens/home_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/search_screen.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/widgets/custom_bottom_nav_bar.dart';
-import 'package:easy_pay_app/features/bottomNav/setting/presentation/screens/setting_screen.dart';
+import 'package:easy_pay_app/features/setting/presentation/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = const [
     HomeScreen(),
-    Placeholder(), // SearchScreen()
+    SearchScreen(),
     MessageScreen(),
     SettingScreen(),
   ];

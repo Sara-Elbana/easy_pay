@@ -1,3 +1,5 @@
+import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
+import 'package:easy_pay_app/features/Branch/presentation/screens/map_search_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/pages/forgot_password_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/pages/change_password_screen.dart';
@@ -25,31 +27,35 @@ class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
     AppRoutesName.splashScreen: (_) => const SplashScreen(),
     AppRoutesName.onboardingScreen: (_) => BlocProvider(
-      create: (_) => getIt<OnboardingCubit>(),
-      child: const OnboardingScreen(),
-    ),
+          create: (_) => getIt<OnboardingCubit>(),
+          child: const OnboardingScreen(),
+        ),
     AppRoutesName.welcomeScreen: (_) => const WelcomeScreen(),
     AppRoutesName.signInScreen: (context) => BlocProvider(
-      create: (_) => getIt<AuthCubit>(),
-      child: const SignInScreen(),
-    ),
+          create: (_) => getIt<AuthCubit>(),
+          child: const SignInScreen(),
+        ),
     AppRoutesName.signUpScreen: (context) => BlocProvider(
-      create: (_) => getIt<AuthCubit>(),
-      child: const SignUpScreen(),
-    ),
+          create: (_) => getIt<AuthCubit>(),
+          child: const SignUpScreen(),
+        ),
     AppRoutesName.forgotPasswordScreen: (_) => BlocProvider(
-      create: (_) => getIt<ForgotPasswordCubit>(),
-      child: ForgotPasswordScreen(),
-    ),
+          create: (_) => getIt<ForgotPasswordCubit>(),
+          child: ForgotPasswordScreen(),
+        ),
     AppRoutesName.changePasswordScreen: (_) => ChangePasswordScreen(),
-    AppRoutesName.changePasswordSuccessScreen: (_) => const ChangePasswordSuccessScreen(),
-    AppRoutesName.homeScreen:(_) => const HomeScreen(),
-    AppRoutesName.mainScreen:(_) => const MainScreen(),
+    AppRoutesName.changePasswordSuccessScreen: (_) =>
+        const ChangePasswordSuccessScreen(),
+    AppRoutesName.homeScreen: (_) => const HomeScreen(),
+    AppRoutesName.mainScreen: (_) => const MainScreen(),
     AppRoutesName.settingScreen: (_) => const SettingScreen(),
-    AppRoutesName.appInformationScreen:(_) => const AppInformationScreen(),
+    AppRoutesName.appInformationScreen: (_) => const AppInformationScreen(),
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
-    AppRoutesName.chatScreen:(_) => const ChatScreen(),
-    AppRoutesName.cardDetailsScreen:(_) => const CardDetailsScreen(),
-
+    AppRoutesName.chatScreen: (_) => const ChatScreen(),
+    AppRoutesName.cardDetailsScreen: (_) => const CardDetailsScreen(),
+    AppRoutesName.mapSearchScreen: (_) => BlocProvider(
+          create: (context) => getIt<MapCubit>(),
+          child: const MapSearchScreen(),
+        ),
   };
 }

@@ -1,4 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:easy_pay_app/features/Branch/data/datasources/map_remote_data_source.dart';
+import 'package:easy_pay_app/features/Branch/data/repositories/map_repository_impl.dart';
+import 'package:easy_pay_app/features/Branch/domain/repositories/map_repository.dart';
+import 'package:easy_pay_app/features/Branch/domain/usecases/get_autocomplete_usecase.dart';
+import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
 import 'package:easy_pay_app/features/auth/data/data_source/auth_remote_datasource.dart';
 import 'package:easy_pay_app/features/auth/data/repository_impl/auth_repository_impl.dart';
 import 'package:easy_pay_app/features/auth/data/repository_impl/biometric_repository_impl.dart';
@@ -84,4 +89,11 @@ Future<void> setupDependencies() async {
   getIt.registerFactory<ForgotPasswordCubit>(
     () => ForgotPasswordCubit(),
   );
+  getIt.registerFactory(() => MapCubit(
+      getAutocompleteUseCase: getIt(), getPlaceDetailsUseCase: getIt()));
+  getIt.registerLazySingleton(() => GetAutocompleteUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetPlaceDetailsUseCase(getIt()));
+  getIt.registerLazySingleton<MapRepository>(() => MapRepositoryImpl(getIt()));
+  getIt.registerLazySingleton<MapRemoteDataSource>(
+      () => MapRemoteDataSourceImpl(getIt()));
 }

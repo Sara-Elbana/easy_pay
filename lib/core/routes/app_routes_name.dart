@@ -14,5 +14,6 @@ class AppRoutesName {
   static const String accountScreen = "accountScreen";
   static const String chatScreen = "chatScreen";
   static const String cardDetailsScreen = "cardDetailsScreen";
+  static const String mapSearchScreen = "mapSearchScreen";
 
 }

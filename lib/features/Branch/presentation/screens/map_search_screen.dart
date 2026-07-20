@@ -81,6 +81,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
               zoomControlsEnabled: false,
               mapToolbarEnabled: false,
               myLocationButtonEnabled: false,
+              myLocationEnabled: false,
               onMapCreated: _onMapCreated,
             ),
           ),

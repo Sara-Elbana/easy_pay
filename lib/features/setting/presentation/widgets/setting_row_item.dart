@@ -41,20 +41,20 @@ class SettingRowItem extends StatelessWidget {
                   ),
                 ),
 
-                if (subtitle != null) ...[
-                  Text(
-                    subtitle!,
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: context.scaleWidth(12),
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF979797),
-                      height: 16 / 12,
+                subtitle != null?
+                  Visibility(
+                    visible: subtitle != null,
+                    child: Text(
+                      subtitle!,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: context.scaleWidth(12),
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF979797),
+                        height: 16 / 12,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: context.scaleWidth(8)),
-                ],
-
+                  ): const SizedBox.shrink(),
                 if (trailing != null)
                   trailing!
                 else if (showArrow)

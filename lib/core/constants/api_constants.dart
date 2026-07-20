@@ -3,6 +3,11 @@ class ApiConstants {
   static const String baseUrl = 'https://api.example.com';
   static const String apiVersion = 'v1';
 
+  //Google Maps Endpoints
+  static const String googleMapsBaseUrl = 'https://maps.googleapis.com';
+  static const String autocompleteEndpoint = '/maps/api/place/autocomplete/json';
+  static const String placeDetailsEndpoint = '/maps/api/place/details/json';
+
   // Timeouts (in seconds)
   static const int connectionTimeout = 30;
   static const int receiveTimeout = 30;

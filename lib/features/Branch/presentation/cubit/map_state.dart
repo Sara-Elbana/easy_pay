@@ -1,4 +1,5 @@
-import 'package:easy_pay_app/features/Branch/domain/entities/place_entity.dart';
+import 'package:easy_pay_app/features/Branch/domain/entities/place_details.dart';
+import 'package:easy_pay_app/features/Branch/domain/entities/place_suggestion.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class MapState extends Equatable {

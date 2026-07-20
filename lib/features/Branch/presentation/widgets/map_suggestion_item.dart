@@ -1,5 +1,5 @@
 import 'package:easy_pay_app/core/core.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/place_entity.dart';
+import 'package:easy_pay_app/features/Branch/domain/entities/place_suggestion.dart';
 import 'package:flutter/material.dart';
 
 class MapSuggestionItem extends StatelessWidget {
@@ -18,6 +18,7 @@ class MapSuggestionItem extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       leading: const Icon(Icons.location_on, color: AppColors.primary),
       title: Row(
+
         children: [
           Expanded(
             child: Text(

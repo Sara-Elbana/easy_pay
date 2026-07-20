@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import '../../domain/entities/beneficiary.dart';
+import '../../../beneficiary/domain/entities/beneficiary.dart';
 import 'beneficiary_item.dart';
 
 class ChooseBeneficiarySection extends StatelessWidget {
@@ -11,6 +11,7 @@ class ChooseBeneficiarySection extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onSelectManual;
   final ValueChanged<Beneficiary> onSelectBeneficiary;
+  final VoidCallback? onFindBeneficiary;
 
   const ChooseBeneficiarySection({
     super.key,
@@ -20,6 +21,7 @@ class ChooseBeneficiarySection extends StatelessWidget {
     required this.isEnabled,
     required this.onSelectManual,
     required this.onSelectBeneficiary,
+    this.onFindBeneficiary,
   });
 
   @override
@@ -41,15 +43,7 @@ class ChooseBeneficiarySection extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: isEnabled
-                    ? () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('opening_beneficiary_directory'.tr()),
-                          ),
-                        );
-                      }
-                    : null,
+                onTap: isEnabled ? onFindBeneficiary : null,
                 child: Text(
                   'find_beneficiary'.tr(),
                   style: TextStyle(

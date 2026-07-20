@@ -12,6 +12,9 @@ class ExecuteTransferUseCase {
     required double amount,
     required String content,
     required bool saveBeneficiary,
+    int? type,
+    String? bank,
+    String? branch,
   }) async {
     return await repository.executeTransfer(
       fromCardId: fromCardId,
@@ -20,6 +23,9 @@ class ExecuteTransferUseCase {
       amount: amount,
       content: content,
       saveBeneficiary: saveBeneficiary,
+      type: type,
+      bank: bank,
+      branch: branch,
     );
   }
 }

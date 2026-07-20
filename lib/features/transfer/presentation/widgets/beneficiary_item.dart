@@ -1,6 +1,7 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/widgets/custom_avatar.dart';
 import 'package:flutter/material.dart';
-import '../../domain/entities/beneficiary.dart';
+import '../../../beneficiary/domain/entities/beneficiary.dart';
 
 class BeneficiaryItem extends StatelessWidget {
   final Beneficiary? beneficiary;
@@ -12,17 +13,18 @@ class BeneficiaryItem extends StatelessWidget {
     super.key,
     required this.beneficiary,
     required this.isSelected,
-    this.isEnabled = true,
+    required this.isEnabled,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bool isAddButton = beneficiary == null;
+    final isAddButton = beneficiary == null;
 
-    final childWidget = SizedBox(
-      width: 110,
+    final childWidget = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             width: 88,
@@ -47,65 +49,10 @@ class BeneficiaryItem extends StatelessWidget {
                       size: 32,
                     ),
                   )
-                : ClipOval(
-                    child: beneficiary!.avatarUrl != null
-                        ? Image.network(
-                            beneficiary!.avatarUrl!,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Container(
-                                width: 80,
-                                height: 80,
-                                color: AppColors.gray200,
-                                alignment: Alignment.center,
-                                child: const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.0,
-                                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
-                                  ),
-                                ),
-                              );
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                width: 80,
-                                height: 80,
-                                color: AppColors.gray200,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  beneficiary!.name.isNotEmpty
-                                      ? beneficiary!.name.substring(0, 1).toUpperCase()
-                                      : '?',
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textDark,
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        : Container(
-                            width: 80,
-                            height: 80,
-                            color: AppColors.gray200,
-                            alignment: Alignment.center,
-                            child: Text(
-                              beneficiary!.name.isNotEmpty
-                                  ? beneficiary!.name.substring(0, 1).toUpperCase()
-                                  : '?',
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textDark,
-                              ),
-                            ),
-                          ),
+                : CustomAvatar(
+                    url: beneficiary!.avatarUrl,
+                    name: beneficiary!.name,
+                    radius: 40,
                   ),
           ),
           const SizedBox(height: 8),

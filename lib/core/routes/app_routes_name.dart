@@ -25,4 +25,7 @@ class AppRoutesName {
   static const String withdrawSuccessScreen = "withdrawSuccessScreen";
   static const String mapSearchScreen = "mapSearchScreen";
   static const String interestRateScreen = "interestRateScreen";
+  static const String beneficiaryDirectoryScreen = "beneficiaryDirectoryScreen";
+  static const String addBeneficiaryScreen = "addBeneficiaryScreen";
+  static const String beneficiaryDetailScreen = "beneficiaryDetailScreen";
 }

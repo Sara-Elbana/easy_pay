@@ -1,9 +1,9 @@
 import 'package:easy_pay_app/core/services/biometric_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/beneficiary.dart';
+import '../../../beneficiary/domain/entities/beneficiary.dart';
 import '../../domain/entities/transfer_card.dart';
 import '../../domain/usecases/execute_transfer_usecase.dart';
-import '../../domain/usecases/get_beneficiaries_usecase.dart';
+import '../../../beneficiary/domain/usecases/get_beneficiaries_usecase.dart';
 import '../../domain/usecases/get_cards_usecase.dart';
 import 'transfer_state.dart';
 
@@ -69,8 +69,8 @@ class TransferCubit extends Cubit<TransferState> {
       cardNumber: beneficiary.cardNumber,
       amount: '',
       content: '',
-      selectedBank: '',
-      selectedBranch: '',
+      selectedBank: beneficiary.bank ?? '',
+      selectedBranch: beneficiary.branch ?? '',
       saveBeneficiary: false,
     ));
   }
@@ -191,6 +191,9 @@ class TransferCubit extends Cubit<TransferState> {
         amount: amt,
         content: state.content,
         saveBeneficiary: state.saveBeneficiary,
+        type: state.selectedTransactionType,
+        bank: state.selectedBank.isNotEmpty ? state.selectedBank : null,
+        branch: state.selectedBranch.isNotEmpty ? state.selectedBranch : null,
       );
 
       if (result) {

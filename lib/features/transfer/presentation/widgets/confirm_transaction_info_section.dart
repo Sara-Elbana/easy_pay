@@ -2,7 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:easy_pay_app/features/transfer/presentation/widgets/account_dropdown.dart';
-import 'package:easy_pay_app/features/transfer/presentation/widgets/bank_branch_selector_widget.dart';
+import 'package:easy_pay_app/core/widgets/selection_box.dart';
+import 'package:easy_pay_app/core/widgets/custom_selection_dialog.dart';
 import 'package:flutter/material.dart';
 import '../cubit/transfer_cubit.dart';
 import '../cubit/transfer_state.dart';
@@ -26,6 +27,34 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
     required this.contentController,
     required this.amountController,
   });
+
+  void _showBankSelection(BuildContext parentContext) {
+    CustomSelectionDialog.show<TransferCubit, TransferState>(
+      context: parentContext,
+      cubit: cubit,
+      title: 'choose_beneficiary_bank'.tr(),
+      selectedValue: state.selectedBank,
+      itemsProvider: (s) => s.filteredBanks,
+      searchQueryProvider: (s) => s.bankSearchQuery,
+      onSearchChanged: cubit.updateBankSearch,
+      onSelected: cubit.selectBank,
+      onDismissed: cubit.resetSearchQueries,
+    );
+  }
+
+  void _showBranchSelection(BuildContext parentContext) {
+    CustomSelectionDialog.show<TransferCubit, TransferState>(
+      context: parentContext,
+      cubit: cubit,
+      title: 'choose_beneficiary_branch'.tr(),
+      selectedValue: state.selectedBranch,
+      itemsProvider: (s) => s.filteredBranches,
+      searchQueryProvider: (s) => s.branchSearchQuery,
+      onSearchChanged: cubit.updateBranchSearch,
+      onSelected: cubit.selectBranch,
+      onDismissed: cubit.resetSearchQueries,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,32 +87,22 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
           // Bank
           Text('choose_bank'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
           const SizedBox(height: 6),
-          BankBranchSelectorWidget(
-            label: 'choose_beneficiary_bank'.tr(),
+          SelectionBox(
             value: state.selectedBank,
             placeholder: 'choose_bank'.tr(),
             isEnabled: true,
-            itemsProvider: (s) => s.filteredBanks,
-            searchQueryProvider: (s) => s.bankSearchQuery,
-            onSearchChanged: cubit.updateBankSearch,
-            onSelected: cubit.selectBank,
-            onDismissed: cubit.resetSearchQueries,
+            onTap: () => _showBankSelection(context),
           ),
           const SizedBox(height: 12),
 
           // Branch
           Text('choose_branch'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
           const SizedBox(height: 6),
-          BankBranchSelectorWidget(
-            label: 'choose_beneficiary_branch'.tr(),
+          SelectionBox(
             value: state.selectedBranch,
             placeholder: 'choose_branch'.tr(),
             isEnabled: state.selectedBank.isNotEmpty,
-            itemsProvider: (s) => s.filteredBranches,
-            searchQueryProvider: (s) => s.branchSearchQuery,
-            onSearchChanged: cubit.updateBranchSearch,
-            onSelected: cubit.selectBranch,
-            onDismissed: cubit.resetSearchQueries,
+            onTap: () => _showBranchSelection(context),
           ),
           const SizedBox(height: 12),
         ],

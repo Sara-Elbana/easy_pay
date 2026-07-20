@@ -1,8 +1,8 @@
 import '../entities/beneficiary.dart';
-import '../repositories/transfer_repository.dart';
+import '../repositories/beneficiary_repository.dart';
 
 class GetBeneficiariesUseCase {
-  final TransferRepository repository;
+  final BeneficiaryRepository repository;
 
   GetBeneficiariesUseCase(this.repository);
 

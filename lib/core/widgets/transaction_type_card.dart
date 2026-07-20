@@ -9,6 +9,14 @@ class TransactionTypeCard extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onTap;
 
+  // Customization options for reusability
+  final Color? selectedColor;
+  final Color? unselectedColor;
+  final Color? selectedContentColor;
+  final Color? unselectedContentColor;
+  final double? width;
+  final double? height;
+
   const TransactionTypeCard({
     super.key,
     required this.icon,
@@ -17,6 +25,12 @@ class TransactionTypeCard extends StatelessWidget {
     required this.isActiveStyle,
     this.isEnabled = true,
     required this.onTap,
+    this.selectedColor,
+    this.unselectedColor,
+    this.selectedContentColor,
+    this.unselectedContentColor,
+    this.width,
+    this.height,
   });
 
   @override
@@ -31,26 +45,29 @@ class TransactionTypeCard extends StatelessWidget {
       backgroundColor = AppColors.gray100;
       border = Border.all(color: AppColors.gray200, width: 2);
     } else if (useSolidFill) {
-      backgroundColor = AppColors.primary;
+      backgroundColor = selectedColor ?? AppColors.primary;
     } else if (useOutline) {
       backgroundColor = Colors.white;
-      border = Border.all(color: AppColors.primary, width: 2);
+      border = Border.all(color: selectedColor ?? AppColors.primary, width: 2);
     } else {
+      backgroundColor = unselectedColor ?? AppColors.gray100;
       border = Border.all(color: Colors.transparent, width: 2);
     }
 
     final Color contentColor = !isEnabled
         ? AppColors.textLight.withAlpha(50)
         : (useSolidFill
-            ? Colors.white
-            : (useOutline ? AppColors.primary : AppColors.textLight));
+            ? (selectedContentColor ?? Colors.white)
+            : (useOutline
+                ? (selectedContentColor ?? AppColors.primary)
+                : (unselectedContentColor ?? AppColors.textLight)));
 
     return GestureDetector(
       onTap: isEnabled ? onTap : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        width: 120,
-        height: 110,
+        width: width ?? 120,
+        height: height ?? 110,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: backgroundColor,
@@ -59,7 +76,7 @@ class TransactionTypeCard extends StatelessWidget {
           boxShadow: useSolidFill
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withAlpha(30),
+                    color: (selectedColor ?? AppColors.primary).withAlpha(30),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   )

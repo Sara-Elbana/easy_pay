@@ -68,7 +68,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.beneficiaryIcon,
           title: "beneficiary".tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutesName.beneficiaryDirectoryScreen);
+          },
         ),
       ],
     );

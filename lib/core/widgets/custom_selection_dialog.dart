@@ -5,7 +5,7 @@ import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CustomSelectionDialog<B extends StateStreamable<S>, S> extends StatelessWidget {
+class CustomSelectionDialog<B extends StateStreamableSource<S>, S> extends StatelessWidget {
   final String title;
   final String selectedValue;
   final List<String> Function(S) itemsProvider;
@@ -22,6 +22,39 @@ class CustomSelectionDialog<B extends StateStreamable<S>, S> extends StatelessWi
     required this.onSearchChanged,
     required this.onSelected,
   });
+
+  static Future<void> show<B extends StateStreamableSource<S>, S>({
+    required BuildContext context,
+    required B cubit,
+    required String title,
+    required String selectedValue,
+    required List<String> Function(S) itemsProvider,
+    required String Function(S) searchQueryProvider,
+    required ValueChanged<String> onSearchChanged,
+    required ValueChanged<String> onSelected,
+    VoidCallback? onDismissed,
+  }) {
+    return showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return BlocProvider.value(
+          value: cubit,
+          child: CustomSelectionDialog<B, S>(
+            title: title,
+            selectedValue: selectedValue,
+            itemsProvider: itemsProvider,
+            searchQueryProvider: searchQueryProvider,
+            onSearchChanged: onSearchChanged,
+            onSelected: onSelected,
+          ),
+        );
+      },
+    ).then((_) {
+      if (onDismissed != null) {
+        onDismissed();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

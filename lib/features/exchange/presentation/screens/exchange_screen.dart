@@ -81,7 +81,8 @@ class ExchangeScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -94,8 +95,8 @@ class ExchangeScreen extends StatelessWidget {
                 BlocBuilder<ExchangeCubit, ExchangeState>(
                   builder: (context, state) {
                     final cubit = context.read<ExchangeCubit>();
-                    final bool isButtonEnabled = state.fromAmount.isNotEmpty &&
-                        !state.isLoading;
+                    final bool isButtonEnabled =
+                        state.fromAmount.isNotEmpty && !state.isLoading;
 
                     return Container(
                       padding: const EdgeInsets.all(24.0),
@@ -138,7 +139,8 @@ class ExchangeScreen extends StatelessWidget {
                               (code) => cubit.changeToCurrency(code),
                             ),
                           ),
-                          if (state.fromAmount.isNotEmpty && state.conversionRate > 0) ...[
+                          if (state.fromAmount.isNotEmpty &&
+                              state.conversionRate > 0) ...[
                             const SizedBox(height: 16),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,9 +168,13 @@ class ExchangeScreen extends StatelessWidget {
                           ],
                           const SizedBox(height: 32),
                           ElevatedButton(
-                            onPressed: isButtonEnabled ? () => cubit.executeExchange() : null,
+                            onPressed: isButtonEnabled
+                                ? () => cubit.executeExchange()
+                                : null,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: isButtonEnabled ? AppColors.primary : const Color(0xFFF2F1F9),
+                              backgroundColor: isButtonEnabled
+                                  ? AppColors.primary
+                                  : const Color(0xFFF2F1F9),
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
@@ -190,7 +196,9 @@ class ExchangeScreen extends StatelessWidget {
                                       fontFamily: 'Poppins',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
-                                      color: isButtonEnabled ? Colors.white : const Color(0xFFCACACA),
+                                      color: isButtonEnabled
+                                          ? Colors.white
+                                          : const Color(0xFFCACACA),
                                     ),
                                   ),
                           ),

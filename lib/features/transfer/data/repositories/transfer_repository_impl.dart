@@ -1,4 +1,4 @@
-import '../../domain/entities/beneficiary.dart';
+import '../../../beneficiary/domain/entities/beneficiary.dart';
 import '../../domain/entities/transfer_card.dart';
 import '../../domain/repositories/transfer_repository.dart';
 import '../models/mock_transfer_data.dart';
@@ -16,12 +16,6 @@ class TransferRepositoryImpl implements TransferRepository {
   }
 
   @override
-  Future<List<Beneficiary>> getBeneficiaries() async {
-    await Future.delayed(const Duration(milliseconds: 300));
-    return _mockBeneficiaries;
-  }
-
-  @override
   Future<bool> executeTransfer({
     required String fromCardId,
     required String beneficiaryName,
@@ -29,6 +23,9 @@ class TransferRepositoryImpl implements TransferRepository {
     required double amount,
     required String content,
     required bool saveBeneficiary,
+    int? type,
+    String? bank,
+    String? branch,
   }) async {
     await Future.delayed(const Duration(seconds: 1)); // Simulate server api call
     if (saveBeneficiary) {
@@ -39,6 +36,9 @@ class TransferRepositoryImpl implements TransferRepository {
             id: DateTime.now().millisecondsSinceEpoch.toString(),
             name: beneficiaryName,
             cardNumber: cardNumber,
+            type: type ?? 0,
+            bank: bank,
+            branch: branch,
           ),
         );
       }

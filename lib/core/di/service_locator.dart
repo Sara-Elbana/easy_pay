@@ -20,9 +20,13 @@ import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../../features/transfer/domain/repositories/transfer_repository.dart';
 import '../../features/transfer/data/repositories/transfer_repository_impl.dart';
 import '../../features/transfer/domain/usecases/get_cards_usecase.dart';
-import '../../features/transfer/domain/usecases/get_beneficiaries_usecase.dart';
+import '../../features/beneficiary/domain/repositories/beneficiary_repository.dart';
+import '../../features/beneficiary/data/repositories/beneficiary_repository_impl.dart';
+import '../../features/beneficiary/domain/usecases/get_beneficiaries_usecase.dart';
 import '../../features/transfer/domain/usecases/execute_transfer_usecase.dart';
+import '../../features/beneficiary/domain/usecases/save_beneficiary_usecase.dart';
 import '../../features/transfer/presentation/cubit/transfer_cubit.dart';
+import '../../features/beneficiary/presentation/cubit/beneficiary_cubit.dart';
 import 'package:easy_pay_app/features/withdraw/domain/repositories/withdraw_repository.dart';
 import 'package:easy_pay_app/features/withdraw/domain/usecases/execute_withdraw_usecase.dart';
 import 'package:easy_pay_app/features/withdraw/data/repositories/withdraw_repository_impl.dart';
@@ -71,6 +75,9 @@ Future<void> setupDependencies() async {
 
   getIt.registerLazySingleton(
         () => BiometricService(getIt()),
+  );
+  getIt.registerLazySingleton(
+        () => MediaService(),
   );
 
 //// Biometric
@@ -123,9 +130,6 @@ Future<void> setupDependencies() async {
         () => GetCardsUseCase(getIt()),
   );
   getIt.registerLazySingleton(
-        () => GetBeneficiariesUseCase(getIt()),
-  );
-  getIt.registerLazySingleton(
         () => ExecuteTransferUseCase(getIt()),
   );
   getIt.registerFactory<TransferCubit>(
@@ -134,6 +138,23 @@ Future<void> setupDependencies() async {
       getBeneficiariesUseCase: getIt(),
       executeTransferUseCase: getIt(),
       biometricService: getIt(),
+    ),
+  );
+
+  // Beneficiary Feature
+  getIt.registerLazySingleton<BeneficiaryRepository>(
+        () => BeneficiaryRepositoryImpl(),
+  );
+  getIt.registerLazySingleton(
+        () => GetBeneficiariesUseCase(getIt()),
+  );
+  getIt.registerLazySingleton(
+        () => SaveBeneficiaryUseCase(getIt()),
+  );
+  getIt.registerFactory<BeneficiaryCubit>(
+        () => BeneficiaryCubit(
+      getBeneficiariesUseCase: getIt(),
+      saveBeneficiaryUseCase: getIt(),
     ),
   );
 

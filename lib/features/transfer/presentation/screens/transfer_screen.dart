@@ -5,16 +5,17 @@ import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_checkbox.dart';
 import 'package:easy_pay_app/features/transfer/presentation/widgets/choose_beneficiary_section.dart';
-import 'package:easy_pay_app/features/transfer/presentation/widgets/choose_transaction_section.dart';
+import 'package:easy_pay_app/features/beneficiary/presentation/widgets/add_beneficiary_type_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/features/beneficiary/domain/entities/beneficiary.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/transfer_cubit.dart';
 import '../cubit/transfer_state.dart';
 import '../utils/transfer_controllers_manager.dart';
 import '../widgets/account_dropdown.dart';
-import '../widgets/transfer_form_section.dart';
+import 'package:easy_pay_app/core/widgets/beneficiary_form_fields.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
-import 'package:easy_pay_app/features/transfer/presentation/widgets/bank_branch_selector_widget.dart';
+import 'package:easy_pay_app/core/widgets/custom_selection_dialog.dart';
 
 class TransferScreen extends StatelessWidget {
   final _controllersManager = TransferControllersManager();
@@ -23,6 +24,34 @@ class TransferScreen extends StatelessWidget {
 
   void _onStateChanged(BuildContext context, TransferState state) {
     _controllersManager.syncState(state);
+  }
+
+  void _showBankSelection(BuildContext parentContext, TransferCubit cubit, TransferState state) {
+    CustomSelectionDialog.show<TransferCubit, TransferState>(
+      context: parentContext,
+      cubit: cubit,
+      title: 'choose_beneficiary_bank'.tr(),
+      selectedValue: state.selectedBank,
+      itemsProvider: (s) => s.filteredBanks,
+      searchQueryProvider: (s) => s.bankSearchQuery,
+      onSearchChanged: cubit.updateBankSearch,
+      onSelected: cubit.selectBank,
+      onDismissed: cubit.resetSearchQueries,
+    );
+  }
+
+  void _showBranchSelection(BuildContext parentContext, TransferCubit cubit, TransferState state) {
+    CustomSelectionDialog.show<TransferCubit, TransferState>(
+      context: parentContext,
+      cubit: cubit,
+      title: 'choose_beneficiary_branch'.tr(),
+      selectedValue: state.selectedBranch,
+      itemsProvider: (s) => s.filteredBranches,
+      searchQueryProvider: (s) => s.branchSearchQuery,
+      onSearchChanged: cubit.updateBranchSearch,
+      onSelected: cubit.selectBranch,
+      onDismissed: cubit.resetSearchQueries,
+    );
   }
 
   @override
@@ -69,14 +98,23 @@ class TransferScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: context.scaleHeight(24)),
-                  ChooseTransactionSection(
-                    selectedTransactionType: state.selectedTransactionType,
+                  Text(
+                    'choose_transaction'.tr(),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textLight,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  AddBeneficiaryTypeSelector(
+                    selectedType: state.selectedTransactionType,
                     isEnabled: isTransactionTypeEnabled,
-                    onTransactionTypeSelected: cubit.selectTransactionType,
+                    onTypeSelected: cubit.selectTransactionType,
                   ),
                   SizedBox(height: context.scaleHeight(24)),
                   ChooseBeneficiarySection(
-                    beneficiaries: state.beneficiaries,
+                    beneficiaries: state.filteredBeneficiaries,
                     selectedBeneficiary: state.selectedBeneficiary,
                     isManualBeneficiary: state.isManualBeneficiary,
                     isEnabled: isBeneficiaryEnabled,
@@ -88,62 +126,34 @@ class TransferScreen extends StatelessWidget {
                       _controllersManager.contentController.clear();
                     },
                     onSelectBeneficiary: cubit.selectBeneficiary,
+                    onFindBeneficiary: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutesName.beneficiaryDirectoryScreen,
+                      ).then((result) {
+                        cubit.loadTransferData();
+                        if (result is Beneficiary) {
+                          cubit.selectBeneficiary(result);
+                        }
+                      });
+                    },
                   ),
-                  if (state.selectedTransactionType == 2) ...[
-                    SizedBox(height: context.scaleHeight(16)),
-                    Text(
-                      'choose_bank'.tr(),
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textLight,
-                      ),
-                    ),
-                    SizedBox(height: context.scaleHeight(6)),
-                    BankBranchSelectorWidget(
-                      label: 'choose_beneficiary_bank'.tr(),
-                      value: state.selectedBank,
-                      placeholder: 'choose_bank'.tr(),
-                      isEnabled: isFormFieldsEnabled,
-                      itemsProvider: (s) => s.filteredBanks,
-                      searchQueryProvider: (s) => s.bankSearchQuery,
-                      onSearchChanged: cubit.updateBankSearch,
-                      onSelected: cubit.selectBank,
-                      onDismissed: cubit.resetSearchQueries,
-                    ),
-                    SizedBox(height: context.scaleHeight(16)),
-                    Text(
-                      'choose_branch'.tr(),
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textLight,
-                      ),
-                    ),
-                    SizedBox(height: context.scaleHeight(6)),
-                    BankBranchSelectorWidget(
-                      label: 'choose_beneficiary_branch'.tr(),
-                      value: state.selectedBranch,
-                      placeholder: 'choose_branch'.tr(),
-                      isEnabled: isFormFieldsEnabled && state.selectedBank.isNotEmpty,
-                      itemsProvider: (s) => s.filteredBranches,
-                      searchQueryProvider: (s) => s.branchSearchQuery,
-                      onSearchChanged: cubit.updateBranchSearch,
-                      onSelected: cubit.selectBranch,
-                      onDismissed: cubit.resetSearchQueries,
-                    ),
-                  ],
-                  SizedBox(height: context.scaleHeight(24)),
-                  TransferFormSection(
+                  BeneficiaryFormFields(
+                    isBankBranchVisible: state.selectedTransactionType == 2,
+                    isAmountContentVisible: true,
+                    isEnabled: isFormFieldsEnabled,
                     nameController: _controllersManager.nameController,
                     cardController: _controllersManager.cardController,
                     amountController: _controllersManager.amountController,
                     contentController: _controllersManager.contentController,
                     onNameChanged: cubit.updateName,
-                    onCardChanged: cubit.updateCardNumber,
+                    onCardNumberChanged: cubit.updateCardNumber,
                     onAmountChanged: cubit.updateAmount,
                     onContentChanged: cubit.updateContent,
-                    isEnabled: isFormFieldsEnabled,
+                    selectedBank: state.selectedBank,
+                    selectedBranch: state.selectedBranch,
+                    onChooseBank: () => _showBankSelection(context, cubit, state),
+                    onChooseBranch: () => _showBranchSelection(context, cubit, state),
                     isAmountExceeded: state.isAmountExceeded,
                   ),
                    SizedBox(height: context.scaleHeight(16)),

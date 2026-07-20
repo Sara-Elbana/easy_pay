@@ -13,6 +13,7 @@ import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.d
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
+import 'package:easy_pay_app/features/beneficiary/domain/entities/beneficiary.dart';
 import 'package:easy_pay_app/features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:easy_pay_app/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:easy_pay_app/features/onboarding/presentation/pages/splash_screen.dart';
@@ -20,7 +21,11 @@ import 'package:easy_pay_app/features/onboarding/presentation/pages/welcome_scre
 import 'package:easy_pay_app/features/transfer/presentation/screens/transfer_screen.dart';
 import 'package:easy_pay_app/features/transfer/presentation/screens/confirm_screen.dart';
 import 'package:easy_pay_app/features/transfer/presentation/screens/success_transfer_screen.dart';
+import 'package:easy_pay_app/features/beneficiary/presentation/screens/beneficiary_directory_screen.dart';
+import 'package:easy_pay_app/features/beneficiary/presentation/screens/add_beneficiary_screen.dart';
+import 'package:easy_pay_app/features/beneficiary/presentation/screens/beneficiary_detail_screen.dart';
 import 'package:easy_pay_app/features/transfer/presentation/cubit/transfer_cubit.dart';
+import 'package:easy_pay_app/features/beneficiary/presentation/cubit/beneficiary_cubit.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/screens/main_screen.dart';
 import 'package:easy_pay_app/features/exchange_rate/presentation/screens/exchange_rate_screen.dart';
 import 'package:easy_pay_app/features/exchange_rate/presentation/cubit/exchange_rate_cubit.dart';
@@ -87,5 +92,34 @@ class AppRoutes {
         ),
     AppRoutesName.payTheBillScreen: (_) => const PayTheBillScreen(),
     AppRoutesName.interestRateScreen: (_) => const InterestRateScreen(),
+    AppRoutesName.beneficiaryDirectoryScreen: (_) => BlocProvider(
+          create: (_) => getIt<BeneficiaryCubit>(),
+          child: const BeneficiaryDirectoryScreen(),
+        ),
+    AppRoutesName.addBeneficiaryScreen: (context) {
+      final arguments = ModalRoute.of(context)?.settings.arguments;
+      if (arguments is BeneficiaryCubit) {
+        return BlocProvider.value(
+          value: arguments,
+          child: const AddBeneficiaryScreen(),
+        );
+      }
+      return BlocProvider(
+        create: (_) => getIt<BeneficiaryCubit>(),
+        child: const AddBeneficiaryScreen(),
+      );
+    },
+    AppRoutesName.beneficiaryDetailScreen: (context) {
+      final arguments = ModalRoute.of(context)?.settings.arguments;
+      if (arguments is Map<String, dynamic>) {
+        final cubit = arguments['cubit'] as BeneficiaryCubit;
+        final beneficiary = arguments['beneficiary'] as Beneficiary;
+        return BlocProvider.value(
+          value: cubit,
+          child: BeneficiaryDetailScreen(beneficiary: beneficiary),
+        );
+      }
+      throw Exception('Invalid arguments for BeneficiaryDetailScreen');
+    },
   };
 }

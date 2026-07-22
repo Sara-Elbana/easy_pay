@@ -34,10 +34,8 @@ class AppInformationScreen extends StatelessWidget {
               showArrow: false,
               trailing: Text(
                 "dec_2019".tr(),
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                  fontSize: context.scaleWidth(14),
+                style: AppTextStyles.titleMedium.copyWith(
+                  color: AppColors.primary
                 ),
               ),
             ),
@@ -46,10 +44,8 @@ class AppInformationScreen extends StatelessWidget {
               showArrow: false,
               trailing: Text(
                 "v_9_0_2".tr(),
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                  fontSize: context.scaleWidth(14),
+                style: AppTextStyles.titleMedium.copyWith(
+                    color: AppColors.primary
                 ),
               ),
             ),
@@ -58,10 +54,8 @@ class AppInformationScreen extends StatelessWidget {
               showArrow: false,
               trailing: Text(
                 "english".tr(),
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                  fontSize: context.scaleWidth(14),
+                style: AppTextStyles.titleMedium.copyWith(
+                    color: AppColors.primary
                 ),
               ),
             ),

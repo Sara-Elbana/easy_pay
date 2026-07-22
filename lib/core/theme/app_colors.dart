@@ -83,4 +83,5 @@ class AppColors {
   // Banking backgrounds
   static const Color accountBackground = Color(0xFFF0F9FF);
   static const Color transactionBackground = Color(0xFFFAF5FF);
+
 }

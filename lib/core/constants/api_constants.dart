@@ -31,8 +31,6 @@ class ApiConstants {
   // exchange rates
 
   static const String currencyTopBaseUrl = 'https://currency-top.top';
-  static const String currencyTopApiKey =
-      'KpyB9xAPdOw5ZJ5OlAeJrE9gwQlcSRB3uUyykW2f';
   static const String currencyTopCurrenciesEndpoint = '/api/v1/currencies';
   static const String currencyTopConvertEndpoint = '/api/v1/convert';
 

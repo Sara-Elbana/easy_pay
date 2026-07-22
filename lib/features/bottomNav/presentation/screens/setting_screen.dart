@@ -24,7 +24,7 @@ class SettingScreen extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.arrow_back_ios_new,
-                color: Colors.white,
+                color: AppColors.white,
               ),
             ),
           ),
@@ -44,9 +44,7 @@ class SettingScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      // Space for avatar
                       SizedBox(height: context.scaleHeight(72)),
-                      // User name
                       Text(
                         'Push Puttichai',
                         style: TextStyle(
@@ -57,12 +55,10 @@ class SettingScreen extends StatelessWidget {
                           height: 1.5,
                         ),
                       ),
-
                       SizedBox(height: context.scaleHeight(24)),
-
-                      // Settings list
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: context.scaleWidth(24)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: context.scaleWidth(24)),
                         child: Column(
                           children: [
                             SettingRowItem(
@@ -96,8 +92,6 @@ class SettingScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Avatar overlapping the header and white card
                 Positioned(
                   top: -context.scaleHeight(50),
                   left: 0,

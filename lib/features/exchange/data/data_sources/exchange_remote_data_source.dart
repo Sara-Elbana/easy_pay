@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_pay_app/core/network/api_config.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/dio_client.dart';
 
@@ -32,7 +33,7 @@ class ExchangeRemoteDataSourceImpl implements ExchangeRemoteDataSource {
         },
         options: Options(
           headers: {
-            'x-api-key': ApiConstants.currencyTopApiKey,
+            'x-api-key': ApiConfig.currencyTopApiKey,
           },
         ),
       );

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/network/api_config.dart';
 import 'package:easy_pay_app/core/network/dio_client.dart';
 
 abstract class ExchangeRateRemoteDataSource {
@@ -26,7 +27,7 @@ class ExchangeRateRemoteDataSourceImpl implements ExchangeRateRemoteDataSource {
         },
         options: Options(
           headers: {
-            'x-api-key': ApiConstants.currencyTopApiKey,
+            'x-api-key': ApiConfig.currencyTopApiKey,
           },
         ),
       );

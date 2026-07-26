@@ -18,30 +18,50 @@ class MapCubit extends Cubit<MapState> {
   void searchPlaces(AutoCompleteRequest request) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
 
+<<<<<<< HEAD
     if (request.query.trim().isEmpty) {
+=======
+    if (request.query!.trim().isEmpty) {
+>>>>>>> origin/saraReffat
       emit(MapInitial());
       return;
     }
 
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       emit(AutocompleteLoading());
+<<<<<<< HEAD
       try {
         final suggestions = await getAutocompleteUseCase(request: request);
         emit(AutocompleteSuccess(suggestions));
       } catch (e) {
         emit(AutocompleteError(e.toString().replaceAll('Exception: ', '')));
       }
+=======
+      final result = await getAutocompleteUseCase(request: request);
+      result.fold(
+        (failure) => emit(AutocompleteError(failure.message)),
+        (suggestions) => emit(AutocompleteSuccess(suggestions)),
+      );
+>>>>>>> origin/saraReffat
     });
   }
 
   Future<void> selectPlace(AutoPlaceDetailsRequest request) async {
     emit(PlaceDetailsLoading());
+<<<<<<< HEAD
     try {
       final details = await getPlaceDetailsUseCase(request);
       emit(PlaceDetailsSuccess(details));
     } catch (e) {
       emit(PlaceDetailsError(e.toString().replaceAll('Exception: ', '')));
     }
+=======
+    final result = await getPlaceDetailsUseCase(request);
+    result.fold(
+      (failure) => emit(PlaceDetailsError(failure.message)),
+      (details) => emit(PlaceDetailsSuccess(details)),
+    );
+>>>>>>> origin/saraReffat
   }
 
   @override

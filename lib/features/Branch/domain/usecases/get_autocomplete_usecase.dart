@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-import 'package:dartz/dartz.dart';
-import 'package:easy_pay_app/core/errors/failures.dart';
->>>>>>> origin/saraReffat
 import 'package:easy_pay_app/features/Branch/domain/entities/auto__place_details_request.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/auto_complete_request.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/place_details.dart';
@@ -14,12 +9,7 @@ class GetAutocompleteUseCase {
 
   GetAutocompleteUseCase(this.repository);
 
-<<<<<<< HEAD
   Future<List<PlaceSuggestion>> call({required AutoCompleteRequest request}) {
-=======
-  Future<Either<Failure, List<PlaceSuggestion>>> call(
-      {required AutoCompleteRequest request}) {
->>>>>>> origin/saraReffat
     return repository.getAutocomplete(request);
   }
 }
@@ -29,11 +19,7 @@ class GetPlaceDetailsUseCase {
 
   GetPlaceDetailsUseCase(this.repository);
 
-<<<<<<< HEAD
   Future<PlaceDetails> call(AutoPlaceDetailsRequest request) {
-=======
-  Future<Either<Failure, PlaceDetails>> call(AutoPlaceDetailsRequest request) {
->>>>>>> origin/saraReffat
     return repository.getPlaceDetails(request);
   }
 }

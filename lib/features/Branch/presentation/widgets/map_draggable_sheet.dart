@@ -74,11 +74,11 @@ class _MapDraggableSheetState extends State<MapDraggableSheet> {
         return MapSearchField(
           controller: _searchController,
           onChanged: (val) {
-            context.read<MapCubit>().searchPlaces(AutoCompleteRequest(query: val));
+            context.read<MapCubit>().searchPlaces(AutoCompleteRequest(query: val) as String);
           },
           onClear: () {
             _searchController.clear();
-            context.read<MapCubit>().searchPlaces(const AutoCompleteRequest(query:""));
+            context.read<MapCubit>().searchPlaces(const AutoCompleteRequest(query:"") as String);
           },
         );
       },
@@ -133,7 +133,7 @@ class _MapDraggableSheetState extends State<MapDraggableSheet> {
             FocusScope.of(context).unfocus();
             _searchController.text = item.mainText;
             final request = AutoPlaceDetailsRequest(placeId: item.placeId);
-            context.read<MapCubit>().selectPlace(request);
+            context.read<MapCubit>().selectPlace(request.placeId);
           },
         );
       },

@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:easy_pay_app/features/Branch/domain/entities/auto__place_details_request.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/auto_complete_request.dart';
 import 'package:easy_pay_app/features/Branch/domain/usecases/get_autocomplete_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'map_state.dart';
@@ -15,31 +13,33 @@ class MapCubit extends Cubit<MapState> {
     required this.getPlaceDetailsUseCase,
   }) : super(MapInitial());
 
-  void searchPlaces(AutoCompleteRequest request) {
+  void searchPlaces(String query) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
 
-    if (request.query!.trim().isEmpty) {
+    if (query.trim().isEmpty) {
       emit(MapInitial());
       return;
     }
 
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       emit(AutocompleteLoading());
-      final result = await getAutocompleteUseCase(request: request);
-      result.fold(
-        (failure) => emit(AutocompleteError(failure.message)),
-        (suggestions) => emit(AutocompleteSuccess(suggestions)),
-      );
+      try {
+        final suggestions = await getAutocompleteUseCase(query);
+        emit(AutocompleteSuccess(suggestions));
+      } catch (e) {
+        emit(AutocompleteError(e.toString().replaceAll('Exception: ', '')));
+      }
     });
   }
 
-  Future<void> selectPlace(AutoPlaceDetailsRequest request) async {
+  Future<void> selectPlace(String placeId) async {
     emit(PlaceDetailsLoading());
-    final result = await getPlaceDetailsUseCase(request);
-    result.fold(
-      (failure) => emit(PlaceDetailsError(failure.message)),
-      (details) => emit(PlaceDetailsSuccess(details)),
-    );
+    try {
+      final details = await getPlaceDetailsUseCase(placeId);
+      emit(PlaceDetailsSuccess(details));
+    } catch (e) {
+      emit(PlaceDetailsError(e.toString().replaceAll('Exception: ', '')));
+    }
   }
 
   @override

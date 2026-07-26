@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/place_entity.dart';
 import 'package:easy_pay_app/features/Branch/domain/repositories/map_repository.dart';
 
@@ -7,7 +6,7 @@ class GetAutocompleteUseCase {
 
   GetAutocompleteUseCase(this.repository);
 
-  Future<Either<Failure, List<PlaceSuggestion>>> call(String query) {
+  Future<List<PlaceSuggestion>> call(String query) {
     return repository.getAutocomplete(query);
   }
 }
@@ -17,7 +16,7 @@ class GetPlaceDetailsUseCase {
 
   GetPlaceDetailsUseCase(this.repository);
 
-  Future<Either<Failure, PlaceDetails>> call(String placeId) {
+  Future<PlaceDetails> call(String placeId) {
     return repository.getPlaceDetails(placeId);
   }
 }

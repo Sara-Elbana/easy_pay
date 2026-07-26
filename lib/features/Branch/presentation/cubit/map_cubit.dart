@@ -23,21 +23,23 @@ class MapCubit extends Cubit<MapState> {
 
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       emit(AutocompleteLoading());
-      final result = await getAutocompleteUseCase(query);
-      result.fold(
-        (failure) => emit(AutocompleteError(failure.message)),
-        (suggestions) => emit(AutocompleteSuccess(suggestions)),
-      );
+      try {
+        final suggestions = await getAutocompleteUseCase(query);
+        emit(AutocompleteSuccess(suggestions));
+      } catch (e) {
+        emit(AutocompleteError(e.toString().replaceAll('Exception: ', '')));
+      }
     });
   }
 
   Future<void> selectPlace(String placeId) async {
     emit(PlaceDetailsLoading());
-    final result = await getPlaceDetailsUseCase(placeId);
-    result.fold(
-      (failure) => emit(PlaceDetailsError(failure.message)),
-      (details) => emit(PlaceDetailsSuccess(details)),
-    );
+    try {
+      final details = await getPlaceDetailsUseCase(placeId);
+      emit(PlaceDetailsSuccess(details));
+    } catch (e) {
+      emit(PlaceDetailsError(e.toString().replaceAll('Exception: ', '')));
+    }
   }
 
   @override

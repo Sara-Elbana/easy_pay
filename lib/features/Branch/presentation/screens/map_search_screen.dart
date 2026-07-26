@@ -1,6 +1,6 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/place_entity.dart';
+import 'package:easy_pay_app/features/Branch/domain/entities/place_details.dart';
 import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
 import 'package:easy_pay_app/features/Branch/presentation/cubit/map_state.dart';
 import 'package:easy_pay_app/features/Branch/presentation/widgets/map_draggable_sheet.dart';

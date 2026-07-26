@@ -1,0 +1,14 @@
+import 'package:dio/dio.dart';
+import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/features/profile/data/models/profile_model.dart';
+
+class ProfileRemoteDataSource {
+  final Dio dio;
+
+  ProfileRemoteDataSource(this.dio);
+
+  Future<ProfileModel> getProfileData() async {
+    final response = await dio.get(ApiConstants.profileEndpoint);
+    return ProfileModel.fromJson(response.data);
+  }
+}

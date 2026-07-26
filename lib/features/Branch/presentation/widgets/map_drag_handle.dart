@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MapDragHandle extends StatelessWidget {
@@ -12,7 +13,7 @@ class MapDragHandle extends StatelessWidget {
           width: 40,
           height: 5,
           decoration: BoxDecoration(
-            color: Colors.grey[300],
+            color: AppColors.gray,
             borderRadius: BorderRadius.circular(10),
           ),
         ),

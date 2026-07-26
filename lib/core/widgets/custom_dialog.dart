@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class CustomDialog extends StatelessWidget {
   final String title;
   final String supTitle;
-  CustomDialog({super.key, required this.title, required this.supTitle});
+   CustomDialog({super.key, required this.title, required this.supTitle});
 
   final TextEditingController emailController = TextEditingController();
 
@@ -29,14 +29,12 @@ class CustomDialog extends StatelessWidget {
         children: [
           Text(
             title,
-
             style: AppTextStyles.titleLarge.copyWith(color: AppColors.black),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: size.height * 0.02),
           Text(
             supTitle,
-
             style: AppTextStyles.bodyLarge.copyWith(color: AppColors.gray800),
           ),
         ],

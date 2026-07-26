@@ -30,7 +30,7 @@ class SearchScreen extends StatelessWidget {
               subtitle: 'search_for_branch'.tr(),
               imageAsset: AppAssets.branchIllus,
               onTap: () {
-                Navigator.pushNamed(context, AppRoutesName.mapSearchScreen);
+               Navigator.pushNamed(context, AppRoutesName.mapSearchScreen);
               },
             ),
             SearchCardWidget(

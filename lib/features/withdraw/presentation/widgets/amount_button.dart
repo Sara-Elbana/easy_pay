@@ -31,7 +31,7 @@ class AmountButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(context.scaleWidth(15)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: Colors.black.withAlpha(500),
                 offset: const Offset(0, 5),
                 blurRadius: 30,
                 spreadRadius: 0,

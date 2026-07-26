@@ -1,7 +1,8 @@
 import 'dart:developer' as developer;
 import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
-import 'package:easy_pay_app/features/Branch/data/models/place_model.dart';
+import 'package:easy_pay_app/features/Branch/data/models/place_details_model.dart';
+import 'package:easy_pay_app/features/Branch/data/models/place_suggestion_model.dart';
 
 abstract class MapRemoteDataSource {
   Future<List<PlaceSuggestionModel>> getAutocomplete(String query);

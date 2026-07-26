@@ -8,6 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await setupDependencies();
+  //await dotenv.load(fileName: ".env");
 
   runApp(
     EasyLocalization(

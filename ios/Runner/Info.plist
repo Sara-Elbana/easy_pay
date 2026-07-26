@@ -47,5 +47,9 @@
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>This app requires Face ID permission to authenticate users using biometric credentials.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires photo library access to choose beneficiary avatar images.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires camera access to take beneficiary avatar images.</string>
 </dict>
 </plist>

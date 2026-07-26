@@ -2,6 +2,7 @@ import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -18,11 +19,7 @@ class ProfileHeader extends StatelessWidget {
         SizedBox(height: context.scaleHeight(12)),
         Text(
           'Push Puttichai',
-          style: TextStyle(
-            fontSize: context.scaleWidth(18),
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
-          ),
+          style: AppTextStyles.transactionAmount.copyWith(fontSize: context.scaleWidth(AppTextStyles.transactionAmount.fontSize ?? 18), color: AppColors.primary),
         ),
       ],
     );

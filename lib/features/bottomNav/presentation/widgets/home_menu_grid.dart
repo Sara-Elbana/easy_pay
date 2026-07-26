@@ -20,7 +20,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.accountAndCardIcon,
           title: "account_and_card".tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutesName.accountScreen);
+          },
         ),
         GridMenuItem(
           iconPath: AppAssets.transferIcon,
@@ -32,7 +34,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.withdrawIcon,
           title: "withdraw".tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutesName.withdrawScreen);
+          },
         ),
         GridMenuItem(
           iconPath: AppAssets.prepaidIcon,
@@ -64,7 +68,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.beneficiaryIcon,
           title: "beneficiary".tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutesName.beneficiaryDirectoryScreen);
+          },
         ),
       ],
     );

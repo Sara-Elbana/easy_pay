@@ -37,3 +37,7 @@ class AuthFailure extends AuthState {
 class BiometricSuccess extends AuthState {
   const BiometricSuccess();
 }
+
+class SignOutSuccess extends AuthState {
+  const SignOutSuccess();
+}

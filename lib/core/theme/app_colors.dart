@@ -22,6 +22,32 @@ class AppColors {
   static const Color dotTeal = Color(0xFF00F0FF);
   static const Color dotBlue = Color(0xFF0077FF);
 
+  // Message Card Icon Backgrounds
+  static const Color messagePink = Color(0xFFFF4267);
+  static const Color messageBlue = Color(0xFF0890FE);
+  static const Color messageOrange = Color(0xFFFFAF2A);
+  static const Color messageTeal = Color(0xFF52D5BA);
+
+  // Consolidated General UI Colors
+  static const Color shadowColor = Color(0x0D000000);
+  static const Color lightGray = Color(0xFF989898);
+  static const Color inactiveIndicator = Color(0xffD9D9D9);
+  static const Color darkGreen = Color(0xff0E2E14);
+  static const Color lightGreen = Color(0xffDDF8DF);
+  static const Color ultraLightGreen = Color(0xffF8FFF8);
+  static const Color charcoal = Color(0xff1B1B1B);
+  static const Color darkGray = Color(0xff8E8E8E);
+  static const Color bgPurpleLight = Color(0xFFF3F4F9);
+  static const Color chatBgColor = Color(0xFFF2F1F9);
+  static const Color offBlack = Color(0xFF1E1E1E);
+  static const Color thinDivider = Color(0xFFF5F5F5);
+  static const Color mediumGray = Color(0xFFBFBFBF);
+  static const Color coolGray = Color(0xFF898989);
+  static const Color softGray = Color(0xFFEEEEEE);
+  static const Color primaryOpacity7 = Color(0x123629B7);
+  static const Color borderGray = Color(0xFFE0E0E0);
+  static const Color dividerColor = Color(0xFFECECEC);
+
   // Button States
   static const Color buttonDisabled = Color(0xFFECECFB);
   static const Color textDisabled = Color(0xFFB9B7E8);

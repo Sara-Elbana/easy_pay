@@ -1,12 +1,7 @@
 class ApiConstants {
   // API Base Configuration
-  static const String baseUrl = 'https://api.example.com';
+  static const String baseUrl = 'https://ebank.dotlaa.com/api';
   static const String apiVersion = 'v1';
-
-  //Google Maps Endpoints
-  static const String googleMapsBaseUrl = 'https://maps.googleapis.com';
-  static const String autocompleteEndpoint = '/maps/api/place/autocomplete/json';
-  static const String placeDetailsEndpoint = '/maps/api/place/details/json';
 
   // Timeouts (in seconds)
   static const int connectionTimeout = 30;
@@ -20,19 +15,26 @@ class ApiConstants {
 
   // Endpoints
   // Authentication
-  static const String loginEndpoint = '/auth/login';
-  static const String logoutEndpoint = '/auth/logout';
+  static const String registerEndpoint = '/register';
+  static const String loginEndpoint = '/login';
+  static const String logoutEndpoint = '/logout';
   static const String refreshTokenEndpoint = '/auth/refresh';
+  static const String forgotPasswordSendEndpoint = '/forgot-password/send';
+  static const String forgotPasswordVerifyEndpoint = '/forgot-password/verify';
+  static const String forgotPasswordResetEndpoint = '/forgot-password/reset';
 
   // User
   static const String userProfileEndpoint = '/users/profile';
   static const String updateProfileEndpoint = '/users/profile';
 
-  // exchange rates
-
-  static const String currencyTopBaseUrl = 'https://currency-top.top';
-  static const String currencyTopCurrenciesEndpoint = '/api/v1/currencies';
-  static const String currencyTopConvertEndpoint = '/api/v1/convert';
+  // ApiBank Public Endpoints
+  static const String branchesEndpoint = '/branches';
+  static const String interestRatesEndpoint = '/interest-rates';
+  static const String exchangeRatesEndpoint = '/exchange-rates';
+  static const String convertCurrencyEndpoint = '/exchange/convert';
+  static const String externalBanksEndpoint = '/external-banks';
+  static const String appInfoEndpoint = '/app-info';
+  static const String savingsTermsEndpoint = '/savings/terms';
 
   // HTTP Headers
   static const String contentTypeJson = 'application/json';

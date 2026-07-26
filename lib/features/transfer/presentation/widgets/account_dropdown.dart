@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import '../../domain/entities/transfer_card.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class AccountDropdown extends StatelessWidget {
   final List<TransferCard> cards;
@@ -38,11 +39,7 @@ class AccountDropdown extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'choose_account_card'.tr(),
-                      style: const TextStyle(
-                        color: AppColors.textLight,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textLight),
                     ),
                   ),
                 ],
@@ -60,11 +57,7 @@ class AccountDropdown extends StatelessWidget {
                     value: card,
                     child: Text(
                       card.cardNumber,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textDark,
-                      ),
+                      style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textDark),
                     ),
                   );
                 }),

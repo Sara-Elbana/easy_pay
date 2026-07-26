@@ -30,12 +30,12 @@ class OnboardingHeader extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: Theme.of(context).brightness == Brightness.dark
                     ? [
-                        const Color(0xff0E2E14),
+                        AppColors.darkGreen,
                         Theme.of(context).scaffoldBackgroundColor,
                       ]
                     : const [
-                        Color(0xffDDF8DF),
-                        Color(0xffF8FFF8),
+                        AppColors.lightGreen,
+                        AppColors.ultraLightGreen,
                       ],
               ),
             ),

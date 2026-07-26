@@ -9,6 +9,10 @@ import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:flutter/material.dart';
 
+import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
+import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 class ChangePasswordScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final newPasswordController = TextEditingController();
@@ -35,94 +39,115 @@ class ChangePasswordScreen extends StatelessWidget {
         title: "change_password".tr(),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.05,
-            vertical: size.height * 0.02,
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: context.scaleHeight(10)),
-              Card(
-                color: theme.brightness == Brightness.dark
-                    ? AppColors.gray800
-                    : Colors.white,
-                elevation: 4,
-                shadowColor: AppColors.gray200.withAlpha(50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(context.scaleWidth(24)),
+        child: BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+          listener: (context, state) {
+            if (state.isPasswordReset) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutesName.changePasswordSuccessScreen,
+                (route) => false,
+              );
+            } else if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage!),
+                  backgroundColor: AppColors.error,
                 ),
-                child: Padding(
-                  padding: EdgeInsets.all(context.scaleWidth(24)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "new_password".tr(),
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.gray500,
-                          fontWeight: FontWeight.w500,
+              );
+            }
+          },
+          builder: (context, state) {
+            final cubit = context.read<ForgotPasswordCubit>();
+            return SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.05,
+                vertical: size.height * 0.02,
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: context.scaleHeight(10)),
+                    Card(
+                      color: theme.brightness == Brightness.dark
+                          ? AppColors.gray800
+                          : Colors.white,
+                      elevation: 4,
+                      shadowColor: AppColors.gray200.withAlpha(50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(context.scaleWidth(24)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(context.scaleWidth(24)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "new_password".tr(),
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                color: AppColors.gray500,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: context.scaleHeight(8)),
+                            CustomTextField(
+                              hintText: "new_password".tr(),
+                              isPassword: true,
+                              controller: newPasswordController,
+                              textInputAction: TextInputAction.next,
+                              validator: Validators.validatePassword,
+                            ),
+                            SizedBox(height: context.scaleHeight(16)),
+                            Text(
+                              "confirm_password".tr(),
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                color: AppColors.gray500,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: context.scaleHeight(8)),
+                            CustomTextField(
+                              hintText: "confirm_password".tr(),
+                              isPassword: true,
+                              controller: confirmPasswordController,
+                              textInputAction: TextInputAction.done,
+                              validator: (value) => Validators.validateConfirmPassword(
+                                value,
+                                newPasswordController.text,
+                              ),
+                            ),
+                            SizedBox(height: context.scaleHeight(24)),
+                            ValueListenableBuilder<bool>(
+                              valueListenable: isButtonEnabled,
+                              builder: (context, enabled, _) {
+                                return CustomButton(
+                                  text: "change_password".tr(),
+                                  isLoading: state.isLoading,
+                                  onPressed: enabled && !state.isLoading
+                                      ? () {
+                                          if (_formKey.currentState?.validate() ?? false) {
+                                            FocusScope.of(context).unfocus();
+                                            cubit.resetPassword(
+                                              state.phoneNumber,
+                                              state.verificationCode,
+                                              newPasswordController.text.trim(),
+                                            );
+                                          }
+                                        }
+                                      : null,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: context.scaleHeight(8)),
-                      CustomTextField(
-                        hintText: "new_password".tr(),
-                        isPassword: true,
-                        controller: newPasswordController,
-                        textInputAction: TextInputAction.next,
-                        validator: Validators.validatePassword,
-                      ),
-                      SizedBox(height: context.scaleHeight(16)),
-                      Text(
-                        "confirm_password".tr(),
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.gray500,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(height: context.scaleHeight(8)),
-                      CustomTextField(
-                        hintText: "confirm_password".tr(),
-                        isPassword: true,
-                        controller: confirmPasswordController,
-                        textInputAction: TextInputAction.done,
-                        validator: (value) => Validators.validateConfirmPassword(
-                          value,
-                          newPasswordController.text,
-                        ),
-                      ),
-                      SizedBox(height: context.scaleHeight(24)),
-                      ValueListenableBuilder<bool>(
-                        valueListenable: isButtonEnabled,
-                        builder: (context, enabled, _) {
-                          return CustomButton(
-                            text: "change_password".tr(),
-                            onPressed: enabled
-                                ? () {
-                                    if (_formKey.currentState?.validate() ?? false) {
-                                      FocusScope.of(context).unfocus();
-                                      // Navigate to success screen
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        AppRoutesName.changePasswordSuccessScreen,
-                                        (route) => false,
-                                      );
-                                    }
-                                  }
-                                : null,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            );
+          },
         ),
       ),
     );

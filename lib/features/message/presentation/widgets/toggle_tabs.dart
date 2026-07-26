@@ -24,7 +24,7 @@ class ToggleTabs extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: selectedIndex == 0
                     ? AppColors.primary
-                    : const Color(0xFFF3F4F9),
+                    : AppColors.bgPurpleLight,
                 foregroundColor:
                     selectedIndex == 0 ? AppColors.white : Colors.grey[600],
                 elevation: 0,
@@ -45,7 +45,7 @@ class ToggleTabs extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: selectedIndex == 1
                     ? AppColors.primary
-                    : const Color(0xFFF3F4F9),
+                    : AppColors.bgPurpleLight,
                 foregroundColor:
                     selectedIndex == 1 ? AppColors.white : Colors.grey[600],
                 elevation: 0,

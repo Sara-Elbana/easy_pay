@@ -1,6 +1,7 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class SearchCardWidget extends StatefulWidget {
   final String title;
@@ -84,22 +85,12 @@ class _SearchCardWidgetState extends State<SearchCardWidget> {
                   children: [
                     Text(
                       widget.title,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: context.scaleWidth(16),
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textDark,
-                      ),
+                      style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: AppColors.textDark, fontFamily: 'Poppins'),
                     ),
                     SizedBox(height: context.scaleHeight(6)),
                     Text(
                       widget.subtitle,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: context.scaleWidth(12),
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.gray400,
-                      ),
+                      style: AppTextStyles.labelMedium.copyWith(fontSize: context.scaleWidth(AppTextStyles.labelMedium.fontSize ?? 12), color: AppColors.gray400, fontFamily: 'Poppins'),
                     ),
                   ],
                 ),

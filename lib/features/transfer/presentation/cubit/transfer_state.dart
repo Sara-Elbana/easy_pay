@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/beneficiary.dart';
+import '../../../beneficiary/domain/entities/beneficiary.dart';
 import '../../domain/entities/transfer_card.dart';
 import 'package:easy_pay_app/features/transfer/data/models/mock_transfer_data.dart';
 
@@ -99,6 +99,13 @@ class TransferState extends Equatable {
         amountVal > 0 &&
         (amountVal + fee) <= balanceVal &&
         content.trim().isNotEmpty;
+  }
+
+  List<Beneficiary> get filteredBeneficiaries {
+    if (selectedTransactionType == null) return const [];
+    return beneficiaries
+        .where((b) => b.type == selectedTransactionType)
+        .toList();
   }
 
   List<String> get filteredBanks {

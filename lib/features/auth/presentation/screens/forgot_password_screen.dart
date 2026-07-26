@@ -31,7 +31,17 @@ class ForgotPasswordScreen extends StatelessWidget {
         title: "forgot_password_title".tr(),
       ),
       body: SafeArea(
-        child: BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
+        child: BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+          listener: (context, state) {
+            if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage!),
+                  backgroundColor: AppColors.error,
+                ),
+              );
+            }
+          },
           builder: (context, state) {
             final cubit = context.read<ForgotPasswordCubit>();
 
@@ -123,11 +133,12 @@ class ForgotPasswordScreen extends StatelessWidget {
         SizedBox(height: context.scaleHeight(24)),
         CustomButton(
           text: "send".tr(),
-          onPressed: state.phoneNumber.trim().isNotEmpty
+          isLoading: state.isLoading,
+          onPressed: state.phoneNumber.trim().isNotEmpty && !state.isLoading
               ? () {
                   if (_formKey.currentState?.validate() ?? false) {
                     FocusScope.of(context).unfocus();
-                    cubit.sendCode();
+                    cubit.sendOtp(state.phoneNumber.trim());
                   }
                 }
               : null,
@@ -174,7 +185,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               child: CustomButton(
                 text: "resend".tr(),
                 onPressed: () {
-                  cubit.sendCode();
+                  cubit.sendOtp(state.phoneNumber);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("code_resent_success".tr()),
@@ -217,13 +228,20 @@ class ForgotPasswordScreen extends StatelessWidget {
         SizedBox(height: context.scaleHeight(24)),
         CustomButton(
           text: "change_password".tr(),
-          onPressed: state.verificationCode.trim().isNotEmpty
-              ? () {
+          isLoading: state.isLoading,
+          onPressed: state.verificationCode.trim().isNotEmpty && !state.isLoading
+              ? () async {
                   FocusScope.of(context).unfocus();
-                  Navigator.pushNamed(
-                    context,
-                    AppRoutesName.changePasswordScreen,
+                  await cubit.verifyOtp(
+                    state.phoneNumber.trim(),
+                    state.verificationCode.trim(),
                   );
+                  if (context.mounted && cubit.state.isCodeVerified) {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutesName.changePasswordScreen,
+                    );
+                  }
                 }
               : null,
         ),

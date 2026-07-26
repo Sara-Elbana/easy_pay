@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import '../../domain/entities/beneficiary.dart';
+import '../../../beneficiary/domain/entities/beneficiary.dart';
 import 'beneficiary_item.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class ChooseBeneficiarySection extends StatelessWidget {
   final List<Beneficiary> beneficiaries;
@@ -11,6 +12,7 @@ class ChooseBeneficiarySection extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onSelectManual;
   final ValueChanged<Beneficiary> onSelectBeneficiary;
+  final VoidCallback? onFindBeneficiary;
 
   const ChooseBeneficiarySection({
     super.key,
@@ -20,6 +22,7 @@ class ChooseBeneficiarySection extends StatelessWidget {
     required this.isEnabled,
     required this.onSelectManual,
     required this.onSelectBeneficiary,
+    this.onFindBeneficiary,
   });
 
   @override
@@ -34,29 +37,13 @@ class ChooseBeneficiarySection extends StatelessWidget {
             children: [
               Text(
                 'choose_beneficiary'.tr(),
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textLight,
-                ),
+                style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textLight),
               ),
               GestureDetector(
-                onTap: isEnabled
-                    ? () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('opening_beneficiary_directory'.tr()),
-                          ),
-                        );
-                      }
-                    : null,
+                onTap: isEnabled ? onFindBeneficiary : null,
                 child: Text(
                   'find_beneficiary'.tr(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: isEnabled ? AppColors.primary : AppColors.textLight,
-                  ),
+                  style: AppTextStyles.bodyMediumSemiBold.copyWith(color: isEnabled ? AppColors.primary : AppColors.textLight),
                 ),
               ),
             ],

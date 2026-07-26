@@ -1,5 +1,6 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CustomCheckbox extends StatelessWidget {
   final bool value;
@@ -55,11 +56,7 @@ class CustomCheckbox extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 label!,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textDark,
-                ),
+                style: AppTextStyles.labelLarge.copyWith(color: AppColors.textDark),
               ),
             ],
           ],

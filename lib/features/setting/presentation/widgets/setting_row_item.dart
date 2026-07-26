@@ -1,6 +1,7 @@
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class SettingRowItem extends StatelessWidget {
   final String title;
@@ -31,30 +32,18 @@ class SettingRowItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: context.scaleWidth(16),
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textDark,
-                      height: 24 / 16,
-                    ),
+                    style: AppTextStyles.titleMedium.copyWith(fontSize: context.scaleWidth(AppTextStyles.titleMedium.fontSize ?? 16), color: AppColors.textDark, height: 24 / 16, fontFamily: 'Poppins'),
                   ),
                 ),
 
-                subtitle != null?
-                  Visibility(
-                    visible: subtitle != null,
-                    child: Text(
-                      subtitle!,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: context.scaleWidth(12),
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF979797),
-                        height: 16 / 12,
-                      ),
-                    ),
-                  ): const SizedBox.shrink(),
+                if (subtitle != null) ...[
+                  Text(
+                    subtitle!,
+                    style: AppTextStyles.bodySmallSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodySmallSemiBold.fontSize ?? 12), color: AppColors.gray, height: 16 / 12, fontFamily: 'Poppins'),
+                  ),
+                  SizedBox(width: context.scaleWidth(8)),
+                ],
+
                 if (trailing != null)
                   trailing!
                 else if (showArrow)
@@ -69,7 +58,7 @@ class SettingRowItem extends StatelessWidget {
           const Divider(
             height: 1,
             thickness: 1,
-            color: Color(0xFFECECEC),
+            color: AppColors.dividerColor,
           ),
         ],
       ),

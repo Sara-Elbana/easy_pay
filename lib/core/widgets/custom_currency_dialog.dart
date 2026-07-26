@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CurrencyInfo {
   final String code;
@@ -48,12 +49,7 @@ class CustomCurrencyDialog extends StatelessWidget {
                   child: Text(
                     'select_currency'.tr(),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.gray900,
-                    ),
+                    style: AppTextStyles.transactionAmount.copyWith(color: AppColors.gray900, fontFamily: 'Poppins'),
                   ),
                 ),
                 GestureDetector(
@@ -92,12 +88,7 @@ class CustomCurrencyDialog extends StatelessWidget {
                           Expanded(
                             child: Text(
                               '${currency.symbol.isNotEmpty ? currency.symbol : currency.code} ( ${currency.name} )',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 16,
-                                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                                color: isSelected ? AppColors.primary : const Color(0xFF989898),
-                              ),
+                              style: AppTextStyles.bodyLarge.copyWith(color: isSelected ? AppColors.primary : AppColors.lightGray, fontFamily: 'Poppins'),
                             ),
                           ),
                           if (isSelected)

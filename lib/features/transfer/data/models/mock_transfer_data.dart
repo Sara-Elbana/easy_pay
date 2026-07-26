@@ -1,4 +1,4 @@
-import '../../domain/entities/beneficiary.dart';
+import '../../../beneficiary/domain/entities/beneficiary.dart';
 import '../../domain/entities/transfer_card.dart';
 
 const List<TransferCard> mockCards = [
@@ -19,24 +19,32 @@ final List<Beneficiary> mockBeneficiaries = [
     id: '2',
     name: 'khaled',
     cardNumber: '0123456789110',
+    type: 0,
     avatarUrl: 'https://i.pravatar.cc/150?img=12',
   ),
   const Beneficiary(
     id: '3',
     name: 'hala',
     cardNumber: '0123456789111',
+    type: 1,
     avatarUrl: 'https://i.pravatar.cc/150?img=49',
   ),
   const Beneficiary(
     id: '4',
     name: 'yaser',
     cardNumber: '0123456789112',
+    type: 2,
+    bank: 'Wells Fargo',
+    branch: 'New York',
     avatarUrl: 'https://i.pravatar.cc/150?img=15',
   ),
   const Beneficiary(
     id: '5',
     name: 'Sarah',
     cardNumber: '0123456789113',
+    type: 2,
+    bank: 'Citibank',
+    branch: 'Chicago',
     avatarUrl: 'https://i.pravatar.cc/150?img=44',
   ),
 ];

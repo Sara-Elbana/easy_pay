@@ -1,6 +1,8 @@
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class MessageCard extends StatelessWidget {
   final IconData? icon;
@@ -33,7 +35,7 @@ class MessageCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(context.scaleWidth(15)),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x0D000000),
+              color: AppColors.shadowColor,
               offset: Offset(0, 5),
               blurRadius: 30,
               spreadRadius: 0,
@@ -75,38 +77,35 @@ class MessageCard extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: context.scaleWidth(16),
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF343434),
-                            height: 24 / 16,
-                          ),
+                          style: AppTextStyles.titleMedium.copyWith(
+                              fontSize: context.scaleWidth(
+                                  AppTextStyles.titleMedium.fontSize ?? 16),
+                              color: AppColors.textDark,
+                              height: 24 / 16,
+                              fontFamily: 'Poppins'),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         const Spacer(),
                         Text(
                           date,
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: context.scaleWidth(12),
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF989898),
-                            height: 16 / 12,
-                          ),
+                          style: AppTextStyles.labelMedium.copyWith(
+                              fontSize: context.scaleWidth(
+                                  AppTextStyles.labelMedium.fontSize ?? 12),
+                              color: AppColors.lightGray,
+                              height: 16 / 12,
+                              fontFamily: 'Poppins'),
                         ),
                       ],
                     ),
                     Text(
                       subtitle,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: context.scaleWidth(12),
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF989898),
-                        height: 16 / 12,
-                      ),
+                      style: AppTextStyles.bodySmallSemiBold.copyWith(
+                          fontSize: context.scaleWidth(
+                              AppTextStyles.bodySmallSemiBold.fontSize ?? 12),
+                          color: AppColors.lightGray,
+                          height: 16 / 12,
+                          fontFamily: 'Poppins'),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

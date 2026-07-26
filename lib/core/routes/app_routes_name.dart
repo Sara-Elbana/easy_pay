@@ -21,7 +21,11 @@ class AppRoutesName {
   static const String chatScreen = "chatScreen";
   static const String settingScreen = "settingScreen";
   static const String cardDetailsScreen = "cardDetailsScreen";
+  static const String withdrawScreen = "withdrawScreen";
+  static const String withdrawSuccessScreen = "withdrawSuccessScreen";
   static const String mapSearchScreen = "mapSearchScreen";
   static const String interestRateScreen = "interestRateScreen";
-
+  static const String beneficiaryDirectoryScreen = "beneficiaryDirectoryScreen";
+  static const String addBeneficiaryScreen = "addBeneficiaryScreen";
+  static const String beneficiaryDetailScreen = "beneficiaryDetailScreen";
 }

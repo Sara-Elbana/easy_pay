@@ -1,6 +1,7 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CardInfoRow extends StatelessWidget {
   final String label;
@@ -26,19 +27,11 @@ class CardInfoRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: context.scaleWidth(16),
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppTextStyles.titleMedium.copyWith(fontSize: context.scaleWidth(AppTextStyles.titleMedium.fontSize ?? 16), color: AppColors.lightGray),
               ),
               Text(
                 value,
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontSize: context.scaleWidth(16),
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: AppColors.primary),
               ),
             ],
           ),

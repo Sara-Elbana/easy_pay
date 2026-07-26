@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class MapInitialPlaceholder extends StatelessWidget {
   final ScrollController scrollController;
@@ -13,16 +14,12 @@ class MapInitialPlaceholder extends StatelessWidget {
     return ListView(
       controller: scrollController,
       padding: const EdgeInsets.all(20),
-      children: const [
-        SizedBox(height: 40),
+      children: [
+        const SizedBox(height: 40),
         Center(
           child: Text(
             'Start searching for a bank, branch or place',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
+            style: AppTextStyles.labelLarge.copyWith(color: Colors.grey),
           ),
         ),
       ],

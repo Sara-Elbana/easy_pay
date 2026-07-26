@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_colors.dart';
 
 class SwapButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -17,13 +18,13 @@ class SwapButton extends StatelessWidget {
           children: [
             Icon(
               Icons.arrow_downward,
-              color: Color(0xFF3629B7),
+              color: AppColors.primary,
               size: 24,
             ),
             SizedBox(width: 4),
             Icon(
               Icons.arrow_upward,
-              color: Color(0xFFFF4267),
+              color: AppColors.messagePink,
               size: 24,
             ),
           ],

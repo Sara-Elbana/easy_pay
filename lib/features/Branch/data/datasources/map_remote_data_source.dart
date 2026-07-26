@@ -1,77 +1,75 @@
+import 'dart:developer' as developer;
 import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
-import 'package:easy_pay_app/core/errors/exceptions.dart';
-import 'package:easy_pay_app/core/network/api_config.dart';
-import 'package:easy_pay_app/features/Branch/data/datasources/map_mock_data.dart';
-import 'package:easy_pay_app/features/Branch/data/models/place_details_model.dart';
-import 'package:easy_pay_app/features/Branch/data/models/place_suggestion_model.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/auto__place_details_request.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/auto_complete_request.dart';
+import 'package:easy_pay_app/features/Branch/data/models/place_model.dart';
 
 abstract class MapRemoteDataSource {
-  Future<List<PlaceSuggestionModel>> getAutocomplete(
-      AutoCompleteRequest request);
-  Future<PlaceDetailsModel> getPlaceDetails(AutoPlaceDetailsRequest request);
+  Future<List<PlaceSuggestionModel>> getAutocomplete(String query);
+  Future<PlaceDetailsModel> getPlaceDetails(String placeId);
 }
 
 class MapRemoteDataSourceImpl implements MapRemoteDataSource {
   final Dio dio;
+  List<Map<String, dynamic>> _cachedBranches = [];
 
   MapRemoteDataSourceImpl(this.dio);
 
   @override
-  Future<List<PlaceSuggestionModel>> getAutocomplete(
-      AutoCompleteRequest request) async {
-    if (request.query.startsWith('mock_')) {
-      return MapMockData.getMockSuggestions(request.query);
-    }
+  Future<List<PlaceSuggestionModel>> getAutocomplete(String query) async {
     try {
       final response = await dio.get(
-        '${ApiConstants.googleMapsBaseUrl}${ApiConstants.autocompleteEndpoint}',
-        queryParameters: {
-          'input': request.query,
-          'key': ApiConfig.googleMapsApiKey,
-          'components': 'country:eg',
-        },
+        ApiConstants.branchesEndpoint,
+        queryParameters: query.isNotEmpty ? {'query': query} : null,
       );
-      if (response.data['status'] == 'OK') {
-        final predictions = (response.data['predictions'] as List?) ?? [];
-        return predictions
-            .map((json) => PlaceSuggestionModel.fromJson(json))
-            .toList();
-      } else if (response.data['status'] == 'ZERO_RESULTS') {
-        return [];
+
+      if (response.statusCode == 200 && response.data != null) {
+        final List rawData = response.data;
+        _cachedBranches = List<Map<String, dynamic>>.from(rawData);
+
+        return _cachedBranches.map((item) {
+          return PlaceSuggestionModel(
+            placeId: item['id'].toString(),
+            description: item['address'] ?? '',
+            mainText: item['name'] ?? '',
+            secondaryText: item['distance_text'] ?? '',
+          );
+        }).toList();
       }
-      throw ServerException(
-          message: response.data['error_message'] ?? 'API Error');
+      throw Exception('Failed to load branches');
     } catch (e) {
-      return MapMockData.getMockSuggestions(request.query);
+      developer.log("⚠️ Error loading branches: $e");
+      return [];
     }
   }
 
   @override
-  Future<PlaceDetailsModel> getPlaceDetails(
-      AutoPlaceDetailsRequest request) async {
-    if (request.placeId.startsWith('mock_')) {
-      return MapMockData.getMockPlaceDetails(request.placeId);
-    }
+  Future<PlaceDetailsModel> getPlaceDetails(String placeId) async {
     try {
-      final response = await dio.get(
-        '${ApiConstants.googleMapsBaseUrl}${ApiConstants.placeDetailsEndpoint}',
-        queryParameters: {
-          'place_id': request.placeId,
-          'fields': 'name,geometry,formatted_address',
-          'key': ApiConfig.googleMapsApiKey,
-        },
+      // If cache is empty (e.g. direct load), fetch all branches first
+      if (_cachedBranches.isEmpty) {
+        await getAutocomplete('');
+      }
+
+      final branch = _cachedBranches.firstWhere(
+        (b) => b['id'].toString() == placeId,
+        orElse: () => throw Exception('Branch not found in cache'),
       );
 
-      if (response.data['status'] == 'OK') {
-        return PlaceDetailsModel.fromJson(response.data['result']);
-      } else {
-        throw ServerException(message: response.data['error_message'] ?? 'Failed');
-      }
+      return PlaceDetailsModel(
+        name: branch['name'] ?? '',
+        latitude: double.parse(branch['latitude'].toString()),
+        longitude: double.parse(branch['longitude'].toString()),
+        address: branch['address'] ?? '',
+      );
     } catch (e) {
-      return MapMockData.getMockPlaceDetails(request.placeId);
+      developer.log("⚠️ Error getting place details: $e");
+      // Fallback
+      return PlaceDetailsModel(
+        name: 'Branch Details',
+        latitude: 30.0444,
+        longitude: 31.2357,
+        address: 'Unknown Address',
+      );
     }
   }
 }

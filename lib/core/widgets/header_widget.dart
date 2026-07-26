@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class HeaderWidget extends StatelessWidget {
   final Widget? leading;
@@ -29,11 +30,7 @@ class HeaderWidget extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
+              style: AppTextStyles.titleLargeMedium.copyWith(color: Colors.white),
             ),
           ),
           trailing ?? const SizedBox(width: 40),

@@ -5,7 +5,9 @@ import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/header_widget.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/features/setting/presentation/widgets/setting_row_item.dart';
+import 'package:easy_pay_app/features/setting/presentation/widgets/sign_out_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -47,13 +49,7 @@ class SettingScreen extends StatelessWidget {
                       SizedBox(height: context.scaleHeight(72)),
                       Text(
                         'Push Puttichai',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: context.scaleWidth(16),
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primary,
-                          height: 1.5,
-                        ),
+                        style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: AppColors.primary, fontFamily: 'Poppins'),
                       ),
                       SizedBox(height: context.scaleHeight(24)),
                       Padding(
@@ -84,6 +80,11 @@ class SettingScreen extends StatelessWidget {
                               title: 'customer_care'.tr(),
                               subtitle: '19008989',
                               onTap: () {},
+                              showArrow: false,
+                            ),
+                            SettingRowItem(
+                              title: 'sign_out'.tr(),
+                              onTap: () => SignOutDialog.show(context),
                               showArrow: false,
                             ),
                           ],

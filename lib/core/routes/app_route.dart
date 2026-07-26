@@ -32,9 +32,9 @@ import 'package:easy_pay_app/features/exchange_rate/presentation/screens/exchang
 import 'package:easy_pay_app/features/exchange_rate/presentation/cubit/exchange_rate_cubit.dart';
 import 'package:easy_pay_app/features/exchange/presentation/screens/exchange_screen.dart';
 import 'package:easy_pay_app/features/exchange/presentation/cubit/exchange_cubit.dart';
-import 'package:easy_pay_app/features/message/presentation/screens/account_screen.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/screens/account_screen.dart';
 import 'package:easy_pay_app/features/message/presentation/screens/chat_screen.dart';
-import 'package:easy_pay_app/features/message/presentation/screens/card_details_screen.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/screens/card_details_screen.dart';
 import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_screen.dart';
 import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_success_screen.dart';
 import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';

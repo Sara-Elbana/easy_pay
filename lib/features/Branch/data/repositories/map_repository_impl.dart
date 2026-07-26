@@ -17,7 +17,7 @@ class MapRepositoryImpl implements MapRepository {
   Future<Either<Failure, List<PlaceSuggestion>>> getAutocomplete(
       AutoCompleteRequest request) async {
     try {
-      final suggestions = await remoteDataSource.getAutocomplete(request);
+      final suggestions = await remoteDataSource.getAutocomplete(request.query);
       return Right(suggestions);
     } on ServerException catch (e) {
       return Right(MapMockData.getMockSuggestions(request.query));
@@ -32,7 +32,7 @@ class MapRepositoryImpl implements MapRepository {
   Future<Either<Failure, PlaceDetails>> getPlaceDetails(
       AutoPlaceDetailsRequest request) async {
     try {
-      final details = await remoteDataSource.getPlaceDetails(request);
+      final details = await remoteDataSource.getPlaceDetails(request.placeId);
       return Right(details);
     } on ServerException catch (e) {
       return Right(MapMockData.getMockPlaceDetails(request.placeId));

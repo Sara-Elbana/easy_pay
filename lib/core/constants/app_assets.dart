@@ -10,8 +10,6 @@ class AppAssets {
   static const String multiCardBank = 'assets/images/multiCardBank.png';
   static const String cardBlue = 'assets/images/card_blue.png';
   static const String cardGold = 'assets/images/card_gold.png';
-  static const String bankCardYellow = 'assets/images/bankCardYellow.png';
-  static const String bankCardBlue = 'assets/images/bankCardBlue.png';
   static const String branchIllus = 'assets/images/branch_illus.png';
   static const String interestIllus = 'assets/images/interest_illus.png';
   static const String exchangeRateIllus =
@@ -21,6 +19,8 @@ class AppAssets {
   static const String internetBillImage = 'assets/images/internetBillImage.png';
   static const String mobileBillImage = 'assets/images/mobileBillImage.png';
   static const String electricBillImage = 'assets/images/electricBillImage.png';
+  static const String bankCardYellow = 'assets/images/bankCardYellow.png';
+  static const String bankCardBlue = 'assets/images/bankCardBlue.png';
 
 
 

@@ -79,9 +79,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             );
             await Future.delayed(const Duration(seconds: 1));
             if (!context.mounted) return;
-            Navigator.pushReplacementNamed(
+            Navigator.pushNamedAndRemoveUntil(
               context,
               AppRoutesName.mainScreen,
+              (route) => false,
             );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(

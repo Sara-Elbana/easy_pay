@@ -4,6 +4,7 @@ import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class WithdrawSuccessScreen extends StatelessWidget {
   const WithdrawSuccessScreen({super.key});
@@ -33,25 +34,14 @@ class WithdrawSuccessScreen extends StatelessWidget {
               // Title
               Text(
                 'successful_withdrawal'.tr(),
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: context.scaleWidth(22),
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
-                ),
+                style: AppTextStyles.titleLarge.copyWith(fontSize: context.scaleWidth(AppTextStyles.titleLarge.fontSize ?? 22), color: AppColors.textDark, fontFamily: 'Poppins'),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: context.scaleHeight(24)),
               // Description
               Text(
                 'withdrawal_success_msg'.tr(),
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: context.scaleWidth(14),
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xFF989898),
-                  height: 1.5,
-                ),
+                style: AppTextStyles.bodyMedium.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyMedium.fontSize ?? 14), color: AppColors.lightGray, fontFamily: 'Poppins'),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: context.scaleHeight(32)),

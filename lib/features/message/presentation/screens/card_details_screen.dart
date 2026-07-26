@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/features/message/presentation/widgets/card_info_row.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CardDetailsScreen extends StatelessWidget {
   const CardDetailsScreen({super.key});
@@ -19,11 +20,7 @@ class CardDetailsScreen extends StatelessWidget {
         ),
         title: Text(
           'card'.tr(),
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: context.scaleWidth(20),
-          ),
+          style: AppTextStyles.titleLargeMedium.copyWith(fontSize: context.scaleWidth(AppTextStyles.titleLargeMedium.fontSize ?? 20), color: Colors.black87),
         ),
         centerTitle: false,
       ),
@@ -42,11 +39,7 @@ class CardDetailsScreen extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 'delete_card'.tr(),
-                style: TextStyle(
-                  color: Colors.redAccent,
-                  fontSize: context.scaleWidth(16),
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: Colors.redAccent),
               ),
             ),
           ),

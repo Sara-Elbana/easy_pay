@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CustomAvatar extends StatelessWidget {
   final String? url;
@@ -38,11 +39,7 @@ class CustomAvatar extends StatelessWidget {
           ? (name != null && name!.trim().isNotEmpty
               ? Text(
                   name!.substring(0, 1).toUpperCase(),
-                  style: TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: radius * 0.9,
-                  ),
+                  style: AppTextStyles.bodyMediumSemiBold.copyWith(color: AppColors.primary),
                 )
               : Icon(
                   defaultIcon,

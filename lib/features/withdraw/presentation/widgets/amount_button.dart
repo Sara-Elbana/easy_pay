@@ -1,6 +1,7 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class AmountButton extends StatelessWidget {
   final String text;
@@ -40,12 +41,7 @@ class AmountButton extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             text,
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: context.scaleWidth(16),
-              fontWeight: FontWeight.w600,
-              color: isSelected ? Colors.white : const Color(0xFF989898),
-            ),
+            style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: isSelected ? Colors.white : AppColors.lightGray, fontFamily: 'Poppins'),
           ),
         ),
       ),

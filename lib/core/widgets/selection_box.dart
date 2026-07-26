@@ -1,5 +1,6 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class SelectionBox extends StatelessWidget {
   final String value;
@@ -44,13 +45,7 @@ class SelectionBox extends StatelessWidget {
         ),
         child: Text(
           hasValue ? value : placeholder,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: hasValue ? FontWeight.w500 : FontWeight.w400,
-            color: hasValue
-                ? AppColors.textDark
-                : (isEnabled ? AppColors.textLight : AppColors.textLight.withAlpha(50)),
-          ),
+          style: AppTextStyles.bodyLarge.copyWith(color: hasValue ? AppColors.textDark : (isEnabled ? AppColors.textLight : AppColors.textLight.withAlpha(50))),
         ),
       ),
     );

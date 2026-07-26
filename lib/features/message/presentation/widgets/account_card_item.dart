@@ -3,6 +3,7 @@ import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/features/message/domain/entities/account_entity.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class AccountCardItem extends StatelessWidget {
   final AccountEntity account;
@@ -36,19 +37,11 @@ class AccountCardItem extends StatelessWidget {
             children: [
               Text(
                 account.title,
-                style: TextStyle(
-                  fontSize: context.scaleWidth(18),
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF1E1E1E),
-                ),
+                style: AppTextStyles.transactionAmount.copyWith(fontSize: context.scaleWidth(AppTextStyles.transactionAmount.fontSize ?? 18), color: AppColors.offBlack),
               ),
               Text(
                 account.accountNumber,
-                style: TextStyle(
-                  fontSize: context.scaleWidth(16),
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFF1E1E1E),
-                ),
+                style: AppTextStyles.bodyLarge.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLarge.fontSize ?? 16), color: AppColors.offBlack),
               ),
             ],
           ),
@@ -58,18 +51,11 @@ class AccountCardItem extends StatelessWidget {
             children: [
               Text(
                 'available_balance'.tr(),
-                style: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: context.scaleWidth(14),
-                ),
+                style: AppTextStyles.bodyMedium.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyMedium.fontSize ?? 14), color: AppColors.lightGray),
               ),
               Text(
                 '\$${account.availableBalance.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: context.scaleWidth(14),
-                ),
+                style: AppTextStyles.bodyMediumSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyMediumSemiBold.fontSize ?? 14), color: AppColors.primary),
               ),
             ],
           ),
@@ -79,18 +65,11 @@ class AccountCardItem extends StatelessWidget {
             children: [
               Text(
                 'branch'.tr(),
-                style: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: context.scaleWidth(14),
-                ),
+                style: AppTextStyles.bodyMedium.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyMedium.fontSize ?? 14), color: AppColors.lightGray),
               ),
               Text(
                 account.branch,
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: context.scaleWidth(14),
-                ),
+                style: AppTextStyles.bodyMediumSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyMediumSemiBold.fontSize ?? 14), color: AppColors.primary),
               ),
             ],
           ),

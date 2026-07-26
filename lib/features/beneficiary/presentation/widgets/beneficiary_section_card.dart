@@ -3,6 +3,7 @@ import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_avatar.dart';
 import 'package:flutter/material.dart';
 import '../../domain/entities/beneficiary.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class BeneficiarySectionCard extends StatelessWidget {
   final String title;
@@ -25,11 +26,7 @@ class BeneficiarySectionCard extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: AppColors.gray,
-          ),
+          style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
         ),
         SizedBox(height: context.scaleHeight(8)),
         Container(
@@ -38,7 +35,7 @@ class BeneficiarySectionCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             boxShadow: const [
               BoxShadow(
-                color: Color(0x123629B7),
+                color: AppColors.primaryOpacity7,
                 offset: Offset(0, 4),
                 blurRadius: 30,
               ),
@@ -49,7 +46,7 @@ class BeneficiarySectionCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: items.length,
             separatorBuilder: (context, index) => const Divider(
-              color: Color(0xFFECECEC),
+              color: AppColors.dividerColor,
               height: 1,
             ),
             itemBuilder: (context, index) {
@@ -63,19 +60,11 @@ class BeneficiarySectionCard extends StatelessWidget {
                 ),
                 title: Text(
                   b.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textDark,
-                  ),
+                  style: AppTextStyles.titleMedium.copyWith(color: AppColors.textDark),
                 ),
                 subtitle: Text(
                   b.cardNumber,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.gray,
-                  ),
+                  style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
                 ),
                 trailing: const Icon(
                   Icons.chevron_right,

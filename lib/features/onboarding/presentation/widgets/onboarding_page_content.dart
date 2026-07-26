@@ -3,6 +3,7 @@ import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'onboarding_header.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class OnboardingPageContent extends StatelessWidget {
   final String imagePath;
@@ -40,7 +41,7 @@ class OnboardingPageContent extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Colors.white
-                    : const Color(0xff1B1B1B),
+                    : AppColors.charcoal,
                 height: 1.25,
               ),
             ),
@@ -54,14 +55,7 @@ class OnboardingPageContent extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: context.scaleWidth(15),
-                fontWeight: FontWeight.w400,
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.gray300
-                    : const Color(0xff8E8E8E),
-                height: 1.7,
-              ),
+              style: AppTextStyles.titleMediumSmall.copyWith(fontSize: context.scaleWidth(AppTextStyles.titleMediumSmall.fontSize ?? 15), color: Theme.of(context).brightness == Brightness.dark ? AppColors.gray300 : AppColors.darkGray, height: 1.7),
             ),
           ),
         ],

@@ -42,57 +42,17 @@ import 'package:easy_pay_app/features/exchange/data/repositories/exchange_reposi
 import 'package:easy_pay_app/features/exchange/domain/repositories/exchange_repository.dart';
 import 'package:easy_pay_app/features/exchange/presentation/cubit/exchange_cubit.dart';
 
+import 'package:easy_pay_app/features/auth/domain/use_cases/reset_password_usecase.dart';
+import 'package:easy_pay_app/features/auth/domain/use_cases/send_otp_usecase.dart';
+import 'package:easy_pay_app/features/auth/domain/use_cases/sign_out_usecase.dart';
+import 'package:easy_pay_app/features/auth/domain/use_cases/verify_otp_usecase.dart';
+
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
   final prefs = SharedPreferencesService();
   await prefs.init();
   getIt.registerSingleton<SharedPreferencesService>(prefs);
-  // Data Source
-  getIt.registerLazySingleton<AuthRemoteDataSource>(
-        () => AuthRemoteDataSourceImpl(),
-  );
-
-// Repository
-  getIt.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImpl(
-      remoteDataSource: getIt(),
-    ),
-  );
-
-// Use Cases
-  getIt.registerLazySingleton(
-        () => SignInUseCase(getIt()),
-  );
-
-  getIt.registerLazySingleton(
-        () => SignUpUseCase(getIt()),
-  );
-
-  getIt.registerLazySingleton(
-        () => LocalAuthentication(),
-  );
-
-  getIt.registerLazySingleton(
-        () => BiometricService(getIt()),
-  );
-  getIt.registerLazySingleton(
-        () => MediaService(),
-  );
-
-//// Biometric
-  getIt.registerLazySingleton<BiometricRepository>(
-        () => BiometricRepositoryImpl(
-      getIt(),
-    ),
-  );
-
-  getIt.registerLazySingleton(
-        () => BiometricUseCase(
-      getIt(),
-    ),
-  );
-
 
   /// secure storage
   const secureStorage = SecureStorageService();
@@ -107,19 +67,86 @@ Future<void> setupDependencies() async {
   final dio = DioClient.createDioClient();
   getIt.registerSingleton<Dio>(dio);
 
+  // Data Source
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(dio: getIt()),
+  );
+
+  // Repository
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: getIt(),
+      secureStorageService: getIt(),
+    ),
+  );
+
+  // Use Cases
+  getIt.registerLazySingleton(
+    () => SignInUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton(
+    () => SignUpUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton(
+    () => SendOtpUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton(
+    () => VerifyOtpUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton(
+    () => ResetPasswordUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton(
+    () => SignOutUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton(
+    () => LocalAuthentication(),
+  );
+
+  getIt.registerLazySingleton(
+    () => BiometricService(getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => MediaService(),
+  );
+
+  //// Biometric
+  getIt.registerLazySingleton<BiometricRepository>(
+    () => BiometricRepositoryImpl(
+      getIt(),
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => BiometricUseCase(
+      getIt(),
+    ),
+  );
+
   // Cubits
   getIt.registerFactory<OnboardingCubit>(
-        () => OnboardingCubit(totalPages: 3),
+    () => OnboardingCubit(totalPages: 3),
   );
   getIt.registerFactory<AuthCubit>(
-        () => AuthCubit(
+    () => AuthCubit(
       signInUseCase: getIt(),
       signUpUseCase: getIt(),
       biometricUseCase: getIt(),
+      signOutUseCase: getIt(),
     ),
   );
   getIt.registerFactory<ForgotPasswordCubit>(
-        () => ForgotPasswordCubit(),
+    () => ForgotPasswordCubit(
+      sendOtpUseCase: getIt(),
+      verifyOtpUseCase: getIt(),
+      resetPasswordUseCase: getIt(),
+    ),
   );
 
   // Transfer Feature

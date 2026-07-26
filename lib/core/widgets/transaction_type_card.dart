@@ -1,5 +1,6 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class TransactionTypeCard extends StatelessWidget {
   final IconData icon;
@@ -97,12 +98,7 @@ class TransactionTypeCard extends StatelessWidget {
               label,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 12,
-                height: 1.2,
-                fontWeight: FontWeight.bold,
-                color: contentColor,
-              ),
+              style: AppTextStyles.bodySmallSemiBold.copyWith(color: contentColor, height: 1.2),
             ),
           ],
         ),

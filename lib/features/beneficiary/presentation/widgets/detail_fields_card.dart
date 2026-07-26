@@ -5,6 +5,7 @@ import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import '../../domain/entities/beneficiary.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class DetailFieldsCard extends StatelessWidget {
   final Beneficiary beneficiary;
@@ -25,7 +26,7 @@ class DetailFieldsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x123629B7),
+            color: AppColors.primaryOpacity7,
             offset: Offset(0, 4),
             blurRadius: 30,
           ),
@@ -38,11 +39,7 @@ class DetailFieldsCard extends StatelessWidget {
             // Bank
             Text(
               'choose_bank'.tr(),
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: AppColors.gray,
-              ),
+              style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
             ),
             SizedBox(height: context.scaleHeight(6)),
             CustomTextField(
@@ -55,11 +52,7 @@ class DetailFieldsCard extends StatelessWidget {
             // Branch
             Text(
               'choose_branch'.tr(),
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: AppColors.gray,
-              ),
+              style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
             ),
             SizedBox(height: context.scaleHeight(6)),
             CustomTextField(
@@ -73,11 +66,7 @@ class DetailFieldsCard extends StatelessWidget {
           // Transaction Name
           Text(
             'name'.tr(),
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.gray,
-            ),
+            style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
           ),
           SizedBox(height: context.scaleHeight(6)),
           CustomTextField(
@@ -90,11 +79,7 @@ class DetailFieldsCard extends StatelessWidget {
           // Card number
           Text(
             'card_number_label'.tr(),
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.gray,
-            ),
+            style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
           ),
           SizedBox(height: context.scaleHeight(6)),
           CustomTextField(

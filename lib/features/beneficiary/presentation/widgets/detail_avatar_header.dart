@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class DetailAvatarHeader extends StatelessWidget implements PreferredSizeWidget {
   final String? avatarUrl;
@@ -30,11 +31,7 @@ class DetailAvatarHeader extends StatelessWidget implements PreferredSizeWidget 
           ),
           title: Text(
             'beneficiary'.tr(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-            ),
+            style: AppTextStyles.titleLargeMedium.copyWith(color: Colors.white),
           ),
           actions: [
             IconButton(
@@ -52,11 +49,7 @@ class DetailAvatarHeader extends StatelessWidget implements PreferredSizeWidget 
         SizedBox(height: context.scaleHeight(12)),
         Text(
           name,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
+          style: AppTextStyles.bodyLargeSemiBold.copyWith(color: Colors.white),
         ),
       ],
     );

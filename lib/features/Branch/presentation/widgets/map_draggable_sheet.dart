@@ -121,7 +121,7 @@ class _MapDraggableSheetState extends State<MapDraggableSheet> {
       itemCount: suggestions.length,
       separatorBuilder: (_, __) => const Divider(
         height: 1,
-        color: Color(0xFFEEEEEE),
+        color: AppColors.softGray,
       ),
       itemBuilder: (context, index) {
         final item = suggestions[index];

@@ -4,15 +4,19 @@ class UserEntity extends Equatable {
   final String id;
   final String name;
   final String phoneNumber;
-  final String password;
+  final String? password;
+  final String? accessToken;
+  final String? refreshToken;
 
   const UserEntity({
     required this.id,
     required this.name,
     required this.phoneNumber,
-    required this.password,
+    this.password,
+    this.accessToken,
+    this.refreshToken,
   });
 
   @override
-  List<Object?> get props => [id, name, phoneNumber, password];
+  List<Object?> get props => [id, name, phoneNumber, password, accessToken, refreshToken];
 }

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/transfer_cubit.dart';
 import '../cubit/transfer_state.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class SuccessTransferScreen extends StatelessWidget {
   const SuccessTransferScreen({super.key});
@@ -44,22 +45,14 @@ class SuccessTransferScreen extends StatelessWidget {
                     SizedBox(height: context.scaleHeight(40)),
                     Text(
                       'transfer_successful'.tr(),
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
-                      ),
+                      style: AppTextStyles.titleLarge.copyWith(color: AppColors.primary),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: context.scaleHeight(16)),
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: AppColors.textDark,
-                          height: 1.4,
-                        ),
+                        style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textDark, height: 1.4),
                         children: [
                           const TextSpan(
                               text: 'You have successfully transferred '),

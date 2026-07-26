@@ -51,7 +51,7 @@ class BeneficiaryDetailScreen extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0x0D000000),
+                    color: AppColors.shadowColor,
                     offset: Offset(0, -2),
                     blurRadius: 3,
                   ),

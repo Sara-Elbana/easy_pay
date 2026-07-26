@@ -34,7 +34,7 @@ class MessageScreen extends StatelessWidget {
             SizedBox(height: context.scaleHeight(20)),
             MessageCard(
               iconAsset: AppAssets.accountIcon,
-              iconBackgroundColor: const Color(0xFFFF4267),
+              iconBackgroundColor: AppColors.messagePink,
               title: 'account'.tr(),
               subtitle: 'Your account is limited. Please foll...',
               date: '12/10',
@@ -54,7 +54,7 @@ class MessageScreen extends StatelessWidget {
             SizedBox(height: context.scaleHeight(20)),
             MessageCard(
               iconAsset: AppAssets.paypalIcon,
-              iconBackgroundColor: const Color(0xFFFFAF2A),
+              iconBackgroundColor: AppColors.messageOrange,
               title: 'paypal'.tr(),
               subtitle: 'Your account has been locked. Ple...',
               date: '10/11',

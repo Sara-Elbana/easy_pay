@@ -2,6 +2,7 @@ import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class AddBeneficiaryAvatar extends StatelessWidget {
   final String? avatarUrl;
@@ -45,11 +46,7 @@ class AddBeneficiaryAvatar extends StatelessWidget {
         SizedBox(height: context.scaleHeight(12)),
         Text(
           name.isEmpty ? 'Push Puttichai' : name,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.primary,
-          ),
+          style: AppTextStyles.bodyLargeSemiBold.copyWith(color: AppColors.primary),
         ),
       ],
     );

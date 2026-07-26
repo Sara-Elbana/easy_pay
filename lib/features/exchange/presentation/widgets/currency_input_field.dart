@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CurrencyInputField extends StatefulWidget {
   final String label;
@@ -56,19 +57,14 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
       children: [
         Text(
           widget.label,
-          style: const TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF979797),
-          ),
+          style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray, fontFamily: 'Poppins'),
         ),
         const SizedBox(height: 6),
         Container(
           height: 65,
           decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: const Color(0xFFBFBFBF), width: 1),
+            border: Border.all(color: AppColors.mediumGray, width: 1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Row(
@@ -81,20 +77,10 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
                     readOnly: widget.readOnly,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: widget.onAmountChanged,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.gray900,
-                    ),
-                    decoration: const InputDecoration(
+                    style: AppTextStyles.titleMedium.copyWith(color: AppColors.gray900, fontFamily: 'Poppins'),
+                    decoration: InputDecoration(
                       hintText: 'Amount',
-                      hintStyle: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFFCACACA),
-                      ),
+                      hintStyle: AppTextStyles.titleMedium.copyWith(color: AppColors.textLight, fontFamily: 'Poppins'),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -104,7 +90,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
               Container(
                 width: 1,
                 height: 34,
-                color: const Color(0xFFBFBFBF),
+                color: AppColors.mediumGray,
               ),
               GestureDetector(
                 onTap: widget.onCurrencyTap,
@@ -116,12 +102,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
                     children: [
                       Text(
                         widget.selectedCurrency,
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.gray900,
-                        ),
+                        style: AppTextStyles.titleMedium.copyWith(color: AppColors.gray900, fontFamily: 'Poppins'),
                       ),
                       const SizedBox(width: 8),
                       const Column(
@@ -130,12 +111,12 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
                           Icon(
                             Icons.keyboard_arrow_up,
                             size: 14,
-                            color: Color(0xFF898989),
+                            color: AppColors.coolGray,
                           ),
                           Icon(
                             Icons.keyboard_arrow_down,
                             size: 14,
-                            color: Color(0xFF898989),
+                            color: AppColors.coolGray,
                           ),
                         ],
                       ),

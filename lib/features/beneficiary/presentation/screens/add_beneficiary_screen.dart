@@ -6,6 +6,8 @@ import 'package:easy_pay_app/core/widgets/custom_selection_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/services/media_service.dart';
+import 'package:easy_pay_app/core/routes/app_routes_name.dart';
+import 'package:easy_pay_app/features/beneficiary/domain/entities/beneficiary.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/beneficiary_cubit.dart';
 import '../cubit/beneficiary_state.dart';
@@ -24,7 +26,27 @@ class AddBeneficiaryScreen extends StatelessWidget {
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.pop(context);
+      final cubit = context.read<BeneficiaryCubit>();
+      final savedBeneficiary = state.beneficiaries.firstWhere(
+        (b) => b.cardNumber == state.cardNumber,
+        orElse: () => Beneficiary(
+          id: state.editingBeneficiaryId ?? '',
+          name: state.name,
+          cardNumber: state.cardNumber,
+          type: state.selectedType,
+          avatarUrl: state.avatarUrl ?? '',
+          bank: state.selectedBank.isNotEmpty ? state.selectedBank : null,
+          branch: state.selectedBranch.isNotEmpty ? state.selectedBranch : null,
+        ),
+      );
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutesName.beneficiaryDetailScreen,
+        arguments: {
+          'cubit': cubit,
+          'beneficiary': savedBeneficiary,
+        },
+      );
     }
     if (state.errorMessage != null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -36,7 +58,8 @@ class AddBeneficiaryScreen extends StatelessWidget {
     }
   }
 
-  void _showBankSelection(BuildContext parentContext, BeneficiaryCubit cubit, BeneficiaryState state) {
+  void _showBankSelection(BuildContext parentContext, BeneficiaryCubit cubit,
+      BeneficiaryState state) {
     CustomSelectionDialog.show<BeneficiaryCubit, BeneficiaryState>(
       context: parentContext,
       cubit: cubit,
@@ -50,7 +73,8 @@ class AddBeneficiaryScreen extends StatelessWidget {
     );
   }
 
-  void _showBranchSelection(BuildContext parentContext, BeneficiaryCubit cubit, BeneficiaryState state) {
+  void _showBranchSelection(BuildContext parentContext, BeneficiaryCubit cubit,
+      BeneficiaryState state) {
     CustomSelectionDialog.show<BeneficiaryCubit, BeneficiaryState>(
       context: parentContext,
       cubit: cubit,
@@ -87,15 +111,17 @@ class AddBeneficiaryScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: CustomAppBar(
-        title: 'add_card'.tr(),
+        title: 'add_beneficiary'.tr(),
       ),
       body: BlocConsumer<BeneficiaryCubit, BeneficiaryState>(
         listener: _onStateChanged,
         builder: (context, state) {
           nameController.text = state.name;
-          nameController.selection = TextSelection.collapsed(offset: state.name.length);
+          nameController.selection =
+              TextSelection.collapsed(offset: state.name.length);
           cardController.text = state.cardNumber;
-          cardController.selection = TextSelection.collapsed(offset: state.cardNumber.length);
+          cardController.selection =
+              TextSelection.collapsed(offset: state.cardNumber.length);
 
           return SafeArea(
             child: SingleChildScrollView(
@@ -128,8 +154,10 @@ class AddBeneficiaryScreen extends StatelessWidget {
                     cardController: cardController,
                     onNameChanged: cubit.updateName,
                     onCardNumberChanged: cubit.updateCardNumber,
-                    onChooseBank: () => _showBankSelection(context, cubit, state),
-                    onChooseBranch: () => _showBranchSelection(context, cubit, state),
+                    onChooseBank: () =>
+                        _showBankSelection(context, cubit, state),
+                    onChooseBranch: () =>
+                        _showBranchSelection(context, cubit, state),
                     onSave: () => cubit.saveBeneficiary(),
                   ),
                 ],

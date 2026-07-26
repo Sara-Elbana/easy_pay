@@ -1,6 +1,7 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -48,11 +49,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       enabled: widget.enabled,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       inputFormatters: widget.inputFormatters,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        color: AppColors.textDark,
-      ),
+      style: AppTextStyles.titleMedium.copyWith(color: AppColors.textDark),
       decoration: InputDecoration(
         filled: true,
         fillColor: widget.enabled
@@ -61,13 +58,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         hintText: widget.hintText,
-        hintStyle: TextStyle(
-          color: widget.enabled
-              ? AppColors.textLight
-              : AppColors.textLight.withAlpha(50),
-          fontSize: 15,
-          fontWeight: FontWeight.w400,
-        ),
+        hintStyle: AppTextStyles.titleMediumSmall.copyWith(color: widget.enabled ? AppColors.textLight : AppColors.textLight.withAlpha(50)),
         prefixIcon: widget.prefixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -91,10 +82,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.error, width: 1.5),
         ),
-        errorStyle: const TextStyle(
-          color: AppColors.error,
-          fontSize: 12,
-        ),
+        errorStyle: AppTextStyles.bodySmall.copyWith(color: AppColors.error),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide:

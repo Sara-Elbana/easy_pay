@@ -16,6 +16,7 @@ import '../widgets/account_dropdown.dart';
 import 'package:easy_pay_app/core/widgets/beneficiary_form_fields.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_selection_dialog.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class TransferScreen extends StatelessWidget {
   final _controllersManager = TransferControllersManager();
@@ -26,7 +27,8 @@ class TransferScreen extends StatelessWidget {
     _controllersManager.syncState(state);
   }
 
-  void _showBankSelection(BuildContext parentContext, TransferCubit cubit, TransferState state) {
+  void _showBankSelection(
+      BuildContext parentContext, TransferCubit cubit, TransferState state) {
     CustomSelectionDialog.show<TransferCubit, TransferState>(
       context: parentContext,
       cubit: cubit,
@@ -40,7 +42,8 @@ class TransferScreen extends StatelessWidget {
     );
   }
 
-  void _showBranchSelection(BuildContext parentContext, TransferCubit cubit, TransferState state) {
+  void _showBranchSelection(
+      BuildContext parentContext, TransferCubit cubit, TransferState state) {
     CustomSelectionDialog.show<TransferCubit, TransferState>(
       context: parentContext,
       cubit: cubit,
@@ -100,11 +103,8 @@ class TransferScreen extends StatelessWidget {
                   SizedBox(height: context.scaleHeight(24)),
                   Text(
                     'choose_transaction'.tr(),
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textLight,
-                    ),
+                    style: AppTextStyles.titleMediumSmall
+                        .copyWith(color: AppColors.textLight),
                   ),
                   const SizedBox(height: 12),
                   AddBeneficiaryTypeSelector(
@@ -152,11 +152,13 @@ class TransferScreen extends StatelessWidget {
                     onContentChanged: cubit.updateContent,
                     selectedBank: state.selectedBank,
                     selectedBranch: state.selectedBranch,
-                    onChooseBank: () => _showBankSelection(context, cubit, state),
-                    onChooseBranch: () => _showBranchSelection(context, cubit, state),
+                    onChooseBank: () =>
+                        _showBankSelection(context, cubit, state),
+                    onChooseBranch: () =>
+                        _showBranchSelection(context, cubit, state),
                     isAmountExceeded: state.isAmountExceeded,
                   ),
-                   SizedBox(height: context.scaleHeight(16)),
+                  SizedBox(height: context.scaleHeight(16)),
                   CustomCheckbox(
                     value: state.saveBeneficiary,
                     label: 'save_to_directory'.tr(),
@@ -165,7 +167,7 @@ class TransferScreen extends StatelessWidget {
                       cubit.toggleSaveBeneficiary(val ?? false);
                     },
                   ),
-                   SizedBox(height: context.scaleHeight(32)),
+                  SizedBox(height: context.scaleHeight(32)),
                   CustomButton(
                     text: 'confirm_label'.tr(),
                     isEnabled: state.isFormValid &&
@@ -180,7 +182,7 @@ class TransferScreen extends StatelessWidget {
                       );
                     },
                   ),
-                   SizedBox(height: context.scaleHeight(24)),
+                  SizedBox(height: context.scaleHeight(24)),
                 ],
               ),
             ),

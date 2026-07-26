@@ -38,6 +38,9 @@ class AppAssets {
   static const String flagGb = 'assets/images/gb.png';
   static const String flagJp = 'assets/images/jp.png';
   static const String flagIn = 'assets/images/in.png';
+  static const String flagEg = 'assets/images/eg.png';
+  static const String flagSa = 'assets/images/sa.png';
+  static const String flagAe = 'assets/images/ae.png';
 
 
   // Icons

@@ -7,6 +7,7 @@ import 'package:easy_pay_app/core/widgets/custom_selection_dialog.dart';
 import 'package:flutter/material.dart';
 import '../cubit/transfer_cubit.dart';
 import '../cubit/transfer_state.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class ConfirmTransactionInfoSection extends StatelessWidget {
   final TransferState state;
@@ -63,11 +64,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
       children: [
         Text(
           'confirm_transaction_information'.tr(),
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textLight,
-          ),
+          style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textLight),
         ),
         const SizedBox(height: 16),
 

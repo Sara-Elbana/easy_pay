@@ -80,12 +80,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       controller: _controller,
                       decoration: InputDecoration(
                         hintText: 'type_something'.tr(),
-                        hintStyle: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: context.scaleWidth(14),
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF989898),
-                        ),
+                        hintStyle: AppTextStyles.labelLarge.copyWith(fontSize: context.scaleWidth(AppTextStyles.labelLarge.fontSize ?? 14), color: AppColors.lightGray, fontFamily: 'Poppins'),
                         border: InputBorder.none,
                       ),
                     ),
@@ -131,7 +126,7 @@ class _ReceivedMessage extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: context.scaleWidth(250)),
         padding: EdgeInsets.all(context.scaleWidth(12)),
         decoration: BoxDecoration(
-          color: const Color(0xFFF2F1F9),
+          color: AppColors.chatBgColor,
           borderRadius: BorderRadius.circular(context.scaleWidth(15)),
         ),
         child: Column(
@@ -139,13 +134,7 @@ class _ReceivedMessage extends StatelessWidget {
           children: texts
               .map((t) => Text(
                     t,
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: context.scaleWidth(14),
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF343434),
-                      height: 1.5,
-                    ),
+                    style: AppTextStyles.labelLarge.copyWith(fontSize: context.scaleWidth(AppTextStyles.labelLarge.fontSize ?? 14), color: AppColors.textDark, fontFamily: 'Poppins'),
                   ))
               .toList(),
         ),
@@ -171,13 +160,7 @@ class _SentMessage extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: context.scaleWidth(14),
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-            height: 1.5,
-          ),
+          style: AppTextStyles.labelLarge.copyWith(fontSize: context.scaleWidth(AppTextStyles.labelLarge.fontSize ?? 14), color: Colors.white, fontFamily: 'Poppins'),
         ),
       ),
     );

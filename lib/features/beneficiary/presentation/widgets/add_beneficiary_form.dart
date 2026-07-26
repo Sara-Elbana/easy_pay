@@ -3,6 +3,7 @@ import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/beneficiary_form_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_colors.dart';
 
 class AddBeneficiaryForm extends StatelessWidget {
   final int selectedType;
@@ -47,7 +48,7 @@ class AddBeneficiaryForm extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x123629B7),
+            color: AppColors.primaryOpacity7,
             offset: Offset(0, 4),
             blurRadius: 30,
           ),

@@ -70,7 +70,10 @@ class AppRoutes {
         ),
     AppRoutesName.confirmScreen: (_) => ConfirmScreen(),
     AppRoutesName.successTransferScreen: (_) => const SuccessTransferScreen(),
-    AppRoutesName.mainScreen: (_) => const MainScreen(),
+    AppRoutesName.mainScreen: (_) => BlocProvider(
+          create: (_) => getIt<AuthCubit>(),
+          child: const MainScreen(),
+        ),
     AppRoutesName.exchangeRateScreen: (_) => BlocProvider(
           create: (_) => getIt<ExchangeRateCubit>()..getExchangeRates(),
           child: const ExchangeRateScreen(),
@@ -79,7 +82,10 @@ class AppRoutes {
           create: (_) => getIt<ExchangeCubit>(),
           child: const ExchangeScreen(),
         ),
-    AppRoutesName.settingScreen: (_) => const SettingScreen(),
+    AppRoutesName.settingScreen: (_) => BlocProvider(
+          create: (_) => getIt<AuthCubit>(),
+          child: const SettingScreen(),
+        ),
     AppRoutesName.appInformationScreen: (_) => const AppInformationScreen(),
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
     AppRoutesName.chatScreen: (_) => const ChatScreen(),

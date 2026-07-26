@@ -4,6 +4,7 @@ import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CustomSelectionDialog<B extends StateStreamableSource<S>, S> extends StatelessWidget {
   final String title;
@@ -77,11 +78,7 @@ class CustomSelectionDialog<B extends StateStreamableSource<S>, S> extends State
           children: [
             Text(
               title,
-              style: TextStyle(
-                fontSize: context.scaleWidth(18),
-                fontWeight: FontWeight.bold,
-                color: AppColors.textDark,
-              ),
+              style: AppTextStyles.transactionAmount.copyWith(fontSize: context.scaleWidth(AppTextStyles.transactionAmount.fontSize ?? 18), color: AppColors.textDark),
             ),
             SizedBox(height: context.scaleHeight(16)),
             CustomTextField(
@@ -109,11 +106,7 @@ class CustomSelectionDialog<B extends StateStreamableSource<S>, S> extends State
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           item,
-                          style: TextStyle(
-                            fontSize: context.scaleWidth(15),
-                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                            color: isSelected ? AppColors.primary : AppColors.textDark,
-                          ),
+                          style: AppTextStyles.titleMediumSmall.copyWith(fontSize: context.scaleWidth(AppTextStyles.titleMediumSmall.fontSize ?? 15), color: isSelected ? AppColors.primary : AppColors.textDark),
                         ),
                         trailing: isSelected
                             ? Icon(

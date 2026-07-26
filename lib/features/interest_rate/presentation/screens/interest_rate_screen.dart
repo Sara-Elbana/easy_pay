@@ -13,11 +13,13 @@ class InterestRateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar:  CustomAppBar(title: "interest_rate".tr()),
+      appBar: CustomAppBar(title: "interest_rate".tr()),
       body: FutureBuilder<List<InterestRate>>(
         future: InterestRemoteDataSource().getInterestRates(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
           final data = snapshot.data!;
           return Column(
             children: [
@@ -30,16 +32,32 @@ class InterestRateScreen extends StatelessWidget {
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   itemCount: data.length,
-                  separatorBuilder: (_, __) => const Divider(color: Color(0xFFF5F5F5)),
+                  separatorBuilder: (_, __) =>
+                      const Divider(color: AppColors.thinDivider),
                   itemBuilder: (context, index) {
                     final item = data[index];
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Row(
                         children: [
-                          Expanded(flex: 5, child: Text(item.kind, style: const TextStyle(fontWeight: FontWeight.w500))),
-                          Expanded(flex: 2, child: Text(item.deposit, textAlign: TextAlign.right, style: const TextStyle(color: AppColors.black))),
-                          Expanded(flex: 2, child: Text(item.rate, textAlign: TextAlign.right, style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold))),
+                          Expanded(
+                              flex: 5,
+                              child: Text(item.kind,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500))),
+                          Expanded(
+                              flex: 2,
+                              child: Text(item.deposit,
+                                  textAlign: TextAlign.right,
+                                  style:
+                                      const TextStyle(color: AppColors.black))),
+                          Expanded(
+                              flex: 2,
+                              child: Text(item.rate,
+                                  textAlign: TextAlign.right,
+                                  style: const TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.bold))),
                         ],
                       ),
                     );

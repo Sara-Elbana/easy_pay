@@ -74,14 +74,16 @@ class _SignInScreenState extends State<SignInScreen> {
             );
             await Future.delayed(const Duration(seconds: 1));
             if (!context.mounted) return;
-            Navigator.pushReplacementNamed(
+            Navigator.pushNamedAndRemoveUntil(
               context,
               AppRoutesName.mainScreen,
+              (route) => false,
             );
           } else if (state is BiometricSuccess) {
-            Navigator.pushReplacementNamed(
+            Navigator.pushNamedAndRemoveUntil(
               context,
               AppRoutesName.mainScreen,
+              (route) => false,
             );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -140,7 +142,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           CustomTextField(
                             controller: _phoneController,
-                            hintText: "text_input".tr(),
+                            hintText: "phone_number".tr(),
                             focusNode: _phoneFocusNode,
                             keyboardType: TextInputType.phone,
                             textInputAction: TextInputAction.next,

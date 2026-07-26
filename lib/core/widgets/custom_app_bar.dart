@@ -1,5 +1,6 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -54,11 +55,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ) ??
-                  const TextStyle(
-                    color: AppColors.textDark,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                  AppTextStyles.titleLargeMedium.copyWith(color: AppColors.textDark),
             )
           : null,
       centerTitle: centerTitle,

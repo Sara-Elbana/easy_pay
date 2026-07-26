@@ -1,5 +1,6 @@
 import 'package:easy_pay_app/features/auth/domain/use_cases/biometric_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_in_usecase.dart';
+import 'package:easy_pay_app/features/auth/domain/use_cases/sign_out_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_up_usecase.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,11 +9,13 @@ class AuthCubit extends Cubit<AuthState> {
   final SignInUseCase signInUseCase;
   final SignUpUseCase signUpUseCase;
   final BiometricUseCase biometricUseCase;
+  final SignOutUseCase signOutUseCase;
 
   AuthCubit({
     required this.signInUseCase,
     required this.signUpUseCase,
     required this.biometricUseCase,
+    required this.signOutUseCase,
   }) : super(const AuthInitial());
 
   Future<void> signIn(String phoneNumber, String password) async {
@@ -21,7 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
       final user = await signInUseCase(phoneNumber, password);
       emit(AuthSuccess(user));
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
     }
   }
 
@@ -45,7 +48,17 @@ class AuthCubit extends Cubit<AuthState> {
       final user = await signUpUseCase(name, phoneNumber, password);
       emit(AuthSuccess(user));
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
+    }
+  }
+
+  Future<void> signOut() async {
+    emit(const AuthLoading());
+    try {
+      await signOutUseCase();
+      emit(const SignOutSuccess());
+    } catch (e) {
+      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
     }
   }
 }

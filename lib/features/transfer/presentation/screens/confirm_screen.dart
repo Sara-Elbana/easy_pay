@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/transfer_cubit.dart';
 import '../cubit/transfer_state.dart';
 import '../widgets/otp_verification_widget.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class ConfirmScreen extends StatelessWidget {
   final _otpController = TextEditingController();
@@ -109,13 +110,7 @@ class ConfirmScreen extends StatelessWidget {
                                 alignment: Alignment.center,
                                 child: Text(
                                   'otp_code_label'.tr(),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: state.otpMode
-                                        ? AppColors.primary
-                                        : AppColors.textLight,
-                                  ),
+                                  style: AppTextStyles.bodyMediumSemiBold.copyWith(color: state.otpMode ? AppColors.primary : AppColors.textLight),
                                 ),
                               ),
                             ),
@@ -136,13 +131,7 @@ class ConfirmScreen extends StatelessWidget {
                                 alignment: Alignment.center,
                                 child: Text(
                                   'biometrics_label'.tr(),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: !state.otpMode
-                                        ? AppColors.primary
-                                        : AppColors.textLight,
-                                  ),
+                                  style: AppTextStyles.bodyMediumSemiBold.copyWith(color: !state.otpMode ? AppColors.primary : AppColors.textLight),
                                 ),
                               ),
                             ),

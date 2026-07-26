@@ -9,6 +9,7 @@ import '../cubit/exchange_cubit.dart';
 import '../cubit/exchange_state.dart';
 import '../widgets/currency_input_field.dart';
 import '../widgets/swap_button.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class ExchangeScreen extends StatelessWidget {
   const ExchangeScreen({super.key});
@@ -17,18 +18,9 @@ class ExchangeScreen extends StatelessWidget {
     CurrencyInfo(code: 'USD', symbol: '\$', name: 'Dollar'),
     CurrencyInfo(code: 'EUR', symbol: '€', name: 'Euro'),
     CurrencyInfo(code: 'GBP', symbol: '£', name: 'British Pound'),
-    CurrencyInfo(code: 'VND', symbol: '₫', name: 'Viet Nam Dong'),
-    CurrencyInfo(code: 'KRW', symbol: '₩', name: 'South Korean Won'),
-    CurrencyInfo(code: 'CNY', symbol: '¥', name: 'Chinese Yuan'),
-    CurrencyInfo(code: 'RUB', symbol: '₽', name: 'Russian Ruble'),
-    CurrencyInfo(code: 'ARS', symbol: '\$', name: 'Argentine Peso'),
-    CurrencyInfo(code: 'UAH', symbol: '₴', name: 'Ukrainian Hryvnia'),
-    CurrencyInfo(code: 'JPY', symbol: '¥', name: 'Japanese Yen'),
-    CurrencyInfo(code: 'INR', symbol: '₹', name: 'Indian Rupee'),
-    CurrencyInfo(code: 'NIO', symbol: 'C\$', name: 'Nicaraguan Córdoba'),
-    CurrencyInfo(code: 'HKD', symbol: 'HK\$', name: 'Hong Kong Dollar'),
-    CurrencyInfo(code: 'NTD', symbol: 'NT\$', name: 'New Taiwan Dollar'),
-    CurrencyInfo(code: 'JMD', symbol: 'J\$', name: 'Jamaican Dollar'),
+    CurrencyInfo(code: 'EGP', symbol: 'E.£', name: 'Egyptian Pound'),
+    CurrencyInfo(code: 'SAR', symbol: 'SR', name: 'Saudi Riyal'),
+    CurrencyInfo(code: 'AED', symbol: 'AED', name: 'UAE Dirham'),
   ];
 
   void _showCurrencyDialog(
@@ -147,21 +139,11 @@ class ExchangeScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   'currency_rate'.tr(),
-                                  style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.primary,
-                                  ),
+                                  style: AppTextStyles.labelLarge.copyWith(color: AppColors.primary, fontFamily: 'Poppins'),
                                 ),
                                 Text(
                                   '1 ${state.fromCurrency} = ${state.conversionRate.toStringAsFixed(4)} ${state.toCurrency}',
-                                  style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF979797),
-                                  ),
+                                  style: AppTextStyles.labelLarge.copyWith(color: AppColors.gray, fontFamily: 'Poppins'),
                                 ),
                               ],
                             ),
@@ -174,7 +156,7 @@ class ExchangeScreen extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: isButtonEnabled
                                   ? AppColors.primary
-                                  : const Color(0xFFF2F1F9),
+                                  : AppColors.chatBgColor,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
@@ -192,14 +174,7 @@ class ExchangeScreen extends StatelessWidget {
                                   )
                                 : Text(
                                     'exchange'.tr(),
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: isButtonEnabled
-                                          ? Colors.white
-                                          : const Color(0xFFCACACA),
-                                    ),
+                                    style: AppTextStyles.bodyLargeSemiBold.copyWith(color: isButtonEnabled ? Colors.white : AppColors.textLight, fontFamily: 'Poppins'),
                                   ),
                           ),
                         ],

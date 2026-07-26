@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/withdraw_cubit.dart';
 import '../cubit/withdraw_state.dart';
 import 'amount_selector_grid.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class WithdrawAmountSection extends StatefulWidget {
   const WithdrawAmountSection({super.key});
@@ -59,12 +60,7 @@ class _WithdrawAmountSectionState extends State<WithdrawAmountSection> {
           children: [
             Text(
               'choose_amount'.tr(),
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: context.scaleWidth(16),
-                fontWeight: FontWeight.w600,
-                color: AppColors.textDark,
-              ),
+              style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: AppColors.textDark, fontFamily: 'Poppins'),
             ),
             SizedBox(height: context.scaleHeight(12)),
             if (state.isOtherSelected)

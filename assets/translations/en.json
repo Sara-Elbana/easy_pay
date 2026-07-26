@@ -90,6 +90,8 @@
   "transaction_fee_hint": "Transaction Fee",
   "otp_hint": "OTP",
   "amount_exceeds_balance": "Amount exceeds available balance",
+  "err_enter_card_number": "Please enter card number",
+  "err_invalid_card_number": "Card number must be exactly 16 digits",
   "err_enter_name": "Please enter your name",
   "err_enter_email": "Please enter your email",
   "err_invalid_email": "Please enter a valid email",
@@ -150,7 +152,7 @@
   "delete_card": "Delete card",
   "valid_from": "Valid from",
   "good_thru": "Good thru",
-  "add_card": "Add card",
+  "add_beneficiary": "Add Beneficiary",
   "available_balance": "Available balance",
   "alert": "Alert",
   "paypal": "Paypal",
@@ -177,5 +179,9 @@
   "internet_bill_subtitle": "Pay internet bill this month",
   "interest_kind": "Interest kind",
   "deposit": "Deposit",
-  "rate": "Rate"
+  "rate": "Rate",
+  "sign_out": "Sign Out",
+  "are_you_sure_sign_out": "Are you sure you want to sign out?",
+  "yes": "Yes",
+  "no": "No"
 }

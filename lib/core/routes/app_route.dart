@@ -11,6 +11,8 @@ import 'package:easy_pay_app/features/auth/presentation/screens/change_password_
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/screens/home_screen.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/screens/setting_screen.dart';
+import 'package:easy_pay_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:easy_pay_app/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
@@ -51,6 +53,10 @@ class AppRoutes {
           child: const OnboardingScreen(),
         ),
     AppRoutesName.welcomeScreen: (_) => const WelcomeScreen(),
+    AppRoutesName.profileScreen: (_) => BlocProvider(
+      create: (context) => getIt<ProfileCubit>()..fetchProfile(),
+      child: const ProfileScreen(),
+    ),
     AppRoutesName.signInScreen: (context) => BlocProvider(
           create: (_) => getIt<AuthCubit>(),
           child: const SignInScreen(),
@@ -140,5 +146,6 @@ class AppRoutes {
       }
       throw Exception('Invalid arguments for BeneficiaryDetailScreen');
     },
+
   };
 }

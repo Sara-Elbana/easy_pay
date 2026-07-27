@@ -9,34 +9,41 @@ class CardCubit extends Cubit<CardState> {
   final AddCardUseCase addCardUseCase;
   final DeleteCardUseCase deleteCardUseCase;
 
-  CardCubit(this.getCardssUseCase, this.addCardUseCase, this.deleteCardUseCase) : super(CardInitial());
+  CardCubit(this.getCardssUseCase, this.addCardUseCase, this.deleteCardUseCase)
+      : super(CardInitial());
 
   Future<void> loadCards() async {
     emit(CardLoading());
     final result = await getCardssUseCase();
     result.fold(
-          (failure) => emit(CardError(failure.message)),
-          (cards) => emit(CardSuccess(cards)),
+      (failure) => emit(CardError(failure.message)),
+      (cards) => emit(CardSuccess(cards)),
     );
   }
 
-  Future<void> addNewCard(Map<String, dynamic> cardData) async {
+  Future<bool> addNewCard(Map<String, dynamic> cardData) async {
     emit(CardLoading());
     final result = await addCardUseCase(cardData);
+    bool isSuccess = false;
     result.fold(
-          (failure) => emit(CardError(failure.message)),
-          (newCard) {
+      (failure) {
+        emit(CardError(failure.message));
+        isSuccess = false;
+      },
+      (newCard) {
+        isSuccess = true;
         loadCards();
       },
     );
+    return isSuccess;
   }
 
   Future<void> removeCard(int cardId) async {
     emit(CardLoading());
     final result = await deleteCardUseCase(cardId);
     result.fold(
-          (failure) => emit(CardError(failure.message)),
-          (_) {
+      (failure) => emit(CardError(failure.message)),
+      (_) {
         loadCards();
       },
     );

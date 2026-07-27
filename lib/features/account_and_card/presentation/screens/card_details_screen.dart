@@ -61,7 +61,7 @@ class CardDetailsScreen extends StatelessWidget {
                   label: 'Good thru', value: currentCard.expirationDate),
               CardInfoRow(
                   label: 'Available balance',
-                  value: currentCard.bankAccount.balance),
+                  value: '\$${currentCard.bankAccount.balance}'),
               const Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: context.scaleHeight(40.0)),

@@ -23,6 +23,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final _cardNumberController = TextEditingController();
   final _expirationDateController = TextEditingController();
   final _cardTypeController = TextEditingController();
+
   @override
   void dispose() {
     _holderNameController.dispose();
@@ -35,76 +36,83 @@ class _AddCardScreenState extends State<AddCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: CustomAppBar(
-          title: 'add_card'.tr(),
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(context.scaleWidth(24)),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                CustomTextField(
-                  hintText: 'Card Holder Name',
-                  controller: _holderNameController,
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter card holder name' : null,
-                ),
-                SizedBox(height: context.scaleHeight(16)),
-                CustomTextField(
-                  hintText: 'Card Number',
-                  controller: _cardNumberController,
-                  keyboardType: TextInputType.number,
-                  validator: (value) =>
-                      value!.length < 16 ? 'Enter a valid card number' : null,
-                ),
-                SizedBox(height: context.scaleHeight(16)),
-                CustomTextField(
-                  hintText: 'Expiration Date (MM/YY)',
-                  controller: _expirationDateController,
-                  validator: (value) =>
-                      value!.isEmpty ? 'Enter expiration date' : null,
-                ),
-                SizedBox(height: context.scaleHeight(16)),
-                CustomTextField(
-                  hintText: 'Card Type (Visa / Mastercard)',
-                  controller: _cardTypeController,
-                ),
-                SizedBox(height: context.scaleHeight(40)),
-                BlocConsumer<CardCubit, CardState>(
-                  listener: (context, state) {
-                    if (state is CardSuccess) {
-                      context.read<CardCubit>().loadCards();
-                      Navigator.pop(context);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is CardLoading) {
-                      return const CustomLoadingWidget();
-                    } else if (state is CardError) {
-                      return  CustomErrorWidget(message: state.message);
-                    }
-                    return CustomButton(
-                      text: 'save_card'.tr(),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          final cardData = {
-                            "card_holder_name": _holderNameController.text,
-                            "card_number": _cardNumberController.text,
-                            "expiration_date": _expirationDateController.text,
-                            "card_type": _cardTypeController.text,
-                          };
-                          context.read<CardCubit>().addNewCard(cardData);
-                        }
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
+      backgroundColor: Colors.white,
+      appBar: CustomAppBar(
+        title: 'add_card'.tr(),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(context.scaleWidth(24)),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              CustomTextField(
+                hintText: 'Card Holder Name',
+                controller: _holderNameController,
+                validator: (value) =>
+                value!.isEmpty ? 'Please enter card holder name' : null,
+              ),
+              SizedBox(height: context.scaleHeight(16)),
+              CustomTextField(
+                hintText: 'Card Number',
+                controller: _cardNumberController,
+                keyboardType: TextInputType.number,
+                validator: (value) =>
+                value!.length < 16 ? 'Enter a valid card number' : null,
+              ),
+              SizedBox(height: context.scaleHeight(16)),
+              CustomTextField(
+                hintText: 'Expiration Date (MM/YY)',
+                controller: _expirationDateController,
+                keyboardType: TextInputType.datetime,
+                validator: (value) =>
+                value!.isEmpty ? 'Enter expiration date' : null,
+              ),
+              SizedBox(height: context.scaleHeight(16)),
+              CustomTextField(
+                hintText: 'Card Type (Visa / Mastercard)',
+                controller: _cardTypeController,
+              ),
+              SizedBox(height: context.scaleHeight(32)),
+              BlocConsumer<CardCubit, CardState>(
+                listener: (context, state) {
+                },
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      if (state is CardError) ...[
+                        CustomErrorWidget(message: state.message),
+                        SizedBox(height: context.scaleHeight(16)),
+                      ],
+                      state is CardLoading
+                          ? const Center(child: CustomLoadingWidget())
+                          : CustomButton(
+                        text: 'save_card'.tr(),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            final cardData = {
+                              "card_holder_name": _holderNameController.text,
+                              "card_number": _cardNumberController.text,
+                              "expiration_date": _expirationDateController.text,
+                              "card_type": _cardTypeController.text,
+                            };
+                            final success = await context
+                                .read<CardCubit>()
+                                .addNewCard(cardData);
+                            if (success && context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          }
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

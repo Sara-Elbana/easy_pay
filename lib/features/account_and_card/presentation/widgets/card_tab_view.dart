@@ -18,93 +18,100 @@ class CardTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.scaleWidth(24)),
-      child: Column(
-        children: [
-          ...cards.map((card) {
-            final cardAsset = card.cardType.toLowerCase() == 'visa'
-                ? AppAssets.bankCardBlue
-                : AppAssets.bankCardYellow;
-
-            return Container(
-              margin: EdgeInsets.only(bottom: context.scaleHeight(16)),
-              child: Material(
-                color: Colors.transparent,
+      padding: EdgeInsets.symmetric(horizontal: context.scaleWidth(20)),
+      child: ListView.builder(
+        itemCount: cards.length + 1,
+        itemBuilder: (context, index) {
+          if (index == cards.length) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: context.scaleHeight(12)),
+              child: Column(
+                children: [
+                  CustomButton(
+                    text: 'add_card'.tr(),
+                    onPressed: () async {
+                      await Navigator.pushNamed(context, AppRoutesName.addCardScreen);
+                      if (context.mounted) {
+                        await Future.delayed(const Duration(milliseconds: 500));
+                        if (context.mounted) {
+                          context.read<AccountCubit>().loadAccounts();
+                          context.read<CardCubit>().loadCards();
+                        }
+                      }
+                    },
+                  ),
+                  SizedBox(height: context.scaleHeight(20)),
+                ],
+              ),
+            );
+          }
+          final card = cards[index];
+          final cardAsset = card.cardType.toLowerCase() == 'visa'
+              ? AppAssets.bankCardBlue
+              : AppAssets.bankCardYellow;
+          return Container(
+            margin: EdgeInsets.only(bottom: context.scaleHeight(16)),
+            child: Material(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(context.scaleWidth(20)),
+              child: InkWell(
                 borderRadius: BorderRadius.circular(context.scaleWidth(20)),
-                child: InkWell(
+                onTap: () async {
+                  await Navigator.pushNamed(
+                    context,
+                    AppRoutesName.cardDetailsScreen,
+                    arguments: card,
+                  );
+                  if (context.mounted) {
+                    context.read<CardCubit>().loadCards();
+                  }
+                },
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(context.scaleWidth(20)),
-                  onTap: () async {
-                    await Navigator.pushNamed(
-                      context,
-                      AppRoutesName.cardDetailsScreen,
-                      arguments: card,
-                    );
-                    if (context.mounted) {
-                      context.read<CardCubit>().loadCards();
-                    }
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(context.scaleWidth(20)),
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          cardAsset,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        cardAsset,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(context.scaleWidth(26)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              card.cardHolderName,
+                              style: AppTextStyles.titleLarge.copyWith(color: AppColors.white),
+                            ),
+                            SizedBox(height: context.scaleHeight(40)),
+                            Text(
+                              card.cardType,
+                              style: AppTextStyles.titleMedium.copyWith(color: AppColors.white),
+                            ),
+                            SizedBox(height: context.scaleHeight(11)),
+                            Text(
+                              card.maskedCardNumber,
+                              style: AppTextStyles.titleSmall.copyWith(color: AppColors.white),
+                            ),
+                            SizedBox(height: context.scaleHeight(10)),
+                            Text(
+                              '\$${card.bankAccount.balance}',
+                              style: AppTextStyles.titleMedium.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(context.scaleWidth(26)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                card.cardHolderName,
-                                style: AppTextStyles.titleLarge.copyWith(color: AppColors.white),
-                              ),
-                              SizedBox(height: context.scaleHeight(40)),
-                              Text(
-                                card.cardType,
-                                style: AppTextStyles.titleMedium.copyWith(color: AppColors.white),
-                              ),
-                              SizedBox(height: context.scaleHeight(11)),
-                              Text(
-                                card.maskedCardNumber,
-                                style: AppTextStyles.titleSmall.copyWith(color: AppColors.white),
-                              ),
-                              SizedBox(height: context.scaleHeight(10)),
-                              Text(
-                                '\$${card.bankAccount.balance}',
-                                style: AppTextStyles.titleMedium.copyWith(
-                                  color: AppColors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            );
-          }),
-          SizedBox(height: context.scaleHeight(16)),
-          CustomButton(
-            text: 'add_card'.tr(),
-            onPressed: () async {
-              await Navigator.pushNamed(context, AppRoutesName.addCardScreen);
-              if (context.mounted) {
-                await Future.delayed(const Duration(milliseconds: 500));
-                if (context.mounted) {
-                  context.read<AccountCubit>().loadAccounts();
-                  context.read<CardCubit>().loadCards();
-                }
-              }
-            },
-          ),
-          SizedBox(height: context.scaleHeight(24)),
-        ],
+            ),
+          );
+        },
       ),
     );
   }

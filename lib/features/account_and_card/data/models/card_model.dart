@@ -15,14 +15,16 @@ class CardModel extends CardEntity {
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
     return CardModel(
-      id: json['id'],
-      cardHolderName: json['card_holder_name'],
-      cardType: json['card_type'],
-      cardNumber: json['card_number'],
-      maskedCardNumber: json['masked_card_number'],
-      expirationDate: json['expiration_date'],
+      id: json['id'] ?? 0,
+      cardHolderName: json['card_holder_name'] ?? '',
+      cardType: json['card_type'] ?? '',
+      cardNumber: json['card_number'] ?? '',
+      maskedCardNumber: json['masked_card_number'] ?? '',
+      expirationDate: json['expiration_date'] ?? '',
       isActive: json['is_active'] ?? true,
-      bankAccount: BankAccountModel.fromJson(json['bank_account']),
+      bankAccount: json['bank_account'] != null
+          ? BankAccountModel.fromJson(json['bank_account'])
+          : const BankAccountModel(id: 0, accountNumber: '', balance: '0.00'),
     );
   }
 

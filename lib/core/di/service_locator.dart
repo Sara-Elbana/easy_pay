@@ -252,7 +252,7 @@ Future<void> setupDependencies() async {
 
   // App Information Feature
   getIt.registerLazySingleton<AppInfoRemoteDataSource>(
-    () => AppInfoRemoteDataSource(getIt()),
+    () => AppInfoRemoteDataSource(),
   );
 
   getIt.registerLazySingleton<AppInfoRepository>(
@@ -268,7 +268,7 @@ Future<void> setupDependencies() async {
   );
   // Profile Feature
   getIt.registerLazySingleton<ProfileRemoteDataSource>(
-    () => ProfileRemoteDataSource(getIt()),
+    () => ProfileRemoteDataSource(),
   );
 
   getIt.registerLazySingleton<ProfileRepository>(
@@ -285,7 +285,7 @@ Future<void> setupDependencies() async {
 
   // Account & Card Feature
   getIt.registerLazySingleton<AccountRemoteDataSource>(
-        () => AccountRemoteDataSource(getIt()),
+        () => AccountRemoteDataSource(),
   );
   getIt.registerLazySingleton<AccountRepository>(
         () => AccountRepositoryImpl(remoteDataSource: getIt()),
@@ -298,7 +298,7 @@ Future<void> setupDependencies() async {
   );
 
   getIt.registerLazySingleton<CardRemoteDataSource>(
-        () => CardRemoteDataSource(getIt()),
+        () => CardRemoteDataSource(),
   );
 
   getIt.registerLazySingleton<CardRepository>(
@@ -315,7 +315,7 @@ Future<void> setupDependencies() async {
         () => CardCubit(getIt(), getIt(),getIt()),
   );
   getIt.registerLazySingleton<AddCardRemoteDataSource>(
-        () => AddCardRemoteDataSource(getIt()),
+        () => AddCardRemoteDataSource(),
   );
 
 }

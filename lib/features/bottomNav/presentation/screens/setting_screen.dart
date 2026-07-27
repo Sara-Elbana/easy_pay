@@ -20,15 +20,9 @@ class SettingScreen extends StatelessWidget {
         children: [
           HeaderWidget(
             title: 'setting'.tr(),
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context, AppRoutesName.mainScreen);
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: AppColors.white,
-              ),
-            ),
+            onTap: (){
+              Navigator.pushNamed(context, AppRoutesName.profileScreen);
+            },
           ),
           SizedBox(height: context.scaleHeight(60)),
           Expanded(

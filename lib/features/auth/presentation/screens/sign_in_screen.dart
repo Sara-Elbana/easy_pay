@@ -81,11 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
               (route) => false,
             );
           } else if (state is BiometricSuccess) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutesName.mainScreen,
-              (route) => false,
-            );
+            // Biometric authentication validated successfully; no navigation or action taken.
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

@@ -28,4 +28,6 @@ class AppRoutesName {
   static const String beneficiaryDirectoryScreen = "beneficiaryDirectoryScreen";
   static const String addBeneficiaryScreen = "addBeneficiaryScreen";
   static const String beneficiaryDetailScreen = "beneficiaryDetailScreen";
+  static const String addCardScreen = "addCardScreen";
+
 }

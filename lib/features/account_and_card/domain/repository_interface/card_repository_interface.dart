@@ -5,5 +5,5 @@ import 'package:easy_pay_app/features/account_and_card/domain/entities/card_enti
 abstract class CardRepository {
   Future<Either<Failure, List<CardEntity>>> getCards();
   Future<Either<Failure, CardEntity>> addCard(Map<String, dynamic> cardData);
-  Future<Either<Failure, void>> deleteCard(int cardId);
+  Future<Either<Failure, Unit>> deleteCard(int cardId);
 }

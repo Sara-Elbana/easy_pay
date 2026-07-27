@@ -1,3 +1,6 @@
+import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/screens/add_card_screen.dart';
 import 'package:easy_pay_app/features/app_information/presentation/screens/app_information_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:easy_pay_app/features/interest_rate/presentation/screens/interest_rate_screen.dart';
@@ -89,7 +92,17 @@ class AppRoutes {
     AppRoutesName.appInformationScreen: (_) => const AppInformationScreen(),
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
     AppRoutesName.chatScreen: (_) => const ChatScreen(),
-    AppRoutesName.cardDetailsScreen: (_) => const CardDetailsScreen(),
+    AppRoutesName.cardDetailsScreen: (context) {
+      final card = ModalRoute.of(context)?.settings.arguments as CardEntity?;
+      return BlocProvider(
+        create: (_) => getIt<CardCubit>(),
+        child: CardDetailsScreen(card: card),
+      );
+    },
+    AppRoutesName.addCardScreen: (_) => BlocProvider(
+      create: (_) => getIt<CardCubit>(),
+      child: const AddCardScreen(),
+    ),
     AppRoutesName.withdrawScreen: (_) => const WithdrawScreen(),
     AppRoutesName.withdrawSuccessScreen: (_) => const WithdrawSuccessScreen(),
     AppRoutesName.mapSearchScreen: (_) => BlocProvider(

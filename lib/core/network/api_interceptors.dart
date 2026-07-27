@@ -101,7 +101,12 @@ class ErrorInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final exception = _mapDioExceptionToException(err);
     logger.error('Mapped exception: ${exception.runtimeType}');
-    handler.reject(err);
+
+    final modifiedError = err.copyWith(
+      error: exception,
+    );
+
+    handler.reject(modifiedError);
   }
 
   /// Maps DioException to custom exceptions
@@ -186,7 +191,7 @@ class ErrorInterceptor extends Interceptor {
 
       case 422:
         return ServerException(
-          message: 'Validation error. Please check your input.',
+          message: message,
           statusCode: statusCode,
           originalException: dioException,
         );

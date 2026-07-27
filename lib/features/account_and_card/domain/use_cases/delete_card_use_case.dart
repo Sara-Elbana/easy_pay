@@ -7,7 +7,7 @@ class DeleteCardUseCase {
 
   DeleteCardUseCase(this.repository);
 
-  Future<Either<Failure, void>> call(int cardId) async {
+  Future<Either<Failure, Unit>> call(int cardId) async {
     return await repository.deleteCard(cardId);
   }
 }

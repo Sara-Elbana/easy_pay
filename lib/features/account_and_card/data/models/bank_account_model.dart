@@ -9,8 +9,8 @@ class BankAccountModel extends BankAccountEntity {
 
   factory BankAccountModel.fromJson(Map<String, dynamic> json) {
     return BankAccountModel(
-      id: json['id'] ?? 0,
-      accountNumber: json['account_number'] ?? '',
+      id: json['id'],
+      accountNumber: json['account_number'],
       balance: json['balance'] ?? '0.00',
     );
   }

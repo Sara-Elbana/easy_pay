@@ -28,5 +28,11 @@ class AccountModel {
       bankCards: cards,
     );
   }
-}
 
+  static List<AccountModel> listFromJson(Map<String, dynamic> json) {
+    var dataList = json['data'] ?? json['accounts'] ?? [];
+    return (dataList as List)
+        .map((accountJson) => AccountModel.fromJson(accountJson))
+        .toList();
+  }
+}

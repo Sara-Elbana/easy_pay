@@ -184,5 +184,8 @@
   "are_you_sure_sign_out": "Are you sure you want to sign out?",
   "yes": "Yes",
   "no": "No",
-  "add_card": "Add Card"
+  "add_card": "Add Card",
+  "no_accounts_found": "No Accounts Found",
+  "no_cards_found": "No Cards Found",
+  "save_card": "Save Card"
 }

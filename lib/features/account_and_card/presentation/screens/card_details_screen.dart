@@ -1,63 +1,88 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_pay_app/core/core.dart';
+import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
+import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
+import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_state.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/widgets/card_info_row.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CardDetailsScreen extends StatelessWidget {
+  final CardEntity? card;
 
-  const CardDetailsScreen({super.key, });
+  const CardDetailsScreen({super.key, this.card});
 
   @override
   Widget build(BuildContext context) {
-    final card = ModalRoute.of(context)!.settings.arguments as CardEntity;
+    final CardEntity? currentCard =
+        card ?? (ModalRoute.of(context)?.settings.arguments as CardEntity?);
+
+    if (currentCard == null) {
+      return Scaffold(
+        backgroundColor: AppColors.white,
+        appBar: CustomAppBar(
+          title: 'Card'.tr(),
+        ),
+        body: const Center(child: Text('No card data found')),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'card_details'.tr(),
-          style: AppTextStyles.titleLargeMedium.copyWith(
-            fontSize: context.scaleWidth(AppTextStyles.titleLargeMedium.fontSize ?? 20),
-            color: Colors.black87,
-          ),
-        ),
-        centerTitle: false,
+      appBar: CustomAppBar(
+        title: 'Card'.tr(),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: context.scaleHeight(16)),
-          CardInfoRow(label: 'name'.tr(), value: card.cardHolderName),
-          CardInfoRow(label: 'card_number'.tr(), value: card.maskedCardNumber),
-          CardInfoRow(label: 'card_type'.tr(), value: card.cardType),
-          CardInfoRow(label: 'good_thru'.tr(), value: card.expirationDate),
-          CardInfoRow(
-            label: 'status'.tr(),
-            value: card.isActive ? 'Active'.tr() : 'Inactive'.tr(),
-          ),
-          const Spacer(),
-          Padding(
-            padding: EdgeInsets.only(bottom: context.scaleHeight(40.0)),
-            child: TextButton(
-              onPressed: () {
-              },
-              child: Text(
-                'delete_card'.tr(),
-                style: AppTextStyles.bodyLargeSemiBold.copyWith(
-                  fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16),
-                  color: Colors.redAccent,
+      body: BlocConsumer<CardCubit, CardState>(listener: (context, state) {
+        if (state is CardSuccess) {
+          Navigator.pop(context);
+        }
+      }, builder: (context, state) {
+        if (state is CardLoading) {
+          return const CustomLoadingWidget();
+        } else if (state is CardError) {
+          return CustomErrorWidget(
+            message: state.message,
+          );
+        }
+        return Padding(
+          padding: EdgeInsets.all(context.scaleWidth(8)),
+          child: Column(
+            children: [
+              CardInfoRow(label: 'Name', value: currentCard.cardHolderName),
+              CardInfoRow(
+                  label: 'Card number', value: currentCard.maskedCardNumber),
+              CardInfoRow(
+                  label: 'Valid from', value: currentCard.expirationDate),
+              CardInfoRow(
+                  label: 'Good thru', value: currentCard.expirationDate),
+              CardInfoRow(
+                  label: 'Available balance',
+                  value: currentCard.bankAccount.balance),
+              const Spacer(),
+              Padding(
+                padding: EdgeInsets.only(bottom: context.scaleHeight(40.0)),
+                child: TextButton(
+                  onPressed: () {
+                    context.read<CardCubit>().removeCard(currentCard.id);
+                  },
+                  child: Text(
+                    'delete_card'.tr(),
+                    style: AppTextStyles.bodyLargeSemiBold.copyWith(
+                      fontSize: context.scaleWidth(
+                          AppTextStyles.bodyLargeSemiBold.fontSize ?? 16),
+                      color: Colors.redAccent,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      }),
     );
   }
 }

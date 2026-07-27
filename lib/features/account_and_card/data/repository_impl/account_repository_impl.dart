@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/errors/failures.dart';
 import 'package:easy_pay_app/features/account_and_card/data/datasources/account_remote_data_source.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/account_entity.dart';
@@ -29,8 +30,11 @@ class AccountRepositoryImpl implements AccountRepository {
       )).toList();
 
       return Right(entities);
+    } on DioException catch (e) {
+      final errorMessage = e.response?.data['message'] ?? e.error.toString();
+      return Left(ServerFailure(errorMessage));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(UnknownFailure(e.toString()));
     }
   }
 }

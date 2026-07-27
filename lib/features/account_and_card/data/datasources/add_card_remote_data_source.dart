@@ -7,14 +7,10 @@ class AddCardRemoteDataSource {
 
   AddCardRemoteDataSource(this.dio);
   Future<CardModel> addCard(Map<String, dynamic> cardData) async {
-    final response = await dio.post(
-      ApiConstants.cardsEndpoint,
-      data: cardData,
-    );
+    final response = await dio.post(ApiConstants.cardsEndpoint, data: cardData,);
     final data = response.data;
     final cardJson =
         data is Map && data.containsKey('card') ? data['card'] : data;
-
     return CardModel.fromJson(cardJson);
   }
 }

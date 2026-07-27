@@ -25,4 +25,11 @@ class CardModel extends CardEntity {
       bankAccount: BankAccountModel.fromJson(json['bank_account']),
     );
   }
+
+  static List<CardModel> listFromJson(dynamic json) {
+    var dataList = json is Map ? (json['data'] ?? json['cards'] ?? []) : json;
+    return (dataList as List)
+        .map((cardJson) => CardModel.fromJson(cardJson))
+        .toList();
+  }
 }

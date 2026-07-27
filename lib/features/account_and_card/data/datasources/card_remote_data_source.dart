@@ -9,12 +9,10 @@ class CardRemoteDataSource {
 
   Future<List<CardModel>> getCards() async {
     final response = await dio.get(ApiConstants.cardsEndpoint);
-    final data = response.data;
-    List cardsList = data is Map ? data['cards'] ?? [] : data;
-    return cardsList.map((json) => CardModel.fromJson(json)).toList();
+    return CardModel.listFromJson(response.data);
   }
 
   Future<void> deleteCard(int cardId) async {
-    await dio.delete('https://ebank.dotlaa.com/api/cards/$cardId');
+    await dio.delete('${ApiConstants.cardsEndpoint}/$cardId');
   }
 }

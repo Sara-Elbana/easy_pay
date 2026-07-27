@@ -1,0 +1,110 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
+import 'package:easy_pay_app/core/widgets/custom_button.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
+import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
+import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
+import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class AddCardScreen extends StatefulWidget {
+  const AddCardScreen({super.key});
+
+  @override
+  State<AddCardScreen> createState() => _AddCardScreenState();
+}
+
+class _AddCardScreenState extends State<AddCardScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _holderNameController = TextEditingController();
+  final _cardNumberController = TextEditingController();
+  final _expirationDateController = TextEditingController();
+  final _cardTypeController = TextEditingController();
+  @override
+  void dispose() {
+    _holderNameController.dispose();
+    _cardNumberController.dispose();
+    _expirationDateController.dispose();
+    _cardTypeController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: CustomAppBar(
+          title: 'add_card'.tr(),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(context.scaleWidth(24)),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                CustomTextField(
+                  hintText: 'Card Holder Name',
+                  controller: _holderNameController,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Please enter card holder name' : null,
+                ),
+                SizedBox(height: context.scaleHeight(16)),
+                CustomTextField(
+                  hintText: 'Card Number',
+                  controller: _cardNumberController,
+                  keyboardType: TextInputType.number,
+                  validator: (value) =>
+                      value!.length < 16 ? 'Enter a valid card number' : null,
+                ),
+                SizedBox(height: context.scaleHeight(16)),
+                CustomTextField(
+                  hintText: 'Expiration Date (MM/YY)',
+                  controller: _expirationDateController,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Enter expiration date' : null,
+                ),
+                SizedBox(height: context.scaleHeight(16)),
+                CustomTextField(
+                  hintText: 'Card Type (Visa / Mastercard)',
+                  controller: _cardTypeController,
+                ),
+                SizedBox(height: context.scaleHeight(40)),
+                BlocConsumer<CardCubit, CardState>(
+                  listener: (context, state) {
+                    if (state is CardSuccess) {
+                      context.read<CardCubit>().loadCards();
+                      Navigator.pop(context);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is CardLoading) {
+                      return const CustomLoadingWidget();
+                    } else if (state is CardError) {
+                      return  CustomErrorWidget(message: state.message);
+                    }
+                    return CustomButton(
+                      text: 'save_card'.tr(),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final cardData = {
+                            "card_holder_name": _holderNameController.text,
+                            "card_number": _cardNumberController.text,
+                            "expiration_date": _expirationDateController.text,
+                            "card_type": _cardTypeController.text,
+                          };
+                          context.read<CardCubit>().addNewCard(cardData);
+                        }
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+    );
+  }
+}

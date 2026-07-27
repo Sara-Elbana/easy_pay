@@ -39,10 +39,7 @@ class SignOutDialog extends StatelessWidget {
       ),
       title: Text(
         'sign_out'.tr(),
-        style: AppTextStyles.titleMedium.copyWith(
-          color: AppColors.primary,
-          fontWeight: FontWeight.bold,
-        ),
+        style: AppTextStyles.titleMediumPrimary,
       ),
       content: Text(
         'are_you_sure_sign_out'.tr(),
@@ -53,10 +50,7 @@ class SignOutDialog extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           child: Text(
             'no'.tr(),
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.gray500,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.bodyMediumGray500,
           ),
         ),
         ElevatedButton(
@@ -69,10 +63,7 @@ class SignOutDialog extends StatelessWidget {
           onPressed: onConfirm,
           child: Text(
             'yes'.tr(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.labelMediumWhite,
           ),
         ),
       ],

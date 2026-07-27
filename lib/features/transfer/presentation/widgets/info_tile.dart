@@ -30,16 +30,12 @@ class InfoTile extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textLight,
-            ),
+            style: AppTextStyles.labelSmallBoldLight,
           ),
           const SizedBox(height: 4),
           Text(
             value,
-            style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textDark),
+            style: AppTextStyles.titleMediumSmallDark,
           ),
         ],
       ),

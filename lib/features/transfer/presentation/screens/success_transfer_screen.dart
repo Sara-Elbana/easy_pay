@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
-import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
@@ -45,31 +44,25 @@ class SuccessTransferScreen extends StatelessWidget {
                     SizedBox(height: context.scaleHeight(40)),
                     Text(
                       'transfer_successful'.tr(),
-                      style: AppTextStyles.titleLarge.copyWith(color: AppColors.primary),
+                      style: AppTextStyles.titleLargePrimary,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: context.scaleHeight(16)),
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textDark, height: 1.4),
+                        style: AppTextStyles.titleMediumSmallDark,
                         children: [
                           const TextSpan(
                               text: 'You have successfully transferred '),
                           TextSpan(
                             text: '\$${state.amount}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.error,
-                            ),
+                            style: AppTextStyles.error,
                           ),
                           const TextSpan(text: ' to '),
                           TextSpan(
                             text: state.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
+                            style: AppTextStyles.bodyMediumPrimary,
                           ),
                           const TextSpan(text: '!'),
                         ],

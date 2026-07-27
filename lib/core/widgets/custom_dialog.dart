@@ -21,7 +21,7 @@ class CustomDialog extends StatelessWidget {
       title: Center(
         child: Text(
           "had_very_little".tr(),
-          style: AppTextStyles.titleLarge.copyWith(color: AppColors.black),
+          style: AppTextStyles.titleLargeDark,
         ),
       ),
       content: Column(
@@ -29,13 +29,13 @@ class CustomDialog extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppTextStyles.titleLarge.copyWith(color: AppColors.black),
+            style: AppTextStyles.titleLargeDark,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: size.height * 0.02),
           Text(
             supTitle,
-            style: AppTextStyles.bodyLarge.copyWith(color: AppColors.gray800),
+            style: AppTextStyles.bodyLargeGray800,
           ),
         ],
       ),

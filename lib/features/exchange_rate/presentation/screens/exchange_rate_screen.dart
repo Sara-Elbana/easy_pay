@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,10 +44,7 @@ class ExchangeRateScreen extends StatelessWidget {
                         children: [
                           Text(
                             'failed_to_load_rates'.tr(),
-                            style: const TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: AppTextStyles.bodyMediumPoppins,
                           ),
                           const SizedBox(height: 12),
                           ElevatedButton(

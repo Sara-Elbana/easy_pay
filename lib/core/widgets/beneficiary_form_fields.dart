@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:easy_pay_app/core/widgets/selection_box.dart';
@@ -120,7 +119,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
           // Bank Selector
           Text(
             'choose_bank'.tr(),
-            style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+            style: AppTextStyles.bodySmallGray,
           ),
           SizedBox(height: context.scaleHeight(6)),
           SelectionBox(
@@ -134,7 +133,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
           // Branch Selector
           Text(
             'choose_branch'.tr(),
-            style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+            style: AppTextStyles.bodySmallGray,
           ),
           SizedBox(height: context.scaleHeight(6)),
           SelectionBox(
@@ -149,7 +148,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
         // Name field
         Text(
           'name'.tr(),
-          style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+          style: AppTextStyles.bodySmallGray,
         ),
         SizedBox(height: context.scaleHeight(6)),
         CustomTextField(
@@ -163,7 +162,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
         // Card number field
         Text(
           'card_number_label'.tr(),
-          style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+          style: AppTextStyles.bodySmallGray,
         ),
         SizedBox(height: context.scaleHeight(6)),
         CustomTextField(
@@ -179,7 +178,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
           // Amount field
           Text(
             'amount_label'.tr(),
-            style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+            style: AppTextStyles.bodySmallGray,
           ),
           SizedBox(height: context.scaleHeight(6)),
           CustomTextField(
@@ -195,11 +194,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Text(
                 'amount_exceeds_balance'.tr(),
-                style: const TextStyle(
-                  color: AppColors.error,
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.error,
               ),
             ),
           ],
@@ -209,7 +204,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Text(
                 _amountInWords.toLowerCase(),
-                style: AppTextStyles.bodyMediumSemiBold.copyWith(color: AppColors.primary),
+                style: AppTextStyles.bodyMediumPrimary,
               ),
             ),
           ],
@@ -218,7 +213,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
           // Content field
           Text(
             'content_label'.tr(),
-            style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+            style: AppTextStyles.bodySmallGray,
           ),
           SizedBox(height: context.scaleHeight(6)),
           CustomTextField(

@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:easy_pay_app/features/transfer/presentation/widgets/account_dropdown.dart';
 import 'package:easy_pay_app/core/widgets/selection_box.dart';
@@ -64,12 +63,12 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
       children: [
         Text(
           'confirm_transaction_information'.tr(),
-          style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textLight),
+          style: AppTextStyles.titleMediumSmallLight,
         ),
         const SizedBox(height: 16),
 
         // From
-        Text('from'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
+        Text('from'.tr(), style: AppTextStyles.labelSmallBoldLight),
         const SizedBox(height: 6),
         AccountDropdown(
           cards: state.cards,
@@ -82,7 +81,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
 
         if (state.selectedTransactionType == 2) ...[
           // Bank
-          Text('choose_bank'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
+          Text('choose_bank'.tr(), style: AppTextStyles.labelSmallBoldLight),
           const SizedBox(height: 6),
           SelectionBox(
             value: state.selectedBank,
@@ -93,7 +92,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
           const SizedBox(height: 12),
 
           // Branch
-          Text('choose_branch'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
+          Text('choose_branch'.tr(), style: AppTextStyles.labelSmallBoldLight),
           const SizedBox(height: 6),
           SelectionBox(
             value: state.selectedBranch,
@@ -105,7 +104,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
         ],
 
         // To Name
-        Text('to'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
+        Text('to'.tr(), style: AppTextStyles.labelSmallBoldLight),
         const SizedBox(height: 6),
         CustomTextField(
           controller: nameController,
@@ -115,7 +114,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
         const SizedBox(height: 12),
 
         // Card Number
-        Text('card_number_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
+        Text('card_number_label'.tr(), style: AppTextStyles.labelSmallBoldLight),
         const SizedBox(height: 6),
         CustomTextField(
           controller: cardController,
@@ -126,7 +125,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
         const SizedBox(height: 12),
 
         // Fee (read-only dynamically updated)
-        Text('transaction_fee_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
+        Text('transaction_fee_label'.tr(), style: AppTextStyles.labelSmallBoldLight),
         const SizedBox(height: 6),
         CustomTextField(
           controller: feeController,
@@ -136,7 +135,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
         const SizedBox(height: 12),
 
         // Content
-        Text('content_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
+        Text('content_label'.tr(), style: AppTextStyles.labelSmallBoldLight),
         const SizedBox(height: 6),
         CustomTextField(
           controller: contentController,
@@ -146,7 +145,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
         const SizedBox(height: 12),
 
         // Amount
-        Text('amount_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.textLight)),
+        Text('amount_label'.tr(), style: AppTextStyles.labelSmallBoldLight),
         const SizedBox(height: 6),
         CustomTextField(
           controller: amountController,

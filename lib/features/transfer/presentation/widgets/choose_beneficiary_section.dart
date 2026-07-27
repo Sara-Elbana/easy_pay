@@ -37,7 +37,7 @@ class ChooseBeneficiarySection extends StatelessWidget {
             children: [
               Text(
                 'choose_beneficiary'.tr(),
-                style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textLight),
+                style: AppTextStyles.titleMediumSmallLight,
               ),
               GestureDetector(
                 onTap: isEnabled ? onFindBeneficiary : null,

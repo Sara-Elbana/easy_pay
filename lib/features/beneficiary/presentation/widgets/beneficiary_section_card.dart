@@ -26,7 +26,7 @@ class BeneficiarySectionCard extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+          style: AppTextStyles.bodySmallGray,
         ),
         SizedBox(height: context.scaleHeight(8)),
         Container(
@@ -60,11 +60,11 @@ class BeneficiarySectionCard extends StatelessWidget {
                 ),
                 title: Text(
                   b.name,
-                  style: AppTextStyles.titleMedium.copyWith(color: AppColors.textDark),
+                  style: AppTextStyles.titleMediumDark,
                 ),
                 subtitle: Text(
                   b.cardNumber,
-                  style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+                  style: AppTextStyles.bodySmallGray,
                 ),
                 trailing: const Icon(
                   Icons.chevron_right,

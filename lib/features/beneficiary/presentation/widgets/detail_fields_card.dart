@@ -39,7 +39,7 @@ class DetailFieldsCard extends StatelessWidget {
             // Bank
             Text(
               'choose_bank'.tr(),
-              style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+              style: AppTextStyles.bodySmallGray,
             ),
             SizedBox(height: context.scaleHeight(6)),
             CustomTextField(
@@ -52,7 +52,7 @@ class DetailFieldsCard extends StatelessWidget {
             // Branch
             Text(
               'choose_branch'.tr(),
-              style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+              style: AppTextStyles.bodySmallGray,
             ),
             SizedBox(height: context.scaleHeight(6)),
             CustomTextField(
@@ -66,7 +66,7 @@ class DetailFieldsCard extends StatelessWidget {
           // Transaction Name
           Text(
             'name'.tr(),
-            style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+            style: AppTextStyles.bodySmallGray,
           ),
           SizedBox(height: context.scaleHeight(6)),
           CustomTextField(
@@ -79,7 +79,7 @@ class DetailFieldsCard extends StatelessWidget {
           // Card number
           Text(
             'card_number_label'.tr(),
-            style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray),
+            style: AppTextStyles.bodySmallGray,
           ),
           SizedBox(height: context.scaleHeight(6)),
           CustomTextField(

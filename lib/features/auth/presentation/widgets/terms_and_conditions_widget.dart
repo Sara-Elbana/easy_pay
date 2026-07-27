@@ -48,14 +48,12 @@ class TermsAndConditionsWidget extends StatelessWidget {
             onTap: enabled ? () => onChanged(!value) : null,
             child: RichText(
               text: TextSpan(
-                style: AppTextStyles.bodyLarge.copyWith(
-                    color: AppColors.textDark, fontWeight: FontWeight.w400),
+                style: AppTextStyles.bodyLargeDark,
                 children: [
                   TextSpan(text: normalText),
                   TextSpan(
                     text: highlightedText,
-                    style: AppTextStyles.titleMedium.copyWith(
-                        color: AppColors.primary, fontWeight: FontWeight.w600),
+                    style: AppTextStyles.titleMediumPrimarySemiBold,
                   ),
                 ],
               ),

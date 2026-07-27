@@ -49,7 +49,7 @@ class CustomCurrencyDialog extends StatelessWidget {
                   child: Text(
                     'select_currency'.tr(),
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.transactionAmount.copyWith(color: AppColors.gray900, fontFamily: 'Poppins'),
+                    style: AppTextStyles.transactionAmountDark,
                   ),
                 ),
                 GestureDetector(

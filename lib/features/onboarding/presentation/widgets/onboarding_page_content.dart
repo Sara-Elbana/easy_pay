@@ -36,7 +36,7 @@ class OnboardingPageContent extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: AppTextStyles.headlineLarge.copyWith(
                 fontSize: context.scaleWidth(30),
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).brightness == Brightness.dark

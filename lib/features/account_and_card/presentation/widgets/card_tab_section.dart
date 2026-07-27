@@ -26,7 +26,7 @@ class CardTabSection extends StatelessWidget {
           return Center(
             child: Text(
               state.message,
-              style: const TextStyle(color: Colors.red),
+              style: AppTextStyles.bodyMediumRed,
             ),
           );
         }

@@ -1,4 +1,3 @@
-import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +21,7 @@ class AuthFooter extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textDark,
-            ),
+            style: AppTextStyles.bodyMediumDark,
           ),
           GestureDetector(
             onTap: () {
@@ -32,9 +29,7 @@ class AuthFooter extends StatelessWidget {
             },
             child: Text(
               actionText,
-              style: AppTextStyles.titleSmall.copyWith(
-                color: AppColors.primary,
-              ),
+              style: AppTextStyles.titleSmallPrimary,
             ),
           ),
         ],

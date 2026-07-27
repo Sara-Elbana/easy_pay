@@ -52,7 +52,7 @@ class ExchangeScreen extends StatelessWidget {
             SnackBar(
               content: Text(
                 'exchange_success'.tr(),
-                style: const TextStyle(fontFamily: 'Poppins'),
+                style: AppTextStyles.bodyMediumPoppins,
               ),
               backgroundColor: AppColors.primary,
               behavior: SnackBarBehavior.floating,
@@ -139,11 +139,11 @@ class ExchangeScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   'currency_rate'.tr(),
-                                  style: AppTextStyles.labelLarge.copyWith(color: AppColors.primary, fontFamily: 'Poppins'),
+                                  style: AppTextStyles.labelLargePrimary,
                                 ),
                                 Text(
                                   '1 ${state.fromCurrency} = ${state.conversionRate.toStringAsFixed(4)} ${state.toCurrency}',
-                                  style: AppTextStyles.labelLarge.copyWith(color: AppColors.gray, fontFamily: 'Poppins'),
+                                  style: AppTextStyles.labelLargeGray,
                                 ),
                               ],
                             ),

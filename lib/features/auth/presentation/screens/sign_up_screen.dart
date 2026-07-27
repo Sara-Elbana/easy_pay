@@ -128,13 +128,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(height: context.scaleHeight(24)),
                           Text(
                             "welcome_to_us".tr(),
-                            style: AppTextStyles.titleLarge
-                                .copyWith(color: AppColors.primary),
+                            style: AppTextStyles.titleLargePrimary,
                           ),
                           Text(
                             "hello_there_create_new_account".tr(),
-                            style: AppTextStyles.titleSmall
-                                .copyWith(color: AppColors.textDark),
+                            style: AppTextStyles.titleSmallDark,
                           ),
                           const Center(
                             child: AuthIllustration(isSignIn: false),

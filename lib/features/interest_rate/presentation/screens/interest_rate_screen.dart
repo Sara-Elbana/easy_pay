@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/features/exchange_rate/presentation/widgets/exchange_rate_header.dart';
 import 'package:easy_pay_app/features/interest_rate/presentation/cubit/interest_cubit.dart';
@@ -27,7 +28,7 @@ class InterestRateScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(24.0),
                 child: Text(
                   state.errorMessage,
-                  style: const TextStyle(color: AppColors.error),
+                  style: AppTextStyles.bodyMediumError,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -65,9 +66,7 @@ class InterestRateScreen extends StatelessWidget {
                               flex: 5,
                               child: Text(
                                 item.kind,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: AppTextStyles.bodyMedium,
                               ),
                             ),
                             Expanded(
@@ -75,7 +74,7 @@ class InterestRateScreen extends StatelessWidget {
                               child: Text(
                                 item.deposit,
                                 textAlign: TextAlign.right,
-                                style: const TextStyle(color: AppColors.black),
+                                style: AppTextStyles.bodyMediumDark,
                               ),
                             ),
                             Expanded(
@@ -83,10 +82,7 @@ class InterestRateScreen extends StatelessWidget {
                               child: Text(
                                 item.rate,
                                 textAlign: TextAlign.right,
-                                style: const TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: AppTextStyles.bodyMediumPrimary,
                               ),
                             ),
                           ],

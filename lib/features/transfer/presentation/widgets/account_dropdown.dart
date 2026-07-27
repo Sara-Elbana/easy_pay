@@ -39,7 +39,7 @@ class AccountDropdown extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'choose_account_card'.tr(),
-                      style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textLight),
+                      style: AppTextStyles.titleMediumSmallLight,
                     ),
                   ),
                 ],
@@ -57,7 +57,7 @@ class AccountDropdown extends StatelessWidget {
                     value: card,
                     child: Text(
                       card.cardNumber,
-                      style: AppTextStyles.titleMediumSmall.copyWith(color: AppColors.textDark),
+                      style: AppTextStyles.titleMediumSmallDark,
                     ),
                   );
                 }),
@@ -69,11 +69,7 @@ class AccountDropdown extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             selectedCard!.balance,
-            style: const TextStyle(
-              color: AppColors.primary,
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.bodyMediumPrimary,
           ),
         ],
       ],

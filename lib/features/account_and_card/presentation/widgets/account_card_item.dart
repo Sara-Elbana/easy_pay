@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/account_entity.dart';
 import 'package:flutter/material.dart';
@@ -40,13 +39,11 @@ class AccountCardItem extends StatelessWidget {
             children: [
               Text(
                 holderName,
-                style: AppTextStyles.titleMedium
-                    .copyWith(color: AppColors.offBlack),
+                style: AppTextStyles.titleMediumDarkOffBlack,
               ),
               Text(
                 account.accountNumber,
-                style: AppTextStyles.titleMedium
-                    .copyWith(color: AppColors.offBlack),
+                style: AppTextStyles.titleMediumDarkOffBlack,
               ),
             ],
           ),
@@ -56,13 +53,11 @@ class AccountCardItem extends StatelessWidget {
             children: [
               Text(
                 'available_balance'.tr(),
-                style: AppTextStyles.bodyMedium
-                    .copyWith(color: AppColors.lightGray),
+                style: AppTextStyles.bodyMediumGray,
               ),
               Text(
                 '\$${account.balance}',
-                style: AppTextStyles.bodyMediumSemiBold
-                    .copyWith(color: AppColors.primary),
+                style: AppTextStyles.bodyMediumPrimary,
               ),
             ],
           ),
@@ -72,13 +67,11 @@ class AccountCardItem extends StatelessWidget {
             children: [
               Text(
                 'branch'.tr(),
-                style: AppTextStyles.bodyMedium
-                    .copyWith(color: AppColors.lightGray),
+                style: AppTextStyles.bodyMediumGray,
               ),
               Text(
                 "Branch",
-                style: AppTextStyles.bodyMediumSemiBold
-                    .copyWith(color: AppColors.primary),
+                style: AppTextStyles.bodyMediumPrimary,
               ),
             ],
           ),

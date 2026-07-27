@@ -23,14 +23,14 @@ class MapSuggestionItem extends StatelessWidget {
           Expanded(
             child: Text(
               suggestion.mainText,
-              style: AppTextStyles.titleMediumSmall.copyWith(color: Colors.black87),
+              style: AppTextStyles.titleMediumSmallDark87,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           const SizedBox(width: 8),
           Text(
             _extractDistance(suggestion.secondaryText),
-            style: AppTextStyles.labelMedium.copyWith(color: Colors.grey),
+            style: AppTextStyles.labelMediumGray,
           ),
         ],
       ),

@@ -83,9 +83,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         items[index].title.tr(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: AppTextStyles.labelMediumWhite,
                       ),
                     ],
                   ],

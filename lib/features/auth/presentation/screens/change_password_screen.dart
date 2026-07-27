@@ -85,10 +85,7 @@ class ChangePasswordScreen extends StatelessWidget {
                           children: [
                             Text(
                               "new_password".tr(),
-                              style: AppTextStyles.bodyMedium.copyWith(
-                                color: AppColors.gray500,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: AppTextStyles.bodyMediumGray500,
                             ),
                             SizedBox(height: context.scaleHeight(8)),
                             CustomTextField(
@@ -101,10 +98,7 @@ class ChangePasswordScreen extends StatelessWidget {
                             SizedBox(height: context.scaleHeight(16)),
                             Text(
                               "confirm_password".tr(),
-                              style: AppTextStyles.bodyMedium.copyWith(
-                                color: AppColors.gray500,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: AppTextStyles.bodyMediumGray500,
                             ),
                             SizedBox(height: context.scaleHeight(8)),
                             CustomTextField(

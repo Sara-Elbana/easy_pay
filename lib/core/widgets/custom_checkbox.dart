@@ -56,7 +56,7 @@ class CustomCheckbox extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 label!,
-                style: AppTextStyles.labelLarge.copyWith(color: AppColors.textDark),
+                style: AppTextStyles.labelLargeDark,
               ),
             ],
           ],

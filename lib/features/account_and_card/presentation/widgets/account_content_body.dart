@@ -66,7 +66,7 @@ class _AccountContentBodyState extends State<AccountContentBody> {
                 return Center(
                   child: Text(
                     state.message,
-                    style: const TextStyle(color: Colors.red),
+                    style: AppTextStyles.bodyMediumRed,
                   ),
                 );
               }

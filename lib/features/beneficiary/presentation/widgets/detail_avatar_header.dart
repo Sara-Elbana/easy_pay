@@ -31,7 +31,7 @@ class DetailAvatarHeader extends StatelessWidget implements PreferredSizeWidget 
           ),
           title: Text(
             'beneficiary'.tr(),
-            style: AppTextStyles.titleLargeMedium.copyWith(color: Colors.white),
+            style: AppTextStyles.titleLargeWhite,
           ),
           actions: [
             IconButton(
@@ -49,7 +49,7 @@ class DetailAvatarHeader extends StatelessWidget implements PreferredSizeWidget 
         SizedBox(height: context.scaleHeight(12)),
         Text(
           name,
-          style: AppTextStyles.bodyLargeSemiBold.copyWith(color: Colors.white),
+          style: AppTextStyles.bodyLargeSemiBoldWhite,
         ),
       ],
     );

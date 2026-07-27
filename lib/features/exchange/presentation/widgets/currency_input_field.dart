@@ -57,7 +57,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
       children: [
         Text(
           widget.label,
-          style: AppTextStyles.bodySmallSemiBold.copyWith(color: AppColors.gray, fontFamily: 'Poppins'),
+          style: AppTextStyles.bodySmallGray,
         ),
         const SizedBox(height: 6),
         Container(
@@ -77,10 +77,10 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
                     readOnly: widget.readOnly,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: widget.onAmountChanged,
-                    style: AppTextStyles.titleMedium.copyWith(color: AppColors.gray900, fontFamily: 'Poppins'),
+                    style: AppTextStyles.titleMediumGray900,
                     decoration: InputDecoration(
                       hintText: 'Amount',
-                      hintStyle: AppTextStyles.titleMedium.copyWith(color: AppColors.textLight, fontFamily: 'Poppins'),
+                      hintStyle: AppTextStyles.titleMediumLight,
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -102,7 +102,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
                     children: [
                       Text(
                         widget.selectedCurrency,
-                        style: AppTextStyles.titleMedium.copyWith(color: AppColors.gray900, fontFamily: 'Poppins'),
+                        style: AppTextStyles.titleMediumGray900,
                       ),
                       const SizedBox(width: 8),
                       const Column(

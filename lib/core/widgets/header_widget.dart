@@ -30,7 +30,7 @@ class HeaderWidget extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: AppTextStyles.titleLargeMedium.copyWith(color: Colors.white),
+              style: AppTextStyles.titleLargeWhite,
             ),
           ),
           trailing ?? const SizedBox(width: 40),

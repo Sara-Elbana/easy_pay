@@ -105,10 +105,7 @@ class ForgotPasswordScreen extends StatelessWidget {
       children: [
         Text(
           "type_phone".tr(),
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.gray500,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.bodyMediumGray500,
         ),
         SizedBox(height: context.scaleHeight(8)),
         CustomTextField(
@@ -126,9 +123,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         SizedBox(height: context.scaleHeight(12)),
         Text(
           "we_texted_you_phone".tr(),
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.gray500,
-          ),
+          style: AppTextStyles.bodyMediumGray500,
         ),
         SizedBox(height: context.scaleHeight(24)),
         CustomButton(
@@ -159,10 +154,7 @@ class ForgotPasswordScreen extends StatelessWidget {
       children: [
         Text(
           "type_code".tr(),
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.gray500,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.bodyMediumGray500,
         ),
         SizedBox(height: context.scaleHeight(8)),
         Row(
@@ -199,19 +191,14 @@ class ForgotPasswordScreen extends StatelessWidget {
         SizedBox(height: context.scaleHeight(12)),
         RichText(
           text: TextSpan(
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.gray500,
-            ),
+            style: AppTextStyles.bodyMediumGray500,
             children: [
               TextSpan(
                   text: "we_texted_you_code".tr().replaceAll("{}", "").trim()),
               const TextSpan(text: " "),
               TextSpan(
                 text: state.phoneNumber,
-                style: const TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.titleMediumPrimary,
               ),
             ],
           ),
@@ -219,11 +206,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         SizedBox(height: context.scaleHeight(12)),
         Text(
           "code_expiry_notice".tr(),
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.gray400,
-            fontSize: 13,
-            height: 1.4,
-          ),
+          style: AppTextStyles.bodyMediumGray400,
         ),
         SizedBox(height: context.scaleHeight(24)),
         CustomButton(
@@ -253,10 +236,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             },
             child: Text(
               "change_phone_number".tr(),
-              style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.titleMediumPrimary,
             ),
           ),
         ),

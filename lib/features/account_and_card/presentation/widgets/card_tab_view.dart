@@ -40,25 +40,22 @@ class CardTabView extends StatelessWidget {
                       children: [
                         Text(
                           card.cardHolderName,
-                          style: AppTextStyles.titleLarge.copyWith(color: AppColors.white),
+                          style: AppTextStyles.titleLargeWhite,
                         ),
                         SizedBox(height: context.scaleHeight(40)),
                         Text(
                           card.cardType,
-                          style: AppTextStyles.titleMedium.copyWith(color: AppColors.white),
+                          style: AppTextStyles.titleMediumWhite,
                         ),
                         SizedBox(height: context.scaleHeight(11)),
                         Text(
                           card.maskedCardNumber,
-                          style: AppTextStyles.titleSmall.copyWith(color: AppColors.white),
+                          style: AppTextStyles.titleSmallWhite,
                         ),
                         SizedBox(height: context.scaleHeight(10)),
                         Text(
                           '\$${card.bankAccount.balance}',
-                          style: AppTextStyles.titleMedium.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: AppTextStyles.titleMediumWhiteBold,
                         ),
                       ],
                     ),

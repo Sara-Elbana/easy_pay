@@ -39,7 +39,7 @@ class CustomAvatar extends StatelessWidget {
           ? (name != null && name!.trim().isNotEmpty
               ? Text(
                   name!.substring(0, 1).toUpperCase(),
-                  style: AppTextStyles.bodyMediumSemiBold.copyWith(color: AppColors.primary),
+                  style: AppTextStyles.bodyMediumPrimary,
                 )
               : Icon(
                   defaultIcon,

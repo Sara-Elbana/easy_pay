@@ -19,7 +19,7 @@ class MapInitialPlaceholder extends StatelessWidget {
         Center(
           child: Text(
             'Start searching for a bank, branch or place',
-            style: AppTextStyles.labelLarge.copyWith(color: Colors.grey),
+            style: AppTextStyles.labelLargeGray,
           ),
         ),
       ],

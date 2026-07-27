@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,7 @@ class ToggleTabs extends StatelessWidget {
               onPressed: () => onTabChanged(0),
               child: Text(
                 'account_tab'.tr(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: AppTextStyles.bodyMediumBold,
               ),
             ),
           ),
@@ -56,7 +57,7 @@ class ToggleTabs extends StatelessWidget {
               onPressed: () => onTabChanged(1),
               child: Text(
                 'card_tab'.tr(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: AppTextStyles.bodyMediumBold,
               ),
             ),
           ),

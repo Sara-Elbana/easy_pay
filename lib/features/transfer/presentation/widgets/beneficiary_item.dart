@@ -1,4 +1,5 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/widgets/custom_avatar.dart';
 import 'package:flutter/material.dart';
 import '../../../beneficiary/domain/entities/beneficiary.dart';
@@ -58,7 +59,7 @@ class BeneficiaryItem extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             isAddButton ? ' ' : beneficiary!.name,
-            style: TextStyle(
+            style: AppTextStyles.bodySmall.copyWith(
               fontSize: 13,
               fontWeight: isSelected && isEnabled ? FontWeight.bold : FontWeight.w500,
               color: isSelected && isEnabled

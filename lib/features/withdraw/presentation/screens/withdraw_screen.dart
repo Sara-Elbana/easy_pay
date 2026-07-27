@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class WithdrawView extends StatelessWidget {
         ),
         title: Text(
           'biometric_verification'.tr(),
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: AppTextStyles.bodyMediumBold,
         ),
         content: Text(
           '$message\n\n${'biometric_fallback_msg'.tr()}',
@@ -52,7 +53,7 @@ class WithdrawView extends StatelessWidget {
             },
             child: Text(
               'cancel'.tr(),
-              style: const TextStyle(color: Colors.grey),
+              style: AppTextStyles.labelLargeGray,
             ),
           ),
           TextButton(
@@ -62,10 +63,7 @@ class WithdrawView extends StatelessWidget {
             },
             child: Text(
               'proceed'.tr(),
-              style: const TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.titleMediumPrimary,
             ),
           ),
         ],

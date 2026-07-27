@@ -35,7 +35,7 @@ class OTPVerificationWidget extends StatelessWidget {
       children: [
         Text(
           'get_otp_to_verify'.tr(),
-          style: AppTextStyles.labelLarge.copyWith(color: AppColors.textLight),
+          style: AppTextStyles.labelLargeLight,
         ),
         const SizedBox(height: 12),
         if (otpMode)

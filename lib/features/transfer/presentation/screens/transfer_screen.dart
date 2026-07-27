@@ -103,8 +103,7 @@ class TransferScreen extends StatelessWidget {
                   SizedBox(height: context.scaleHeight(24)),
                   Text(
                     'choose_transaction'.tr(),
-                    style: AppTextStyles.titleMediumSmall
-                        .copyWith(color: AppColors.textLight),
+                    style: AppTextStyles.titleMediumSmallLight,
                   ),
                   const SizedBox(height: 12),
                   AddBeneficiaryTypeSelector(

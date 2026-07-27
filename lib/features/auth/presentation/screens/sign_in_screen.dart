@@ -129,13 +129,11 @@ class _SignInScreenState extends State<SignInScreen> {
                           SizedBox(height: context.scaleHeight(24)),
                           Text(
                             "welcome_back".tr(),
-                            style: AppTextStyles.titleLarge
-                                .copyWith(color: AppColors.primary),
+                            style: AppTextStyles.titleLargePrimary,
                           ),
                           Text(
                             "hello_there_sign_in_to_continue".tr(),
-                            style: AppTextStyles.titleSmall
-                                .copyWith(color: AppColors.textDark),
+                            style: AppTextStyles.titleSmallDark,
                           ),
                           const Center(
                             child: AuthIllustration(isSignIn: true),
@@ -176,8 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                               child: Text(
                                 "forgot_your_password".tr(),
-                                style: AppTextStyles.titleSmall
-                                    .copyWith(color: AppColors.textLight),
+                                style: AppTextStyles.titleSmallLight,
                               ),
                             ),
                           ),

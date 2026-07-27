@@ -78,7 +78,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: widget.onAmountChanged,
                     style: AppTextStyles.titleMediumGray900,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Amount',
                       hintStyle: AppTextStyles.titleMediumLight,
                       border: InputBorder.none,

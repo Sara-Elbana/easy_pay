@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/interest_rate/data/models/interest_rate_model.dart';
 
 abstract class InterestRemoteDataSource {
@@ -7,14 +8,14 @@ abstract class InterestRemoteDataSource {
 }
 
 class InterestRemoteDataSourceImpl implements InterestRemoteDataSource {
-  final Dio dio;
+  final ApiService apiService;
 
-  InterestRemoteDataSourceImpl({required this.dio});
+  InterestRemoteDataSourceImpl({required this.apiService});
 
   @override
   Future<List<InterestRateModel>> getInterestRates() async {
     try {
-      final response = await dio.get(ApiConstants.interestRatesEndpoint);
+      final response = await apiService.get(ApiConstants.interestRatesEndpoint);
       if (response.data != null && response.data is List) {
         final List list = response.data as List;
         return list
@@ -22,8 +23,11 @@ class InterestRemoteDataSourceImpl implements InterestRemoteDataSource {
             .toList();
       }
       return [];
-    } on DioException catch (e) {
-      throw Exception(e.message ?? ApiConstants.unknownError);
+    } catch (e) {
+      if (e is DioException) {
+        throw Exception(e.message ?? ApiConstants.unknownError);
+      }
+      throw Exception(e.toString());
     }
   }
 }

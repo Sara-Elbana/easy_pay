@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/auth/data/models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
@@ -12,14 +13,14 @@ abstract class AuthRemoteDataSource {
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final Dio dio;
+  final ApiService apiService;
 
-  AuthRemoteDataSourceImpl({required this.dio});
+  AuthRemoteDataSourceImpl({required this.apiService});
 
   @override
   Future<UserModel> signIn(String phoneNumber, String password) async {
     try {
-      final response = await dio.post(
+      final response = await apiService.post(
         ApiConstants.loginEndpoint,
         data: {
           'phone': phoneNumber,
@@ -27,7 +28,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         },
       );
       return UserModel.fromJson(response.data as Map<String, dynamic>);
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(_extractErrorMessage(e));
     }
   }
@@ -35,7 +36,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<UserModel> signUp(String name, String phoneNumber, String password) async {
     try {
-      final response = await dio.post(
+      final response = await apiService.post(
         ApiConstants.registerEndpoint,
         data: {
           'name': name,
@@ -44,7 +45,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         },
       );
       return UserModel.fromJson(response.data as Map<String, dynamic>);
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(_extractErrorMessage(e));
     }
   }
@@ -52,13 +53,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> sendOtp(String phoneNumber) async {
     try {
-      await dio.post(
+      await apiService.post(
         ApiConstants.forgotPasswordSendEndpoint,
         data: {
           'phone': phoneNumber,
         },
       );
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(_extractErrorMessage(e));
     }
   }
@@ -66,14 +67,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> verifyOtp(String phoneNumber, String code) async {
     try {
-      await dio.post(
+      await apiService.post(
         ApiConstants.forgotPasswordVerifyEndpoint,
         data: {
           'phone': phoneNumber,
           'code': code,
         },
       );
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(_extractErrorMessage(e));
     }
   }
@@ -81,7 +82,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> resetPassword(String phoneNumber, String code, String newPassword) async {
     try {
-      await dio.post(
+      await apiService.post(
         ApiConstants.forgotPasswordResetEndpoint,
         data: {
           'phone': phoneNumber,
@@ -89,7 +90,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           'newPassword': newPassword,
         },
       );
-    } on DioException catch (e) {
+    } catch (e) {
       throw Exception(_extractErrorMessage(e));
     }
   }
@@ -97,22 +98,25 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> signOut() async {
     try {
-      await dio.post(ApiConstants.logoutEndpoint);
-    } on DioException catch (e) {
+      await apiService.post(ApiConstants.logoutEndpoint);
+    } catch (e) {
       throw Exception(_extractErrorMessage(e));
     }
   }
 
-  String _extractErrorMessage(DioException e) {
-    if (e.response?.data != null && e.response?.data is Map) {
-      final data = e.response!.data as Map<String, dynamic>;
-      if (data.containsKey('message') && data['message'] != null) {
-        return data['message'].toString();
+  String _extractErrorMessage(dynamic e) {
+    if (e is DioException) {
+      if (e.response?.data != null && e.response?.data is Map) {
+        final data = e.response!.data as Map<String, dynamic>;
+        if (data.containsKey('message') && data['message'] != null) {
+          return data['message'].toString();
+        }
+        if (data.containsKey('error') && data['error'] != null) {
+          return data['error'].toString();
+        }
       }
-      if (data.containsKey('error') && data['error'] != null) {
-        return data['error'].toString();
-      }
+      return e.message ?? ApiConstants.unknownError;
     }
-    return e.message ?? ApiConstants.unknownError;
+    return e.toString();
   }
 }

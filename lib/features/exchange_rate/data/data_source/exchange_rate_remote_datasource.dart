@@ -1,21 +1,20 @@
-import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
-import 'package:easy_pay_app/core/network/dio_client.dart';
+import 'package:easy_pay_app/core/network/api_service.dart';
 
 abstract class ExchangeRateRemoteDataSource {
   Future<List<Map<String, dynamic>>> fetchLiveExchangeRates();
 }
 
 class ExchangeRateRemoteDataSourceImpl implements ExchangeRateRemoteDataSource {
-  final Dio _dio;
+  final ApiService _apiService;
 
-  ExchangeRateRemoteDataSourceImpl({Dio? dio})
-      : _dio = dio ?? DioClient.createDioClient();
+  ExchangeRateRemoteDataSourceImpl({required ApiService apiService})
+      : _apiService = apiService;
 
   @override
   Future<List<Map<String, dynamic>>> fetchLiveExchangeRates() async {
     try {
-      final response = await _dio.get(ApiConstants.exchangeRatesEndpoint);
+      final response = await _apiService.get(ApiConstants.exchangeRatesEndpoint);
       if (response.statusCode == 200 && response.data != null) {
         return List<Map<String, dynamic>>.from(response.data);
       }

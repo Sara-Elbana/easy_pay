@@ -1,6 +1,5 @@
-import 'package:dio/dio.dart';
 import '../../../../core/constants/api_constants.dart';
-import '../../../../core/network/dio_client.dart';
+import '../../../../core/network/api_service.dart';
 
 abstract class ExchangeRemoteDataSource {
   Future<Map<String, dynamic>> convertCurrency({
@@ -11,10 +10,10 @@ abstract class ExchangeRemoteDataSource {
 }
 
 class ExchangeRemoteDataSourceImpl implements ExchangeRemoteDataSource {
-  final Dio _dio;
+  final ApiService _apiService;
 
-  ExchangeRemoteDataSourceImpl({Dio? dio})
-      : _dio = dio ?? DioClient.createDioClient();
+  ExchangeRemoteDataSourceImpl({required ApiService apiService})
+      : _apiService = apiService;
 
   @override
   Future<Map<String, dynamic>> convertCurrency({
@@ -23,7 +22,7 @@ class ExchangeRemoteDataSourceImpl implements ExchangeRemoteDataSource {
     required double amount,
   }) async {
     try {
-      final response = await _dio.post(
+      final response = await _apiService.post(
         ApiConstants.convertCurrencyEndpoint,
         data: {
           'from_currency': from,

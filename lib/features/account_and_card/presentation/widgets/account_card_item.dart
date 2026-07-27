@@ -69,7 +69,7 @@ class AccountCardItem extends StatelessWidget {
                 'branch'.tr(),
                 style: AppTextStyles.bodyMediumGray,
               ),
-              Text(
+              const Text(
                 "Branch",
                 style: AppTextStyles.bodyMediumPrimary,
               ),

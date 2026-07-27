@@ -12,7 +12,7 @@ import 'package:easy_pay_app/features/account_and_card/domain/use_cases/get_acco
 import 'package:easy_pay_app/features/account_and_card/domain/use_cases/get_cardss_use_case.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/cubit/account_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
-import 'package:easy_pay_app/features/app_information/data/data_source/app_info_remote_dataSource.dart';
+import 'package:easy_pay_app/features/app_information/data/data_source/app_info_remote_data_source.dart';
 import 'package:easy_pay_app/features/app_information/data/repository_impl/app_info_repository_impl.dart';
 import 'package:easy_pay_app/features/app_information/domain/repository_interface/app_info_repository.dart';
 import 'package:easy_pay_app/features/app_information/domain/use_case/get_app_info_use_case.dart';
@@ -91,13 +91,13 @@ Future<void> setupDependencies() async {
     NetworkConnectivityService(),
   );
 
-  // Register Dio
-  final dio = DioClient.createDioClient();
-  getIt.registerSingleton<Dio>(dio);
+  // Register Dio & ApiService
+  getIt.registerLazySingleton<Dio>(() => DioClient.createDioClient());
+  getIt.registerLazySingleton<ApiService>(() => ApiServiceImpl(dio: getIt()));
 
   // Data Source
   getIt.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(dio: getIt()),
+    () => AuthRemoteDataSourceImpl(apiService: getIt()),
   );
 
   // Repository
@@ -215,7 +215,7 @@ Future<void> setupDependencies() async {
 
   // Exchange Rate Feature
   getIt.registerLazySingleton<ExchangeRateRemoteDataSource>(
-    () => ExchangeRateRemoteDataSourceImpl(),
+    () => ExchangeRateRemoteDataSourceImpl(apiService: getIt()),
   );
   getIt.registerLazySingleton<ExchangeRateRepository>(
     () => ExchangeRateRepositoryImpl(remoteDataSource: getIt()),
@@ -226,7 +226,7 @@ Future<void> setupDependencies() async {
 
   // Exchange Feature
   getIt.registerLazySingleton<ExchangeRemoteDataSource>(
-    () => ExchangeRemoteDataSourceImpl(),
+    () => ExchangeRemoteDataSourceImpl(apiService: getIt()),
   );
   getIt.registerLazySingleton<ExchangeRepository>(
     () => ExchangeRepositoryImpl(remoteDataSource: getIt()),
@@ -325,7 +325,7 @@ Future<void> setupDependencies() async {
 
   // Interest Rate Feature
   getIt.registerLazySingleton<InterestRemoteDataSource>(
-    () => InterestRemoteDataSourceImpl(dio: getIt()),
+    () => InterestRemoteDataSourceImpl(apiService: getIt()),
   );
   getIt.registerLazySingleton<InterestRepository>(
     () => InterestRepositoryImpl(remoteDataSource: getIt()),

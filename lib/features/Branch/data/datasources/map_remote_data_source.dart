@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
-import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/Branch/data/models/place_details_model.dart';
 import 'package:easy_pay_app/features/Branch/data/models/place_suggestion_model.dart';
 
@@ -10,15 +10,15 @@ abstract class MapRemoteDataSource {
 }
 
 class MapRemoteDataSourceImpl implements MapRemoteDataSource {
-  final Dio dio;
+  final ApiService apiService;
   List<Map<String, dynamic>> _cachedBranches = [];
 
-  MapRemoteDataSourceImpl(this.dio);
+  MapRemoteDataSourceImpl(this.apiService);
 
   @override
   Future<List<PlaceSuggestionModel>> getAutocomplete(String query) async {
     try {
-      final response = await dio.get(
+      final response = await apiService.get(
         ApiConstants.branchesEndpoint,
         queryParameters: query.isNotEmpty ? {'query': query} : null,
       );

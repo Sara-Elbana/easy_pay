@@ -1,14 +1,14 @@
-import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/app_information/data/model/app_info_model.dart';
 
 class AppInfoRemoteDataSource {
-  final Dio dio;
+  final ApiService apiService;
 
-  AppInfoRemoteDataSource(this.dio);
+  AppInfoRemoteDataSource(this.apiService);
 
   Future<AppInfoModel> getAppInfo() async {
-    final response = await dio.get(ApiConstants.appInfoEndpoint);
+    final response = await apiService.get(ApiConstants.appInfoEndpoint);
     return AppInfoModel.fromJson(response.data);
   }
 }

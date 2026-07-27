@@ -11,6 +11,7 @@ class MapSearchController {
 
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    // ignore: deprecated_member_use
     mapController?.setMapStyle(MapThemeConfigs.silverMapStyle);
   }
 

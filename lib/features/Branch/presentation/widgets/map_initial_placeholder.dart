@@ -14,8 +14,8 @@ class MapInitialPlaceholder extends StatelessWidget {
     return ListView(
       controller: scrollController,
       padding: const EdgeInsets.all(20),
-      children: [
-        const SizedBox(height: 40),
+      children: const [
+        SizedBox(height: 40),
         Center(
           child: Text(
             'Start searching for a bank, branch or place',

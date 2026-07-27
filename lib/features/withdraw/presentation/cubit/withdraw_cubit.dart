@@ -119,7 +119,7 @@ class WithdrawCubit extends Cubit<WithdrawState> {
     } catch (e) {
       emit(state.copyWith(
         isLoading: false,
-        errorMessage: () => e.toString().replaceAll('Exception: ', ''),
+        errorMessage: () => e.toString(),
       ));
     }
   }

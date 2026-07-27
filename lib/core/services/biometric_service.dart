@@ -49,7 +49,7 @@ class BiometricService {
             'Biometric authentication error: ${e.message ?? e.code}');
       }
     } catch (e) {
-      throw Exception(e.toString().replaceAll('Exception: ', ''));
+      throw Exception(e.toString());
     }
   }
 }

@@ -29,7 +29,7 @@ class MapCubit extends Cubit<MapState> {
         final suggestions = await getAutocompleteUseCase(request: request);
         emit(AutocompleteSuccess(suggestions));
       } catch (e) {
-        emit(AutocompleteError(e.toString().replaceAll('Exception: ', '')));
+        emit(AutocompleteError(e.toString()));
       }
     });
   }
@@ -40,7 +40,7 @@ class MapCubit extends Cubit<MapState> {
       final details = await getPlaceDetailsUseCase(request);
       emit(PlaceDetailsSuccess(details));
     } catch (e) {
-      emit(PlaceDetailsError(e.toString().replaceAll('Exception: ', '')));
+      emit(PlaceDetailsError(e.toString()));
     }
   }
 

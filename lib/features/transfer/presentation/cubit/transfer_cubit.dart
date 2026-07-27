@@ -171,7 +171,7 @@ class TransferCubit extends Cubit<TransferState> {
       emit(state.copyWith(
         isBiometricVerified: false,
         isLoading: false,
-        errorMessage: () => e.toString().replaceAll('Exception: ', ''),
+        errorMessage: () => e.toString(),
       ));
     }
   }

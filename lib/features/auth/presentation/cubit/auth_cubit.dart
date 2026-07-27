@@ -26,7 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
       final user = await signInUseCase(request);
       emit(AuthSuccess(user));
     } catch (e) {
-      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -40,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(const AuthFailure('Biometric authentication failed'));
       }
     } catch (e) {
-      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -50,7 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
       final user = await signUpUseCase(request);
       emit(AuthSuccess(user));
     } catch (e) {
-      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -60,7 +60,7 @@ class AuthCubit extends Cubit<AuthState> {
       await signOutUseCase();
       emit(const SignOutSuccess());
     } catch (e) {
-      emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
+      emit(AuthFailure(e.toString()));
     }
   }
 }

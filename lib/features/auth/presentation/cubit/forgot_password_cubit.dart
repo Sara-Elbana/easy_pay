@@ -40,7 +40,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     } catch (e) {
       emit(state.copyWith(
         isLoading: false,
-        errorMessage: e.toString().replaceAll('Exception: ', ''),
+        errorMessage: e.toString(),
       ));
     }
   }
@@ -59,7 +59,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     } catch (e) {
       emit(state.copyWith(
         isLoading: false,
-        errorMessage: e.toString().replaceAll('Exception: ', ''),
+        errorMessage: e.toString(),
       ));
     }
   }
@@ -77,7 +77,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     } catch (e) {
       emit(state.copyWith(
         isLoading: false,
-        errorMessage: e.toString().replaceAll('Exception: ', ''),
+        errorMessage: e.toString(),
       ));
     }
   }

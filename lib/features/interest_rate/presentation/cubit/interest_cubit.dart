@@ -14,7 +14,7 @@ class InterestCubit extends Cubit<InterestState> {
       final rates = await getInterestRatesUseCase();
       emit(InterestSuccess(rates));
     } catch (e) {
-      emit(InterestFailure(e.toString().replaceAll('Exception: ', '')));
+      emit(InterestFailure(e.toString()));
     }
   }
 }

@@ -1,5 +1,10 @@
 import 'package:easy_pay_app/core/services/secure_storage_service.dart';
 import 'package:easy_pay_app/features/auth/data/data_source/auth_remote_datasource.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/reset_password_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/send_otp_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/sign_in_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/sign_up_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/verify_otp_request.dart';
 import 'package:easy_pay_app/features/auth/domain/entities/user_entity.dart';
 import 'package:easy_pay_app/features/auth/domain/repository_interface/auth_repository.dart';
 
@@ -13,8 +18,8 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<UserEntity> signIn(String phoneNumber, String password) async {
-    final userModel = await remoteDataSource.signIn(phoneNumber, password);
+  Future<UserEntity> signIn(SignInRequest request) async {
+    final userModel = await remoteDataSource.signIn(request);
     if (userModel.accessToken != null && userModel.accessToken!.isNotEmpty) {
       await secureStorageService.saveAccessToken(userModel.accessToken!);
     }
@@ -25,9 +30,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<UserEntity> signUp(
-      String name, String phoneNumber, String password) async {
-    final userModel = await remoteDataSource.signUp(name, phoneNumber, password);
+  Future<UserEntity> signUp(SignUpRequest request) async {
+    final userModel = await remoteDataSource.signUp(request);
     if (userModel.accessToken != null && userModel.accessToken!.isNotEmpty) {
       await secureStorageService.saveAccessToken(userModel.accessToken!);
     }
@@ -38,19 +42,18 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> sendOtp(String phoneNumber) async {
-    await remoteDataSource.sendOtp(phoneNumber);
+  Future<void> sendOtp(SendOtpRequest request) async {
+    await remoteDataSource.sendOtp(request);
   }
 
   @override
-  Future<void> verifyOtp(String phoneNumber, String code) async {
-    await remoteDataSource.verifyOtp(phoneNumber, code);
+  Future<void> verifyOtp(VerifyOtpRequest request) async {
+    await remoteDataSource.verifyOtp(request);
   }
 
   @override
-  Future<void> resetPassword(
-      String phoneNumber, String code, String newPassword) async {
-    await remoteDataSource.resetPassword(phoneNumber, code, newPassword);
+  Future<void> resetPassword(ResetPasswordRequest request) async {
+    await remoteDataSource.resetPassword(request);
   }
 
   @override

@@ -9,6 +9,7 @@ import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:flutter/material.dart';
 
+import 'package:easy_pay_app/features/auth/data/models/requests/reset_password_request.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -123,9 +124,11 @@ class ChangePasswordScreen extends StatelessWidget {
                                           if (_formKey.currentState?.validate() ?? false) {
                                             FocusScope.of(context).unfocus();
                                             cubit.resetPassword(
-                                              state.phoneNumber,
-                                              state.verificationCode,
-                                              newPasswordController.text.trim(),
+                                              ResetPasswordRequest(
+                                                phoneNumber: state.phoneNumber,
+                                                code: state.verificationCode,
+                                                newPassword: newPasswordController.text.trim(),
+                                              ),
                                             );
                                           }
                                         }

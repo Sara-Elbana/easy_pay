@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/features/auth/data/models/requests/verify_otp_request.dart';
 import 'package:easy_pay_app/features/auth/domain/repository_interface/auth_repository.dart';
 
 class VerifyOtpUseCase {
@@ -5,7 +6,7 @@ class VerifyOtpUseCase {
 
   VerifyOtpUseCase(this.repository);
 
-  Future<void> call(String phoneNumber, String code) {
-    return repository.verifyOtp(phoneNumber, code);
+  Future<void> call(VerifyOtpRequest request) {
+    return repository.verifyOtp(request);
   }
 }

@@ -1,43 +1,44 @@
+import 'package:easy_pay_app/features/auth/data/models/requests/reset_password_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/send_otp_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/sign_in_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/sign_up_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/verify_otp_request.dart';
 import 'package:easy_pay_app/features/auth/domain/entities/user_entity.dart';
 
 abstract class AuthRepository {
-  Future<UserEntity> signIn(String phoneNumber, String password);
-  Future<UserEntity> signUp(String name, String phoneNumber, String password);
-  Future<void> sendOtp(String phoneNumber);
-  Future<void> verifyOtp(String phoneNumber, String code);
-  Future<void> resetPassword(String phoneNumber, String code, String newPassword);
+  Future<UserEntity> signIn(SignInRequest request);
+  Future<UserEntity> signUp(SignUpRequest request);
+  Future<void> sendOtp(SendOtpRequest request);
+  Future<void> verifyOtp(VerifyOtpRequest request);
+  Future<void> resetPassword(ResetPasswordRequest request);
   Future<void> signOut();
 }
 
 class FakeAuthRepository implements AuthRepository {
   @override
-  Future<UserEntity> signIn(String phoneNumber, String password) async {
+  Future<UserEntity> signIn(SignInRequest request) async {
     return UserEntity(
-        id: '1', name: 'Sara', phoneNumber: phoneNumber, password: '123456');
+        id: '1', name: 'Sara', phoneNumber: request.phoneNumber, password: '123456');
   }
 
   @override
-  Future<UserEntity> signUp(
-    String name,
-    String phoneNumber,
-    String password,
-  ) async {
+  Future<UserEntity> signUp(SignUpRequest request) async {
     return UserEntity(
       id: '1',
-      name: name,
-      phoneNumber: phoneNumber,
-      password: password,
+      name: request.name,
+      phoneNumber: request.phoneNumber,
+      password: request.password,
     );
   }
 
   @override
-  Future<void> sendOtp(String phoneNumber) async {}
+  Future<void> sendOtp(SendOtpRequest request) async {}
 
   @override
-  Future<void> verifyOtp(String phoneNumber, String code) async {}
+  Future<void> verifyOtp(VerifyOtpRequest request) async {}
 
   @override
-  Future<void> resetPassword(String phoneNumber, String code, String newPassword) async {}
+  Future<void> resetPassword(ResetPasswordRequest request) async {}
 
   @override
   Future<void> signOut() async {}

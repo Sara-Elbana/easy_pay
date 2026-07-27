@@ -6,6 +6,7 @@ import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/sign_in_request.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:easy_pay_app/features/auth/presentation/widgets/auth_footer.dart';
@@ -186,8 +187,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 context.read<AuthCubit>().signIn(
-                                      _phoneController.text.trim(),
-                                      _passwordController.text,
+                                      SignInRequest(
+                                        phoneNumber: _phoneController.text.trim(),
+                                        password: _passwordController.text,
+                                      ),
                                     );
                               }
                             },

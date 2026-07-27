@@ -1,3 +1,5 @@
+import 'package:easy_pay_app/features/auth/data/models/requests/sign_in_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/sign_up_request.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/biometric_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_in_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_out_usecase.dart';
@@ -18,10 +20,10 @@ class AuthCubit extends Cubit<AuthState> {
     required this.signOutUseCase,
   }) : super(const AuthInitial());
 
-  Future<void> signIn(String phoneNumber, String password) async {
+  Future<void> signIn(SignInRequest request) async {
     emit(const AuthLoading());
     try {
-      final user = await signInUseCase(phoneNumber, password);
+      final user = await signInUseCase(request);
       emit(AuthSuccess(user));
     } catch (e) {
       emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));
@@ -42,10 +44,10 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signUp(String name, String phoneNumber, String password) async {
+  Future<void> signUp(SignUpRequest request) async {
     emit(const AuthLoading());
     try {
-      final user = await signUpUseCase(name, phoneNumber, password);
+      final user = await signUpUseCase(request);
       emit(AuthSuccess(user));
     } catch (e) {
       emit(AuthFailure(e.toString().replaceAll('Exception: ', '')));

@@ -7,6 +7,8 @@ import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/send_otp_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/verify_otp_request.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_state.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +135,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               ? () {
                   if (_formKey.currentState?.validate() ?? false) {
                     FocusScope.of(context).unfocus();
-                    cubit.sendOtp(state.phoneNumber.trim());
+                    cubit.sendOtp(SendOtpRequest(phoneNumber: state.phoneNumber.trim()));
                   }
                 }
               : null,
@@ -177,7 +179,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               child: CustomButton(
                 text: "resend".tr(),
                 onPressed: () {
-                  cubit.sendOtp(state.phoneNumber);
+                  cubit.sendOtp(SendOtpRequest(phoneNumber: state.phoneNumber));
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("code_resent_success".tr()),
@@ -216,8 +218,10 @@ class ForgotPasswordScreen extends StatelessWidget {
               ? () async {
                   FocusScope.of(context).unfocus();
                   await cubit.verifyOtp(
-                    state.phoneNumber.trim(),
-                    state.verificationCode.trim(),
+                    VerifyOtpRequest(
+                      phoneNumber: state.phoneNumber.trim(),
+                      code: state.verificationCode.trim(),
+                    ),
                   );
                   if (context.mounted && cubit.state.isCodeVerified) {
                     Navigator.pushNamed(

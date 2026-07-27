@@ -1,3 +1,6 @@
+import 'package:easy_pay_app/features/auth/data/models/requests/reset_password_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/send_otp_request.dart';
+import 'package:easy_pay_app/features/auth/data/models/requests/verify_otp_request.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/reset_password_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/send_otp_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/verify_otp_usecase.dart';
@@ -23,16 +26,16 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     emit(state.copyWith(verificationCode: value, errorMessage: null));
   }
 
-  Future<void> sendOtp(String phoneNumber) async {
+  Future<void> sendOtp(SendOtpRequest request) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     try {
       if (sendOtpUseCase != null) {
-        await sendOtpUseCase!(phoneNumber);
+        await sendOtpUseCase!(request);
       }
       emit(state.copyWith(
         isLoading: false,
         isCodeSent: true,
-        phoneNumber: phoneNumber,
+        phoneNumber: request.phoneNumber,
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -42,16 +45,16 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     }
   }
 
-  Future<void> verifyOtp(String phoneNumber, String code) async {
+  Future<void> verifyOtp(VerifyOtpRequest request) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     try {
       if (verifyOtpUseCase != null) {
-        await verifyOtpUseCase!(phoneNumber, code);
+        await verifyOtpUseCase!(request);
       }
       emit(state.copyWith(
         isLoading: false,
         isCodeVerified: true,
-        verificationCode: code,
+        verificationCode: request.code,
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -61,12 +64,11 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     }
   }
 
-  Future<void> resetPassword(
-      String phoneNumber, String code, String newPassword) async {
+  Future<void> resetPassword(ResetPasswordRequest request) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     try {
       if (resetPasswordUseCase != null) {
-        await resetPasswordUseCase!(phoneNumber, code, newPassword);
+        await resetPasswordUseCase!(request);
       }
       emit(state.copyWith(
         isLoading: false,

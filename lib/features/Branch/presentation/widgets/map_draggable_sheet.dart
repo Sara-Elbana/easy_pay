@@ -1,6 +1,4 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/auto__place_details_request.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/auto_complete_request.dart';
 import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
 import 'package:easy_pay_app/features/Branch/presentation/cubit/map_state.dart';
 import 'package:easy_pay_app/features/Branch/presentation/widgets/map_drag_handle.dart';
@@ -74,11 +72,11 @@ class _MapDraggableSheetState extends State<MapDraggableSheet> {
         return MapSearchField(
           controller: _searchController,
           onChanged: (val) {
-            context.read<MapCubit>().searchPlaces(AutoCompleteRequest(query: val));
+            context.read<MapCubit>().searchPlaces(val);
           },
           onClear: () {
             _searchController.clear();
-            context.read<MapCubit>().searchPlaces(const AutoCompleteRequest(query:""));
+            context.read<MapCubit>().searchPlaces("");
           },
         );
       },
@@ -132,8 +130,7 @@ class _MapDraggableSheetState extends State<MapDraggableSheet> {
           onTap: () {
             FocusScope.of(context).unfocus();
             _searchController.text = item.mainText;
-            final request = AutoPlaceDetailsRequest(placeId: item.placeId);
-            context.read<MapCubit>().selectPlace(request);
+            context.read<MapCubit>().selectPlace(item.placeId);
           },
         );
       },

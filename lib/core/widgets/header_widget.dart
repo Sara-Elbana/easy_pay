@@ -5,36 +5,43 @@ class HeaderWidget extends StatelessWidget {
   final Widget? leading;
   final String title;
   final Widget? trailing;
+  final VoidCallback? onTap;
 
   const HeaderWidget({
     super.key,
     required this.title,
     this.leading,
     this.trailing,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.paddingOf(context).top;
-    return Container(
-      padding: EdgeInsets.only(
-        top: statusBarHeight + 10,
-        bottom: 16,
-        left: 16,
-        right: 16,
-      ),
-      child: Row(
-        children: [
-          leading ?? const SizedBox(width: 40),
-          SizedBox(width: leading != null ? 16 : 0),
-          Expanded(
-            child: Text(
-              title,
-              style: AppTextStyles.titleLargeWhite,
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: EdgeInsets.only(
+          top: statusBarHeight + 10,
+          bottom: 16,
+          left: 16,
+          right: 16,
+        ),
+        child: Row(
+          children: [
+            leading ?? const SizedBox(width: 22),
+            SizedBox(width: leading != null ? 16 : 0),
+            Expanded(
+              child: Text(
+                title,
+                style: AppTextStyles.titleLargeMedium
+                    .copyWith(color: Colors.white),
+              ),
             ),
-          ),
-          trailing ?? const SizedBox(width: 40),
-        ],
+            trailing ?? const SizedBox(width: 40),
+          ],
+        ),
       ),
     );
   }

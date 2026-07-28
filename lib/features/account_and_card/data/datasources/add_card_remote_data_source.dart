@@ -13,9 +13,9 @@ class AddCardRemoteDataSource {
       data: cardData,
     );
     final data = response.data;
-    final cardJson =
-        data is Map && data.containsKey('card') ? data['card'] : data;
-
-    return CardModel.fromJson(cardJson);
+    final cardJson = data is Map
+        ? (data['data'] ?? data['card'] ?? data)
+        : data;
+    return CardModel.fromJson(cardJson as Map<String, dynamic>);
   }
 }

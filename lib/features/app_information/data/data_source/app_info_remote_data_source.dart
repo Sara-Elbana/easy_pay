@@ -1,6 +1,6 @@
 import 'package:easy_pay_app/core/constants/api_constants.dart';
-import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/app_information/data/model/app_info_model.dart';
+import 'package:easy_pay_app/core/network/api_service.dart';
 
 class AppInfoRemoteDataSource {
   final ApiService apiService;

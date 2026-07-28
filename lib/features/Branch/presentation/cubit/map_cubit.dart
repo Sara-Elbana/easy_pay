@@ -15,10 +15,10 @@ class MapCubit extends Cubit<MapState> {
     required this.getPlaceDetailsUseCase,
   }) : super(MapInitial());
 
-  void searchPlaces(AutoCompleteRequest request) {
+  void searchPlaces(String query) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
 
-    if (request.query.trim().isEmpty) {
+    if (query.trim().isEmpty) {
       emit(MapInitial());
       return;
     }
@@ -26,7 +26,8 @@ class MapCubit extends Cubit<MapState> {
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       emit(AutocompleteLoading());
       try {
-        final suggestions = await getAutocompleteUseCase(request: request);
+        final suggestions =
+            await getAutocompleteUseCase(request: AutoCompleteRequest(query: query));
         emit(AutocompleteSuccess(suggestions));
       } catch (e) {
         emit(AutocompleteError(e.toString()));
@@ -34,10 +35,11 @@ class MapCubit extends Cubit<MapState> {
     });
   }
 
-  Future<void> selectPlace(AutoPlaceDetailsRequest request) async {
+  Future<void> selectPlace(String placeId) async {
     emit(PlaceDetailsLoading());
     try {
-      final details = await getPlaceDetailsUseCase(request);
+      final details =
+          await getPlaceDetailsUseCase(AutoPlaceDetailsRequest(placeId: placeId));
       emit(PlaceDetailsSuccess(details));
     } catch (e) {
       emit(PlaceDetailsError(e.toString()));

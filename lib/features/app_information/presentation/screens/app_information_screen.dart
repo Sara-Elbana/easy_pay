@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/core.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
+import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
+import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
 import 'package:easy_pay_app/features/app_information/presentation/cubit/app_info_cubit.dart';
 import 'package:easy_pay_app/features/app_information/presentation/cubit/app_info_state.dart';
 import 'package:easy_pay_app/features/setting/presentation/widgets/setting_row_item.dart';
@@ -23,11 +25,7 @@ class AppInformationScreen extends StatelessWidget {
         body: BlocBuilder<AppInfoCubit, AppInfoState>(
           builder: (context, state) {
             if (state is AppInfoLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.primary,
-                ),
-              );
+              return const CustomLoadingWidget();
             } else if (state is AppInfoSuccess) {
               final info = state.appInfo;
               return Padding(
@@ -84,14 +82,7 @@ class AppInformationScreen extends StatelessWidget {
                 ),
               );
             } else if (state is AppInfoError) {
-              return Center(
-                child: Text(
-                  state.message,
-                  style: AppTextStyles.bodyMediumSemiBold.copyWith(
-                    color: Colors.red,
-                  ),
-                ),
-              );
+              return CustomErrorWidget(message: state.message);
             }
             return const SizedBox.shrink();
           },

@@ -1,5 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_pay_app/core/core.dart';
+import 'package:easy_pay_app/core/routes/app_routes_name.dart';
+import 'package:easy_pay_app/core/utils/responsive_helper.dart';
+import 'package:easy_pay_app/core/widgets/custom_button.dart';
+import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
+import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/account_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_state.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/widgets/card_tab_view.dart';
@@ -14,20 +19,44 @@ class CardTabSection extends StatelessWidget {
     return BlocBuilder<CardCubit, CardState>(
       builder: (context, state) {
         if (state is CardLoading) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
-          );
+          return const CustomLoadingWidget();
         } else if (state is CardSuccess) {
           if (state.cards.isEmpty) {
-            return Center(child: Text("no_cards_found".tr()));
+            return Center(
+              child: Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: context.scaleWidth(24)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("no_cards_found".tr()),
+                    SizedBox(height: context.scaleHeight(40)),
+                    CustomButton(
+                      text: 'add_card'.tr(),
+                      onPressed: () async {
+                        await Navigator.pushNamed(
+                          context,
+                          AppRoutesName.addCardScreen,
+                          arguments: context.read<CardCubit>(),
+                        );
+                        if (context.mounted) {
+                          context.read<AccountCubit>().loadAccounts();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
           return CardTabView(cards: state.cards);
         } else if (state is CardError) {
-          return Center(
-            child: Text(
-              state.message,
-              style: AppTextStyles.bodyMediumRed,
-            ),
+
+          return CustomErrorWidget(
+            message: state.message,
+            onRetry: () {
+              context.read<CardCubit>().loadCards();
+            },
           );
         }
         return const SizedBox.shrink();

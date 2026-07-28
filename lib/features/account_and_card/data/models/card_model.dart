@@ -15,14 +15,28 @@ class CardModel extends CardEntity {
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
     return CardModel(
-      id: json['id'],
-      cardHolderName: json['card_holder_name'],
-      cardType: json['card_type'],
-      cardNumber: json['card_number'],
-      maskedCardNumber: json['masked_card_number'],
-      expirationDate: json['expiration_date'],
-      isActive: json['is_active'] ?? true,
-      bankAccount: BankAccountModel.fromJson(json['bank_account']),
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      cardHolderName: json['card_holder_name']?.toString() ?? '',
+      cardType: json['card_type']?.toString() ?? '',
+      cardNumber: json['card_number']?.toString() ?? '',
+      maskedCardNumber: json['masked_card_number']?.toString() ?? '',
+      expirationDate: json['expiration_date']?.toString() ?? '',
+      isActive: json['is_active'] == true || json['is_active'] == 1,
+      bankAccount: json['bank_account'] != null
+          ? BankAccountModel.fromJson(
+              json['bank_account'] as Map<String, dynamic>)
+          : const BankAccountModel(id: 0, accountNumber: '', balance: '0.00'),
     );
+  }
+
+  static List<CardModel> listFromJson(dynamic json) {
+    if (json == null) return [];
+    var dataList = json is Map ? (json['data'] ?? json['cards'] ?? []) : json;
+    if (dataList is! List) return [];
+    return dataList
+        .map((cardJson) => CardModel.fromJson(cardJson as Map<String, dynamic>))
+        .toList();
   }
 }

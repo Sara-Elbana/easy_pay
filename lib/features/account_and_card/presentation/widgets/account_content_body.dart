@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_pay_app/core/core.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
+import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
+import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/cubit/account_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/cubit/account_state.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/widgets/account_tab_section.dart';
@@ -38,9 +39,7 @@ class _AccountContentBodyState extends State<AccountContentBody> {
           child: BlocBuilder<AccountCubit, AccountState>(
             builder: (context, state) {
               if (state is AccountLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
-                );
+                return const CustomLoadingWidget();
               } else if (state is AccountSuccess) {
                 if (state.accounts.isEmpty) {
                   return Center(child: Text("no_accounts_found".tr()));
@@ -63,11 +62,12 @@ class _AccountContentBodyState extends State<AccountContentBody> {
                   ],
                 );
               } else if (state is AccountError) {
-                return Center(
-                  child: Text(
-                    state.message,
-                    style: AppTextStyles.bodyMediumRed,
-                  ),
+
+                return CustomErrorWidget(
+                  message: state.message,
+                  onRetry: () {
+                    context.read<AccountCubit>().loadAccounts();
+                  },
                 );
               }
               return const SizedBox.shrink();

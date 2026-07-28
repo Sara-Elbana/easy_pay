@@ -1,3 +1,6 @@
+import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/screens/add_card_screen.dart';
 import 'package:easy_pay_app/features/app_information/presentation/screens/app_information_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:easy_pay_app/features/interest_rate/presentation/cubit/interest_cubit.dart';
@@ -9,6 +12,8 @@ import 'package:easy_pay_app/features/auth/presentation/screens/change_password_
 import 'package:easy_pay_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/screens/home_screen.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/screens/setting_screen.dart';
+import 'package:easy_pay_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:easy_pay_app/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_up_screen.dart';
@@ -49,6 +54,10 @@ class AppRoutes {
           child: const OnboardingScreen(),
         ),
     AppRoutesName.welcomeScreen: (_) => const WelcomeScreen(),
+    AppRoutesName.profileScreen: (_) => BlocProvider(
+      create: (context) => getIt<ProfileCubit>()..fetchProfile(),
+      child: const ProfileScreen(),
+    ),
     AppRoutesName.signInScreen: (context) => BlocProvider(
           create: (_) => getIt<AuthCubit>(),
           child: const SignInScreen(),
@@ -90,7 +99,41 @@ class AppRoutes {
     AppRoutesName.appInformationScreen: (_) => const AppInformationScreen(),
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
     AppRoutesName.chatScreen: (_) => const ChatScreen(),
-    AppRoutesName.cardDetailsScreen: (_) => const CardDetailsScreen(),
+    AppRoutesName.cardDetailsScreen: (context) {
+      final arguments = ModalRoute.of(context)?.settings.arguments;
+      if (arguments is Map<String, dynamic>) {
+        final card = arguments['card'] as CardEntity?;
+        final cubit = arguments['cubit'] as CardCubit?;
+        if (cubit != null) {
+          return BlocProvider.value(
+            value: cubit,
+            child: CardDetailsScreen(card: card),
+          );
+        }
+      } else if (arguments is CardEntity) {
+        return BlocProvider(
+          create: (_) => getIt<CardCubit>(),
+          child: CardDetailsScreen(card: arguments),
+        );
+      }
+      return BlocProvider(
+        create: (_) => getIt<CardCubit>(),
+        child: const CardDetailsScreen(),
+      );
+    },
+    AppRoutesName.addCardScreen: (context) {
+      final arguments = ModalRoute.of(context)?.settings.arguments;
+      if (arguments is CardCubit) {
+        return BlocProvider.value(
+          value: arguments,
+          child: const AddCardScreen(),
+        );
+      }
+      return BlocProvider(
+        create: (_) => getIt<CardCubit>(),
+        child: const AddCardScreen(),
+      );
+    },
     AppRoutesName.withdrawScreen: (_) => const WithdrawScreen(),
     AppRoutesName.withdrawSuccessScreen: (_) => const WithdrawSuccessScreen(),
     AppRoutesName.mapSearchScreen: (_) => BlocProvider(
@@ -131,5 +174,6 @@ class AppRoutes {
       }
       throw Exception('Invalid arguments for BeneficiaryDetailScreen');
     },
+
   };
 }

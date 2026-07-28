@@ -30,5 +30,6 @@ class AppRoutesName {
   static const String beneficiaryDetailScreen = "beneficiaryDetailScreen";
   static const String addCardScreen = "addCardScreen";
   static const String profileScreen = "profileScreen";
+  static const String messageScreen = "messageScreen";
 
 }

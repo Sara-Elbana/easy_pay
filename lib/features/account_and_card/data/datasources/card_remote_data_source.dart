@@ -12,6 +12,6 @@ class CardRemoteDataSource {
     return CardModel.listFromJson(response.data);
   }
   Future<void> deleteCard(int cardId) async {
-    await apiService.delete('https://ebank.dotlaa.com/api/cards/$cardId');
+    await apiService.delete('${ApiConstants.cardsEndpoint}/$cardId');
   }
 }

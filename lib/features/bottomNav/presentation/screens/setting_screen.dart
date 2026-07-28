@@ -1,111 +1,121 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/constants/app_assets.dart';
+import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/widgets/header_widget.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
+import 'package:easy_pay_app/core/widgets/user_name_text.dart';
+import 'package:easy_pay_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:easy_pay_app/features/setting/presentation/widgets/setting_row_item.dart';
 import 'package:easy_pay_app/features/setting/presentation/widgets/sign_out_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: Column(
-        children: [
-          HeaderWidget(
-            title: 'setting'.tr(),
-            onTap: (){
-              Navigator.pushNamed(context, AppRoutesName.profileScreen);
-            },
-          ),
-          SizedBox(height: context.scaleHeight(60)),
-          Expanded(
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(context.scaleWidth(30)),
-                      topRight: Radius.circular(context.scaleWidth(30)),
+    return BlocProvider(
+      create: (context) => getIt<ProfileCubit>()..fetchProfile(),
+      child: Scaffold(
+        backgroundColor: AppColors.primary,
+        body: Column(
+          children: [
+            HeaderWidget(
+              title: 'setting'.tr(),
+              onTap: (){
+                Navigator.pushNamed(context, AppRoutesName.profileScreen);
+              },
+            ),
+            SizedBox(height: context.scaleHeight(60)),
+            Expanded(
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(context.scaleWidth(30)),
+                        topRight: Radius.circular(context.scaleWidth(30)),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: context.scaleHeight(72)),
+                        UserNameText(
+                          style: AppTextStyles.bodyLargeSemiBold.copyWith(
+                            fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16),
+                            color: AppColors.primary,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                        SizedBox(height: context.scaleHeight(24)),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: context.scaleWidth(24)),
+                          child: Column(
+                            children: [
+                              SettingRowItem(
+                                title: 'password'.tr(),
+                                onTap: () {},
+                              ),
+                              SettingRowItem(
+                                title: 'touch_id'.tr(),
+                                onTap: () {},
+                              ),
+                              SettingRowItem(
+                                title: 'languages'.tr(),
+                                onTap: () {},
+                              ),
+                              SettingRowItem(
+                                title: 'app_information'.tr(),
+                                onTap: () {
+                                  Navigator.pushNamed(context,
+                                      AppRoutesName.appInformationScreen);
+                                },
+                              ),
+                              SettingRowItem(
+                                title: 'customer_care'.tr(),
+                                subtitle: '19008989',
+                                onTap: () {},
+                                showArrow: false,
+                              ),
+                              SettingRowItem(
+                                title: 'sign_out'.tr(),
+                                onTap: () => SignOutDialog.show(context),
+                                showArrow: false,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: context.scaleHeight(72)),
-                      Text(
-                        'Push Puttichai',
-                        style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: AppColors.primary, fontFamily: 'Poppins'),
-                      ),
-                      SizedBox(height: context.scaleHeight(24)),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: context.scaleWidth(24)),
-                        child: Column(
-                          children: [
-                            SettingRowItem(
-                              title: 'password'.tr(),
-                              onTap: () {},
-                            ),
-                            SettingRowItem(
-                              title: 'touch_id'.tr(),
-                              onTap: () {},
-                            ),
-                            SettingRowItem(
-                              title: 'languages'.tr(),
-                              onTap: () {},
-                            ),
-                            SettingRowItem(
-                              title: 'app_information'.tr(),
-                              onTap: () {
-                                Navigator.pushNamed(context,
-                                    AppRoutesName.appInformationScreen);
-                              },
-                            ),
-                            SettingRowItem(
-                              title: 'customer_care'.tr(),
-                              subtitle: '19008989',
-                              onTap: () {},
-                              showArrow: false,
-                            ),
-                            SettingRowItem(
-                              title: 'sign_out'.tr(),
-                              onTap: () => SignOutDialog.show(context),
-                              showArrow: false,
-                            ),
-                          ],
+                  Positioned(
+                    top: -context.scaleHeight(50),
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: ClipOval(
+                        child: Image.asset(
+                          AppAssets.avatarImage,
+                          width: context.scaleWidth(100),
+                          height: context.scaleHeight(100),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: -context.scaleHeight(50),
-                  left: 0,
-                  right: 0,
-                  child: Center(
-                    child: ClipOval(
-                      child: Image.asset(
-                        AppAssets.avatarImage,
-                        width: context.scaleWidth(100),
-                        height: context.scaleHeight(100),
-                        fit: BoxFit.cover,
-                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -3,6 +3,8 @@ import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_c
 import 'package:easy_pay_app/features/account_and_card/presentation/screens/add_card_screen.dart';
 import 'package:easy_pay_app/features/app_information/presentation/screens/app_information_screen.dart';
 import 'package:easy_pay_app/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:easy_pay_app/features/bottomNav/presentation/screens/message_screen.dart';
+import 'package:easy_pay_app/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:easy_pay_app/features/interest_rate/presentation/cubit/interest_cubit.dart';
 import 'package:easy_pay_app/features/interest_rate/presentation/screens/interest_rate_screen.dart';
 import 'package:easy_pay_app/features/pay_the_bill/presentation/screens/pay_the_bill_screen.dart';
@@ -39,7 +41,7 @@ import 'package:easy_pay_app/features/exchange_rate/presentation/cubit/exchange_
 import 'package:easy_pay_app/features/exchange/presentation/screens/exchange_screen.dart';
 import 'package:easy_pay_app/features/exchange/presentation/cubit/exchange_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/screens/account_screen.dart';
-import 'package:easy_pay_app/features/message/presentation/screens/chat_screen.dart';
+import 'package:easy_pay_app/features/chat/presentation/screens/chat_screen.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/screens/card_details_screen.dart';
 import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_screen.dart';
 import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_success_screen.dart';
@@ -79,6 +81,7 @@ class AppRoutes {
           child: TransferScreen(),
         ),
     AppRoutesName.confirmScreen: (_) => ConfirmScreen(),
+    AppRoutesName.messageScreen: (_) => const MessageScreen(),
     AppRoutesName.successTransferScreen: (_) => const SuccessTransferScreen(),
     AppRoutesName.mainScreen: (_) => BlocProvider(
           create: (_) => getIt<AuthCubit>(),
@@ -98,8 +101,10 @@ class AppRoutes {
         ),
     AppRoutesName.appInformationScreen: (_) => const AppInformationScreen(),
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
-    AppRoutesName.chatScreen: (_) => const ChatScreen(),
-    AppRoutesName.cardDetailsScreen: (context) {
+    AppRoutesName.chatScreen: (_) => BlocProvider(
+      create: (context) => getIt<ChatCubit>(),
+      child: const ChatScreen(),
+    ),    AppRoutesName.cardDetailsScreen: (context) {
       final arguments = ModalRoute.of(context)?.settings.arguments;
       if (arguments is Map<String, dynamic>) {
         final card = arguments['card'] as CardEntity?;

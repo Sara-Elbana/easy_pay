@@ -52,9 +52,10 @@ class _OnboardingBodyState extends State<OnboardingBody> {
     return BlocConsumer<OnboardingCubit, OnboardingState>(
       listener: (context, state) {
         if (state.isFinished) {
-          Navigator.pushReplacementNamed(
+          Navigator.pushNamedAndRemoveUntil(
             context,
             AppRoutesName.welcomeScreen,
+            (route) => false,
           );
         }
 

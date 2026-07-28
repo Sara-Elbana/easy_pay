@@ -63,7 +63,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.transactionReportIcon,
           title: "transaction_report".tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutesName.transactionReportScreen);
+          },
         ),
         GridMenuItem(
           iconPath: AppAssets.beneficiaryIcon,

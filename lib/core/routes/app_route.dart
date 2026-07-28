@@ -45,6 +45,7 @@ import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_scr
 import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_success_screen.dart';
 import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
 import 'package:easy_pay_app/features/Branch/presentation/screens/map_search_screen.dart';
+import 'package:easy_pay_app/features/transaction_report/presentation/screens/transaction_report_screen.dart';
 
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -174,6 +175,6 @@ class AppRoutes {
       }
       throw Exception('Invalid arguments for BeneficiaryDetailScreen');
     },
-
+    AppRoutesName.transactionReportScreen: (_) => const TransactionReportScreen(),
   };
 }

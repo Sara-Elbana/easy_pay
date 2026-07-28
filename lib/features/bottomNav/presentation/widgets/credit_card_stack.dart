@@ -2,15 +2,22 @@ import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:flutter/material.dart';
 
 class CreditCardStack extends StatelessWidget {
-  const CreditCardStack({super.key});
+  final double aspectRatio;
+  final double extraHeight;
+
+  const CreditCardStack({
+    super.key,
+    this.aspectRatio = 1.425,
+    this.extraHeight = 20,
+  });
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final cardWidth = constraints.maxWidth;
-        final cardHeight = cardWidth / 1.556;
-        final totalHeight = cardHeight + 20;
+        final cardHeight = cardWidth / aspectRatio;
+        final totalHeight = cardHeight + extraHeight;
 
         return SizedBox(
           height: totalHeight,
@@ -23,22 +30,11 @@ class CreditCardStack extends StatelessWidget {
                 left: 24,
                 right: 24,
                 bottom: 0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(10),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      AppAssets.cardBlue,
-                      fit: BoxFit.fill,
-                    ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    AppAssets.cardBlue,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -47,22 +43,11 @@ class CreditCardStack extends StatelessWidget {
                 left: 12,
                 right: 12,
                 bottom: 12,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(15),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      AppAssets.cardGold,
-                      fit: BoxFit.fill,
-                    ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    AppAssets.cardGold,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -71,22 +56,11 @@ class CreditCardStack extends StatelessWidget {
                 left: 0,
                 right: 0,
                 bottom: 24,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(20),
-                        blurRadius: 15,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      AppAssets.cardBlue,
-                      fit: BoxFit.fill,
-                    ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    AppAssets.cardBlue,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),

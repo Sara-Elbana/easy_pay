@@ -40,6 +40,7 @@ class ApiConstants {
   static const String profileEndpoint = '/profile';
   static const String accountsEndpoint = '/accounts';
   static const String cardsEndpoint = '/cards';
+  static const String reportsMonthlyEndpoint = '/reports/monthly';
 
 
 

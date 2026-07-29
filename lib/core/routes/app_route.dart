@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/features/transaction_report/presentation/cubit/report_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/screens/add_card_screen.dart';
@@ -175,6 +176,9 @@ class AppRoutes {
       }
       throw Exception('Invalid arguments for BeneficiaryDetailScreen');
     },
-    AppRoutesName.transactionReportScreen: (_) => const TransactionReportScreen(),
+    AppRoutesName.transactionReportScreen: (_) => BlocProvider(
+          create: (_) => getIt<ReportCubit>()..getMonthlyReport(),
+          child: const TransactionReportScreen(),
+        ),
   };
 }

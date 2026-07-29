@@ -5,12 +5,46 @@ import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/header_widget.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/widgets/credit_card_stack.dart';
+import 'package:easy_pay_app/features/transaction_report/domain/entities/transaction_entity.dart';
+import 'package:easy_pay_app/features/transaction_report/presentation/cubit/report_cubit.dart';
+import 'package:easy_pay_app/features/transaction_report/presentation/cubit/report_state.dart';
 import 'package:easy_pay_app/features/transaction_report/presentation/widgets/transaction_chart_card.dart';
 import 'package:easy_pay_app/features/transaction_report/presentation/widgets/transaction_item_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TransactionReportScreen extends StatelessWidget {
   const TransactionReportScreen({super.key});
+
+  IconData _getIconForTransaction(TransactionEntity transaction) {
+    final cat = (transaction.category ?? transaction.title).toLowerCase();
+    if (cat.contains('water')) return Icons.water_drop;
+    if (cat.contains('electric') || cat.contains('power')) return Icons.power;
+    if (cat.contains('internet') || cat.contains('wifi')) return Icons.wifi;
+    if (cat.contains('salary') || cat.contains('income')) {
+      return Icons.confirmation_number_outlined;
+    }
+    if (cat.contains('transfer')) return Icons.receipt_long;
+    return Icons.receipt;
+  }
+
+  Color _getIconBgColor(int index) {
+    final colors = [
+      AppColors.primary,
+      AppColors.messagePink,
+      AppColors.messageBlue,
+      AppColors.messageOrange,
+      AppColors.messageTeal,
+    ];
+    return colors[index % colors.length];
+  }
+
+  String _formatAmount(double amount) {
+    final absVal = amount.abs();
+    final formatted =
+        absVal.toStringAsFixed(absVal.truncateToDouble() == absVal ? 0 : 2);
+    return amount >= 0 ? '+\$$formatted' : '- \$$formatted';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,85 +115,121 @@ class TransactionReportScreen extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 0,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const TransactionChartCard(),
-                  SizedBox(height: context.scaleHeight(24)),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Today',
-                        style: AppTextStyles.titleMediumDark.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: context.scaleWidth(16),
-                        ),
-                      ),
-                      
-                    ],
-                  ),
-                  SizedBox(height: context.scaleHeight(4)),
-                  const TransactionItemTile(
-                    title: 'Water Bill',
-                    subtitle: 'Unsuccessfully',
-                    amount: '- \$280',
-                    isPositive: false,
-                    icon: Icons.water_drop,
-                    iconBgColor: AppColors.primary,
-                    showDivider: false,
-                  ),
-
-                  SizedBox(height: context.scaleHeight(20)),
-
-                  Text(
-                    'Yesterday',
-                    style: AppTextStyles.titleMediumDark.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: context.scaleWidth(16),
+            child: BlocBuilder<ReportCubit, ReportState>(
+              builder: (context, state) {
+                if (state is ReportLoading || state is ReportInitial) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primary,
                     ),
-                  ),
-                  SizedBox(height: context.scaleHeight(8)),
-                  const TransactionItemTile(
-                    title: 'Income: Salary Oct',
-                    amount: '+\$1200',
-                    isPositive: true,
-                    icon: Icons.confirmation_number_outlined,
-                    iconBgColor: AppColors.messagePink,
-                    showDivider: true,
-                  ),
-                  const TransactionItemTile(
-                    title: 'Electric Bill',
-                    subtitle: 'Successfully',
-                    amount: '- \$480',
-                    isPositive: false,
-                    icon: Icons.power,
-                    iconBgColor: AppColors.messageBlue,
-                    showDivider: true,
-                  ),
-                  const TransactionItemTile(
-                    title: 'Income : Jane transfers',
-                    amount: '+ \$500',
-                    isPositive: true,
-                    icon: Icons.receipt_long,
-                    iconBgColor: AppColors.messageOrange,
-                    showDivider: true,
-                  ),
-                  const TransactionItemTile(
-                    title: 'Internet Bill',
-                    subtitle: 'Successfully',
-                    amount: '- \$100',
-                    isPositive: false,
-                    icon: Icons.wifi,
-                    iconBgColor: AppColors.messageTeal,
-                    showDivider: false,
-                  ),
-                  SizedBox(height: context.scaleHeight(24)),
-                ],
-              ),
+                  );
+                } else if (state is ReportError) {
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            state.message,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.bodyMediumGray,
+                          ),
+                          SizedBox(height: context.scaleHeight(16)),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () {
+                              context.read<ReportCubit>().getMonthlyReport();
+                            },
+                            child: const Text(
+                              'Retry',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                } else if (state is ReportSuccess) {
+                  final report = state.report;
+                  final todayList = report.reportTransactions.today;
+                  final yesterdayList = report.reportTransactions.yesterday;
+
+                  return SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TransactionChartCard(chartData: report.chartData),
+                        SizedBox(height: context.scaleHeight(24)),
+
+                        if (todayList.isNotEmpty) ...[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Today',
+                                style: AppTextStyles.titleMediumDark.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: context.scaleWidth(16),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: context.scaleHeight(4)),
+                          ...todayList.asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final item = entry.value;
+                            return TransactionItemTile(
+                              title: item.title,
+                              subtitle: item.status,
+                              amount: _formatAmount(item.amount),
+                              isPositive: item.amount >= 0,
+                              icon: _getIconForTransaction(item),
+                              iconBgColor: _getIconBgColor(index),
+                              showDivider: index < todayList.length - 1,
+                            );
+                          }),
+                          SizedBox(height: context.scaleHeight(20)),
+                        ],
+
+                        if (yesterdayList.isNotEmpty) ...[
+                          Text(
+                            'Yesterday',
+                            style: AppTextStyles.titleMediumDark.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: context.scaleWidth(16),
+                            ),
+                          ),
+                          SizedBox(height: context.scaleHeight(8)),
+                          ...yesterdayList.asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final item = entry.value;
+                            return TransactionItemTile(
+                              title: item.title,
+                              subtitle: item.status,
+                              amount: _formatAmount(item.amount),
+                              isPositive: item.amount >= 0,
+                              icon: _getIconForTransaction(item),
+                              iconBgColor:
+                                  _getIconBgColor(index + todayList.length),
+                              showDivider: index < yesterdayList.length - 1,
+                            );
+                          }),
+                          SizedBox(height: context.scaleHeight(24)),
+                        ],
+                      ],
+                    ),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              },
             ),
           ),
         ],

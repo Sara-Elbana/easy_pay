@@ -1,3 +1,8 @@
+import 'package:easy_pay_app/features/transaction_report/data/datasources/transaction_report_remote_data_source.dart';
+import 'package:easy_pay_app/features/transaction_report/data/repositories/transaction_report_repository_impl.dart';
+import 'package:easy_pay_app/features/transaction_report/domain/repositories/transaction_report_repository.dart';
+import 'package:easy_pay_app/features/transaction_report/domain/usecases/get_monthly_report_usecase.dart';
+import 'package:easy_pay_app/features/transaction_report/presentation/cubit/report_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_pay_app/features/account_and_card/data/datasources/account_remote_data_source.dart';
 import 'package:easy_pay_app/features/account_and_card/data/datasources/add_card_remote_data_source.dart';
@@ -336,4 +341,19 @@ Future<void> setupDependencies() async {
   getIt.registerFactory(
     () => InterestCubit(getInterestRatesUseCase: getIt()),
   );
+
+  // Transaction Report Feature
+  getIt.registerLazySingleton<TransactionReportRemoteDataSource>(
+    () => TransactionReportRemoteDataSourceImpl(apiService: getIt()),
+  );
+  getIt.registerLazySingleton<TransactionReportRepository>(
+    () => TransactionReportRepositoryImpl(remoteDataSource: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => GetMonthlyReportUseCase(getIt()),
+  );
+  getIt.registerFactory(
+    () => ReportCubit(getMonthlyReportUseCase: getIt()),
+  );
 }
+

@@ -12,10 +12,6 @@ class AddCardRemoteDataSource {
       ApiConstants.cardsEndpoint,
       data: cardData,
     );
-    final data = response.data;
-    final cardJson = data is Map
-        ? (data['data'] ?? data['card'] ?? data)
-        : data;
-    return CardModel.fromJson(cardJson as Map<String, dynamic>);
+    return CardModel.fromJson(response.data);
   }
 }

@@ -27,8 +27,6 @@ class ApiConstants {
   static const String userProfileEndpoint = '/users/profile';
   static const String updateProfileEndpoint = '/users/profile';
 
-
-
   // ApiBank Public Endpoints
   static const String branchesEndpoint = '/branches';
   static const String interestRatesEndpoint = '/interest-rates';
@@ -41,8 +39,8 @@ class ApiConstants {
   static const String accountsEndpoint = '/accounts';
   static const String cardsEndpoint = '/cards';
   static const String reportsMonthlyEndpoint = '/reports/monthly';
-
-
+  static const String notificationsEndpoint = '/notifications';
+  static const String chatEndpoint = '/notifications/reply';
 
   // HTTP Headers
   static const String contentTypeJson = 'application/json';

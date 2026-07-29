@@ -31,11 +31,20 @@ import 'package:easy_pay_app/features/auth/domain/use_cases/biometric_usecase.da
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_in_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_up_usecase.dart';
 import 'package:easy_pay_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:easy_pay_app/features/chat/data/data_source/chat_remote_data_source.dart';
+import 'package:easy_pay_app/features/chat/data/repositories_impl/chat_repository_impl.dart';
+import 'package:easy_pay_app/features/chat/domain/repositories_interface/chat_repository_interface.dart';
+import 'package:easy_pay_app/features/chat/domain/use_case/send_message_use_case.dart';
+import 'package:easy_pay_app/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:easy_pay_app/features/interest_rate/data/datasources/interest_remote_data_source.dart';
 import 'package:easy_pay_app/features/interest_rate/data/repositories/interest_repository_impl.dart';
 import 'package:easy_pay_app/features/interest_rate/domain/repositories/interest_repository.dart';
 import 'package:easy_pay_app/features/interest_rate/domain/usecases/get_interest_rates_usecase.dart';
 import 'package:easy_pay_app/features/interest_rate/presentation/cubit/interest_cubit.dart';
+import 'package:easy_pay_app/features/message/data/data_source/notification_remote_data_source.dart';
+import 'package:easy_pay_app/features/message/data/repository_impl/notification_repository_impl.dart';
+import 'package:easy_pay_app/features/message/domain/repository_interface/notification_repository_interface.dart';
+import 'package:easy_pay_app/features/message/presentation/cubit/notification_cubit.dart';
 import 'package:easy_pay_app/features/profile/data/data_sources/profile_remote_data_source.dart';
 import 'package:easy_pay_app/features/profile/data/repository_impl/profile_repository_impl.dart';
 import 'package:easy_pay_app/features/profile/domain/repository_interface/profile_repository_interface.dart';
@@ -295,37 +304,37 @@ Future<void> setupDependencies() async {
 
   // Account & Card Feature
   getIt.registerLazySingleton<AccountRemoteDataSource>(
-        () => AccountRemoteDataSource(getIt()),
+    () => AccountRemoteDataSource(getIt()),
   );
   getIt.registerLazySingleton<AccountRepository>(
-        () => AccountRepositoryImpl(remoteDataSource: getIt()),
+    () => AccountRepositoryImpl(remoteDataSource: getIt()),
   );
   getIt.registerLazySingleton(
-        () => GetAccountsUseCase(getIt()),
+    () => GetAccountsUseCase(getIt()),
   );
   getIt.registerFactory<AccountCubit>(
-        () => AccountCubit(getAccountsUseCase: getIt()),
+    () => AccountCubit(getAccountsUseCase: getIt()),
   );
 
   getIt.registerLazySingleton<CardRemoteDataSource>(
-        () => CardRemoteDataSource(getIt()),
+    () => CardRemoteDataSource(getIt()),
   );
 
   getIt.registerLazySingleton<CardRepository>(
-        () => CardRepositoryImpl(getIt(), getIt()),
+    () => CardRepositoryImpl(getIt(), getIt()),
   );
 
   getIt.registerLazySingleton(
-        () => GetCardssUseCase(getIt()),
+    () => GetCardssUseCase(getIt()),
   );
 
   getIt.registerLazySingleton(() => AddCardUseCase(getIt()));
   getIt.registerLazySingleton(() => DeleteCardUseCase(getIt()));
   getIt.registerFactory(
-        () => CardCubit(getIt(), getIt(),getIt()),
+    () => CardCubit(getIt(), getIt(), getIt()),
   );
   getIt.registerLazySingleton<AddCardRemoteDataSource>(
-        () => AddCardRemoteDataSource(getIt()),
+    () => AddCardRemoteDataSource(getIt()),
   );
 
   // Interest Rate Feature
@@ -355,5 +364,25 @@ Future<void> setupDependencies() async {
   getIt.registerFactory(
     () => ReportCubit(getMonthlyReportUseCase: getIt()),
   );
-}
+  // Notifications Feature
+  getIt.registerLazySingleton<NotificationRemoteDataSource>(
+    () => NotificationRemoteDataSource(getIt<ApiService>()),
+  );
+  getIt.registerLazySingleton<NotificationRepositoryInterface>(
+    () => NotificationRepositoryImpl(getIt<NotificationRemoteDataSource>()),
+  );
+  getIt.registerFactory<NotificationCubit>(
+    () => NotificationCubit(getIt<NotificationRepositoryInterface>()),
+  );
+  // Chat Feature
+  getIt.registerLazySingleton<ChatRemoteDataSource>(
+    () => ChatRemoteDataSource(getIt()),
+  );
 
+  getIt.registerLazySingleton<ChatRepositoryInterface>(
+    () => ChatRepositoryImpl(getIt<ChatRemoteDataSource>()),
+  );
+
+  getIt.registerFactory(() => ChatCubit(getIt()));
+  getIt.registerLazySingleton(() => SendMessageUseCase(getIt()));
+}

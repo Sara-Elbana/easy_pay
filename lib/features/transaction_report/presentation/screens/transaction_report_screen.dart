@@ -42,7 +42,7 @@ class TransactionReportScreen extends StatelessWidget {
   String _formatAmount(double amount) {
     final absVal = amount.abs();
     final formatted =
-        absVal.toStringAsFixed(absVal.truncateToDouble() == absVal ? 0 : 2);
+    absVal.toStringAsFixed(absVal.truncateToDouble() == absVal ? 0 : 2);
     return amount >= 0 ? '+\$$formatted' : '- \$$formatted';
   }
 
@@ -217,7 +217,7 @@ class TransactionReportScreen extends StatelessWidget {
                               isPositive: item.amount >= 0,
                               icon: _getIconForTransaction(item),
                               iconBgColor:
-                                  _getIconBgColor(index + todayList.length),
+                              _getIconBgColor(index + todayList.length),
                               showDivider: index < yesterdayList.length - 1,
                             );
                           }),

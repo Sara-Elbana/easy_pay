@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/core/widgets/card_container.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
@@ -70,15 +71,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: context.scaleHeight(10)),
-                    Card(
-                      color: theme.brightness == Brightness.dark
-                          ? AppColors.gray800
-                          : Colors.white,
-                      elevation: 4,
-                      shadowColor: AppColors.gray200.withAlpha(50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(context.scaleWidth(24)),
-                      ),
+                  CardContainer(
                       child: Padding(
                         padding: EdgeInsets.all(context.scaleWidth(24)),
                         child: Column(

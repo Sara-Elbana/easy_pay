@@ -1,3 +1,9 @@
+import 'package:easy_pay_app/features/save_online/data/data_source/savings_remote_data_source.dart';
+import 'package:easy_pay_app/features/save_online/data/repository_impl/management_repository_impl.dart';
+import 'package:easy_pay_app/features/save_online/domain/repository_interface/management_repository_interface.dart';
+import 'package:easy_pay_app/features/save_online/domain/use_cases/create_saving_use_case.dart';
+import 'package:easy_pay_app/features/save_online/domain/use_cases/get_savings_accounts_use_case.dart';
+import 'package:easy_pay_app/features/save_online/presentation/cubit/savings_cubit.dart';
 import 'package:easy_pay_app/features/transaction_report/data/datasources/transaction_report_remote_data_source.dart';
 import 'package:easy_pay_app/features/transaction_report/data/repositories/transaction_report_repository_impl.dart';
 import 'package:easy_pay_app/features/transaction_report/domain/repositories/transaction_report_repository.dart';
@@ -385,4 +391,20 @@ Future<void> setupDependencies() async {
 
   getIt.registerFactory(() => ChatCubit(getIt()));
   getIt.registerLazySingleton(() => SendMessageUseCase(getIt()));
+
+  // Management Feature
+  getIt.registerLazySingleton<SavingsRemoteDataSource>(
+        () => SavingsRemoteDataSource(getIt()),
+  );
+  getIt.registerLazySingleton<ManagementRepositoryInterface>(
+        () => ManagementRepositoryImpl(remoteDataSource: getIt()),
+  );
+  getIt.registerLazySingleton(
+        () => GetSavingsAccountsUseCase(getIt()),
+  );getIt.registerLazySingleton(
+        () => CreateSavingUseCase(getIt()),
+  );
+  getIt.registerFactory<ManagementCubit>(
+        () => ManagementCubit(getSavingsAccountsUseCase: getIt(),createSavingUseCase: getIt()),
+  );
 }

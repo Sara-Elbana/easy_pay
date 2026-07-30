@@ -35,4 +35,8 @@ class AppRoutesName {
   static const String mobilePrepaidScreen = "mobilePrepaidScreen";
   static const String mobilePrepaidConfirmScreen = "mobilePrepaidConfirmScreen";
   static const String mobilePrepaidSuccessScreen = "mobilePrepaidSuccessScreen";
+  static const String saveOnlineScreen = "saveOnlineScreen";
+  static const String addScreen = "addScreen";
+  static const String managementScreen = "managementScreen";
+  static const String saveOnlineSuccessfully = "saveOnlineSuccessfully";
 }

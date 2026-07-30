@@ -55,7 +55,7 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.onlineIcon,
           title: "save_online".tr(),
-          onTap: () {},
+          onTap: () {Navigator.pushNamed(context, AppRoutesName.saveOnlineScreen);},
         ),
         GridMenuItem(
           iconPath: AppAssets.creditCardIcon,

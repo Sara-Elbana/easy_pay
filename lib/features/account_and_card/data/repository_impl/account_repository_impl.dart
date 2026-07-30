@@ -1,7 +1,6 @@
-import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:easy_pay_app/core/errors/failures.dart';
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/features/account_and_card/data/datasources/account_remote_data_source.dart';
+import 'package:easy_pay_app/features/account_and_card/data/models/account_model.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/account_entity.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/bank_card_entity.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/repository_interface/account_repository_interface.dart';
@@ -12,10 +11,11 @@ class AccountRepositoryImpl implements AccountRepository {
   AccountRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, List<AccountEntity>>> getAccounts() async {
-    try {
-      final models = await remoteDataSource.getAccounts();
-      final entities = models.map((model) => AccountEntity(
+  Future<ApiResult<List<AccountEntity>>> getAccounts() async {
+    final result = await remoteDataSource.getAccounts();
+
+    if (result is ApiSuccess<List<AccountModel>>) {
+      final entities = result.data.map((model) => AccountEntity(
         id: model.id,
         accountNumber: model.accountNumber,
         balance: model.balance,
@@ -29,12 +29,10 @@ class AccountRepositoryImpl implements AccountRepository {
         )).toList(),
       )).toList();
 
-      return Right(entities);
-    } on DioException catch (e) {
-      final errorMessage = e.response?.data['message'] ?? e.error.toString();
-      return Left(ServerFailure(errorMessage));
-    } catch (e) {
-      return Left(UnknownFailure(e.toString()));
+      return ApiSuccess(data: entities, message: result.message);
     }
+
+    final failure = result as ApiFailure<List<AccountModel>>;
+    return ApiFailure(error: failure.error, message: failure.message);
   }
 }

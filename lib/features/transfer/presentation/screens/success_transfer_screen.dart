@@ -68,7 +68,7 @@ class SuccessTransferScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Spacer(flex: 2),
+                    SizedBox(height: context.scaleHeight(32)),
                     SizedBox(
                       width: double.infinity,
                       child: CustomButton(
@@ -80,6 +80,7 @@ class SuccessTransferScreen extends StatelessWidget {
                         },
                       ),
                     ),
+                    const Spacer(flex: 2),
                   ],
                 ),
               ),

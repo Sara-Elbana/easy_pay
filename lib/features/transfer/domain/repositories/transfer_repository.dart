@@ -1,8 +1,9 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import '../entities/transfer_card.dart';
 
 abstract class TransferRepository {
-  Future<List<TransferCard>> getCards();
-  Future<bool> executeTransfer({
+  Future<ApiResult<List<TransferCard>>> getCards();
+  Future<ApiResult<bool>> executeTransfer({
     required String fromCardId,
     required String beneficiaryName,
     required String cardNumber,

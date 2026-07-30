@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/core/network/api_service.dart';
 
 abstract class ExchangeRateRemoteDataSource {
-  Future<List<Map<String, dynamic>>> fetchLiveExchangeRates();
+  Future<ApiResult<List<Map<String, dynamic>>>> fetchLiveExchangeRates();
 }
 
 class ExchangeRateRemoteDataSourceImpl implements ExchangeRateRemoteDataSource {
@@ -12,15 +14,22 @@ class ExchangeRateRemoteDataSourceImpl implements ExchangeRateRemoteDataSource {
       : _apiService = apiService;
 
   @override
-  Future<List<Map<String, dynamic>>> fetchLiveExchangeRates() async {
+  Future<ApiResult<List<Map<String, dynamic>>>> fetchLiveExchangeRates() async {
     try {
       final response = await _apiService.get(ApiConstants.exchangeRatesEndpoint);
-      if (response.statusCode == 200 && response.data != null) {
-        return List<Map<String, dynamic>>.from(response.data);
+      if (response.data != null && response.data is List) {
+        final list = List<Map<String, dynamic>>.from(response.data);
+        return ApiSuccess(data: list);
       }
-      throw Exception('Failed to fetch exchange rates');
-    } catch (e) {
-      rethrow;
+      return const ApiFailure(error: 'Failed to fetch exchange rates');
+    } on DioException catch (e) {
+      return ApiFailure(
+        error: e.response?.data['message'] ??
+            e.message ??
+            ApiConstants.unknownError,
+      );
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 }

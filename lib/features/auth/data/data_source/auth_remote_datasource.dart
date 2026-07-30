@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/auth/data/models/requests/reset_password_request.dart';
 import 'package:easy_pay_app/features/auth/data/models/requests/send_otp_request.dart';
@@ -9,12 +10,12 @@ import 'package:easy_pay_app/features/auth/data/models/requests/verify_otp_reque
 import 'package:easy_pay_app/features/auth/data/models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<UserModel> signIn(SignInRequest request);
-  Future<UserModel> signUp(SignUpRequest request);
-  Future<void> sendOtp(SendOtpRequest request);
-  Future<void> verifyOtp(VerifyOtpRequest request);
-  Future<void> resetPassword(ResetPasswordRequest request);
-  Future<void> signOut();
+  Future<ApiResult<UserModel>> signIn(SignInRequest request);
+  Future<ApiResult<UserModel>> signUp(SignUpRequest request);
+  Future<ApiResult<bool>> sendOtp(SendOtpRequest request);
+  Future<ApiResult<bool>> verifyOtp(VerifyOtpRequest request);
+  Future<ApiResult<bool>> resetPassword(ResetPasswordRequest request);
+  Future<ApiResult<bool>> signOut();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -23,89 +24,110 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({required this.apiService});
 
   @override
-  Future<UserModel> signIn(SignInRequest request) async {
+  Future<ApiResult<UserModel>> signIn(SignInRequest request) async {
     try {
       final response = await apiService.post(
         ApiConstants.loginEndpoint,
         data: request.toJson(),
       );
-      return UserModel.fromJson(response.data as Map<String, dynamic>);
-    } catch (e) {
-      throw Exception(_extractErrorMessage(e));
+      if (response.data == null) {
+        return const ApiFailure(error: 'Invalid response format');
+      }
+      final model = UserModel.fromJson(response.data as Map<String, dynamic>);
+      return ApiSuccess(data: model);
+    } on DioException catch (e) {
+      return ApiFailure(error: _extractErrorMessage(e));
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 
   @override
-  Future<UserModel> signUp(SignUpRequest request) async {
+  Future<ApiResult<UserModel>> signUp(SignUpRequest request) async {
     try {
       final response = await apiService.post(
         ApiConstants.registerEndpoint,
         data: request.toJson(),
       );
-      return UserModel.fromJson(response.data as Map<String, dynamic>);
-    } catch (e) {
-      throw Exception(_extractErrorMessage(e));
+      if (response.data == null) {
+        return const ApiFailure(error: 'Invalid response format');
+      }
+      final model = UserModel.fromJson(response.data as Map<String, dynamic>);
+      return ApiSuccess(data: model);
+    } on DioException catch (e) {
+      return ApiFailure(error: _extractErrorMessage(e));
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 
   @override
-  Future<void> sendOtp(SendOtpRequest request) async {
+  Future<ApiResult<bool>> sendOtp(SendOtpRequest request) async {
     try {
       await apiService.post(
         ApiConstants.forgotPasswordSendEndpoint,
         data: request.toJson(),
       );
-    } catch (e) {
-      throw Exception(_extractErrorMessage(e));
+      return const ApiSuccess(data: true);
+    } on DioException catch (e) {
+      return ApiFailure(error: _extractErrorMessage(e));
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 
   @override
-  Future<void> verifyOtp(VerifyOtpRequest request) async {
+  Future<ApiResult<bool>> verifyOtp(VerifyOtpRequest request) async {
     try {
       await apiService.post(
         ApiConstants.forgotPasswordVerifyEndpoint,
         data: request.toJson(),
       );
-    } catch (e) {
-      throw Exception(_extractErrorMessage(e));
+      return const ApiSuccess(data: true);
+    } on DioException catch (e) {
+      return ApiFailure(error: _extractErrorMessage(e));
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 
   @override
-  Future<void> resetPassword(ResetPasswordRequest request) async {
+  Future<ApiResult<bool>> resetPassword(ResetPasswordRequest request) async {
     try {
       await apiService.post(
         ApiConstants.forgotPasswordResetEndpoint,
         data: request.toJson(),
       );
-    } catch (e) {
-      throw Exception(_extractErrorMessage(e));
+      return const ApiSuccess(data: true);
+    } on DioException catch (e) {
+      return ApiFailure(error: _extractErrorMessage(e));
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 
   @override
-  Future<void> signOut() async {
+  Future<ApiResult<bool>> signOut() async {
     try {
       await apiService.post(ApiConstants.logoutEndpoint);
-    } catch (e) {
-      throw Exception(_extractErrorMessage(e));
+      return const ApiSuccess(data: true);
+    } on DioException catch (e) {
+      return ApiFailure(error: _extractErrorMessage(e));
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 
-  String _extractErrorMessage(dynamic e) {
-    if (e is DioException) {
-      if (e.response?.data != null && e.response?.data is Map) {
-        final data = e.response!.data as Map<String, dynamic>;
-        if (data.containsKey('message') && data['message'] != null) {
-          return data['message'].toString();
-        }
-        if (data.containsKey('error') && data['error'] != null) {
-          return data['error'].toString();
-        }
+  String _extractErrorMessage(DioException e) {
+    if (e.response?.data != null && e.response?.data is Map) {
+      final data = e.response!.data as Map<String, dynamic>;
+      if (data.containsKey('message') && data['message'] != null) {
+        return data['message'].toString();
       }
-      return e.message ?? ApiConstants.unknownError;
+      if (data.containsKey('error') && data['error'] != null) {
+        return data['error'].toString();
+      }
     }
-    return e.toString();
+    return e.message ?? ApiConstants.unknownError;
   }
 }

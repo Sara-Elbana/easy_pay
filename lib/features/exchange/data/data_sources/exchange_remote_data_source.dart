@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import '../../../../core/constants/api_constants.dart';
+import '../../../../core/network/api_result.dart';
 import '../../../../core/network/api_service.dart';
 
 abstract class ExchangeRemoteDataSource {
-  Future<Map<String, dynamic>> convertCurrency({
+  Future<ApiResult<Map<String, dynamic>>> convertCurrency({
     required String from,
     required String to,
     required double amount,
@@ -16,7 +18,7 @@ class ExchangeRemoteDataSourceImpl implements ExchangeRemoteDataSource {
       : _apiService = apiService;
 
   @override
-  Future<Map<String, dynamic>> convertCurrency({
+  Future<ApiResult<Map<String, dynamic>>> convertCurrency({
     required String from,
     required String to,
     required double amount,
@@ -31,18 +33,24 @@ class ExchangeRemoteDataSourceImpl implements ExchangeRemoteDataSource {
         },
       );
 
-      if (response.statusCode == 200 && response.data != null) {
+      if (response.data != null && response.data is Map) {
         final double convertedAmount =
             (response.data['converted_amount'] as num).toDouble();
         final double reqAmount = (response.data['amount'] as num).toDouble();
-        return {
+        return ApiSuccess(data: {
           'rate': convertedAmount / reqAmount,
           'result': convertedAmount,
-        };
+        });
       }
-      throw Exception('Failed to convert currency');
-    } catch (e) {
-      rethrow;
+      return const ApiFailure(error: 'Failed to convert currency');
+    } on DioException catch (e) {
+      return ApiFailure(
+        error: e.response?.data['message'] ??
+            e.message ??
+            ApiConstants.unknownError,
+      );
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 }

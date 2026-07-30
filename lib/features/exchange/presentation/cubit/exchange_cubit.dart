@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/repositories/exchange_repository.dart';
 import 'exchange_state.dart';
@@ -10,15 +11,15 @@ class ExchangeCubit extends Cubit<ExchangeState> {
   }
 
   Future<void> updateConversionRate() async {
-    try {
-      final data = await repository.convertCurrency(
-        from: state.fromCurrency,
-        to: state.toCurrency,
-        amount: 1.0,
-      );
-      final rate = (data['rate'] as num).toDouble();
+    final result = await repository.convertCurrency(
+      from: state.fromCurrency,
+      to: state.toCurrency,
+      amount: 1.0,
+    );
+    if (result is ApiSuccess<Map<String, dynamic>>) {
+      final rate = (result.data['rate'] as num).toDouble();
       emit(state.copyWith(conversionRate: rate));
-    } catch (_) {}
+    }
   }
 
   void changeFromCurrency(String currencyCode) async {
@@ -67,24 +68,24 @@ class ExchangeCubit extends Cubit<ExchangeState> {
 
     emit(state.copyWith(fromAmount: amountStr, isLoading: true));
 
-    try {
-      final resultData = await repository.convertCurrency(
-        from: state.fromCurrency,
-        to: state.toCurrency,
-        amount: amount,
-      );
+    final resultData = await repository.convertCurrency(
+      from: state.fromCurrency,
+      to: state.toCurrency,
+      amount: amount,
+    );
 
-      final result = resultData['result'];
-      final rate = resultData['rate'];
+    if (resultData is ApiSuccess<Map<String, dynamic>>) {
+      final result = resultData.data['result'];
+      final rate = resultData.data['rate'];
 
       emit(state.copyWith(
         toAmount: result != null ? (result as num).toStringAsFixed(2) : '',
         conversionRate: rate != null ? (rate as num).toDouble() : state.conversionRate,
         isLoading: false,
       ));
-    } catch (e) {
+    } else if (resultData is ApiFailure<Map<String, dynamic>>) {
       emit(state.copyWith(
-        errorMessage: e.toString(),
+        errorMessage: resultData.error,
         isLoading: false,
       ));
     }

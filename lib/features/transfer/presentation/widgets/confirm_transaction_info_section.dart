@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
-import 'package:easy_pay_app/features/transfer/presentation/widgets/account_dropdown.dart';
+import 'package:easy_pay_app/core/widgets/account_dropdown.dart';
 import 'package:easy_pay_app/core/widgets/selection_box.dart';
 import 'package:easy_pay_app/core/widgets/custom_selection_dialog.dart';
 import 'package:flutter/material.dart';

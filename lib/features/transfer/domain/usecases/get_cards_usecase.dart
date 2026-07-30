@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import '../entities/transfer_card.dart';
 import '../repositories/transfer_repository.dart';
 
@@ -6,7 +7,7 @@ class GetCardsUseCase {
 
   GetCardsUseCase(this.repository);
 
-  Future<List<TransferCard>> call() async {
+  Future<ApiResult<List<TransferCard>>> call() async {
     return await repository.getCards();
   }
 }

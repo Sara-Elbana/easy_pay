@@ -1,7 +1,7 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class AmountButton extends StatelessWidget {
   final String text;
@@ -29,19 +29,19 @@ class AmountButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: isSelected ? AppColors.primary : Colors.white,
             borderRadius: BorderRadius.circular(context.scaleWidth(15)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(500),
-                offset: const Offset(0, 5),
-                blurRadius: 30,
-                spreadRadius: 0,
-              ),
-            ],
+            border: Border.all(
+              color: isSelected ? AppColors.primary : AppColors.inputBorder,
+              width: 1.5,
+            ),
           ),
           alignment: Alignment.center,
           child: Text(
             text,
-            style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: isSelected ? Colors.white : AppColors.lightGray, fontFamily: 'Poppins'),
+            style: AppTextStyles.bodyLargeSemiBold.copyWith(
+              fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16),
+              color: isSelected ? Colors.white : AppColors.lightGray,
+              fontFamily: 'Poppins',
+            ),
           ),
         ),
       ),

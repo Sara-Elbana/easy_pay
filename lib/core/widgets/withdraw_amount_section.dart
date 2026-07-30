@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
+import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
+import 'package:easy_pay_app/core/widgets/amount_selector_grid.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
+import 'package:easy_pay_app/features/withdraw/presentation/cubit/withdraw_cubit.dart';
+import 'package:easy_pay_app/features/withdraw/presentation/cubit/withdraw_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/withdraw_cubit.dart';
-import '../cubit/withdraw_state.dart';
-import 'amount_selector_grid.dart';
-import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class WithdrawAmountSection extends StatefulWidget {
   const WithdrawAmountSection({super.key});
@@ -60,7 +60,11 @@ class _WithdrawAmountSectionState extends State<WithdrawAmountSection> {
           children: [
             Text(
               'choose_amount'.tr(),
-              style: AppTextStyles.bodyLargeSemiBold.copyWith(fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16), color: AppColors.textDark, fontFamily: 'Poppins'),
+              style: AppTextStyles.bodyLargeSemiBold.copyWith(
+                fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16),
+                color: AppColors.textDark,
+                fontFamily: 'Poppins',
+              ),
             ),
             SizedBox(height: context.scaleHeight(12)),
             if (state.isOtherSelected)

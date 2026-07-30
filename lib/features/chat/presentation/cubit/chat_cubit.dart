@@ -1,3 +1,5 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
+import 'package:easy_pay_app/features/chat/domain/entities/chat_message_entity.dart';
 import 'package:easy_pay_app/features/chat/domain/use_case/send_message_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'chat_state.dart';
@@ -12,16 +14,17 @@ class ChatCubit extends Cubit<ChatState> {
       emit(ChatInitial());
     }
   }
+
   Future<void> sendMessage(String text, {int? notificationId}) async {
     if (text.trim().isEmpty) return;
 
     emit(ChatLoading());
 
-    try {
-      final messageEntity = await sendMessageUseCase(text, notificationId: notificationId);
-      emit(ChatMessageSentSuccess(messageEntity));
-    } catch (e) {
-      emit(ChatError(e.toString()));
+    final result = await sendMessageUseCase(text, notificationId: notificationId);
+    if (result is ApiSuccess<ChatMessageEntity>) {
+      emit(ChatMessageSentSuccess(result.data));
+    } else if (result is ApiFailure<ChatMessageEntity>) {
+      emit(ChatError(result.error));
     }
   }
 }

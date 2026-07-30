@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import '../../domain/entities/beneficiary.dart';
 import '../../domain/repositories/beneficiary_repository.dart';
 import '../../../transfer/data/models/mock_transfer_data.dart';
@@ -7,13 +8,13 @@ class BeneficiaryRepositoryImpl implements BeneficiaryRepository {
   final List<Beneficiary> _mockBeneficiaries = mockBeneficiaries;
 
   @override
-  Future<List<Beneficiary>> getBeneficiaries() async {
+  Future<ApiResult<List<Beneficiary>>> getBeneficiaries() async {
     await Future.delayed(const Duration(milliseconds: 200));
-    return _mockBeneficiaries;
+    return ApiSuccess(data: _mockBeneficiaries);
   }
 
   @override
-  Future<bool> saveBeneficiary(Beneficiary beneficiary) async {
+  Future<ApiResult<bool>> saveBeneficiary(Beneficiary beneficiary) async {
     await Future.delayed(const Duration(milliseconds: 300));
     final exists = _mockBeneficiaries.any((b) => b.cardNumber == beneficiary.cardNumber);
     if (!exists) {
@@ -24,6 +25,6 @@ class BeneficiaryRepositoryImpl implements BeneficiaryRepository {
         _mockBeneficiaries[idx] = beneficiary;
       }
     }
-    return true;
+    return const ApiSuccess(data: true);
   }
 }

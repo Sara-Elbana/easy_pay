@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/transfer_cubit.dart';
 import '../cubit/transfer_state.dart';
-import '../widgets/otp_verification_widget.dart';
+import 'package:easy_pay_app/core/widgets/otp_verification_widget.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class ConfirmScreen extends StatelessWidget {

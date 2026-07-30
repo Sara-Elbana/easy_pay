@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import '../repositories/withdraw_repository.dart';
 
 class ExecuteWithdrawUseCase {
@@ -5,7 +6,7 @@ class ExecuteWithdrawUseCase {
 
   ExecuteWithdrawUseCase(this.repository);
 
-  Future<bool> call({
+  Future<ApiResult<bool>> call({
     required String cardId,
     required String phoneNumber,
     required double amount,

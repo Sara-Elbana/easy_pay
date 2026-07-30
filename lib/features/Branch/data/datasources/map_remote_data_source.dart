@@ -1,12 +1,13 @@
-import 'dart:developer' as developer;
+import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/Branch/data/models/place_details_model.dart';
 import 'package:easy_pay_app/features/Branch/data/models/place_suggestion_model.dart';
 
 abstract class MapRemoteDataSource {
-  Future<List<PlaceSuggestionModel>> getAutocomplete(String query);
-  Future<PlaceDetailsModel> getPlaceDetails(String placeId);
+  Future<ApiResult<List<PlaceSuggestionModel>>> getAutocomplete(String query);
+  Future<ApiResult<PlaceDetailsModel>> getPlaceDetails(String placeId);
 }
 
 class MapRemoteDataSourceImpl implements MapRemoteDataSource {
@@ -16,18 +17,18 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
   MapRemoteDataSourceImpl(this.apiService);
 
   @override
-  Future<List<PlaceSuggestionModel>> getAutocomplete(String query) async {
+  Future<ApiResult<List<PlaceSuggestionModel>>> getAutocomplete(String query) async {
     try {
       final response = await apiService.get(
         ApiConstants.branchesEndpoint,
         queryParameters: query.isNotEmpty ? {'query': query} : null,
       );
 
-      if (response.statusCode == 200 && response.data != null) {
+      if (response.data != null && response.data is List) {
         final List rawData = response.data;
         _cachedBranches = List<Map<String, dynamic>>.from(rawData);
 
-        return _cachedBranches.map((item) {
+        final models = _cachedBranches.map((item) {
           return PlaceSuggestionModel(
             placeId: item['id'].toString(),
             description: item['address'] ?? '',
@@ -35,42 +36,58 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
             secondaryText: item['distance_text'] ?? '',
           );
         }).toList();
+
+        return ApiSuccess(data: models);
       }
-      throw Exception('Failed to load branches');
-    } catch (e) {
-      developer.log("⚠️ Error loading branches: $e");
-      return [];
+      return const ApiFailure(error: 'Failed to load branches');
+    } on DioException catch (e) {
+      return ApiFailure(
+        error: e.response?.data['message'] ??
+            e.message ??
+            ApiConstants.unknownError,
+      );
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 
   @override
-  Future<PlaceDetailsModel> getPlaceDetails(String placeId) async {
+  Future<ApiResult<PlaceDetailsModel>> getPlaceDetails(String placeId) async {
     try {
-      // If cache is empty (e.g. direct load), fetch all branches first
       if (_cachedBranches.isEmpty) {
         await getAutocomplete('');
       }
 
       final branch = _cachedBranches.firstWhere(
         (b) => b['id'].toString() == placeId,
-        orElse: () => throw Exception('Branch not found in cache'),
+        orElse: () => {},
       );
 
-      return PlaceDetailsModel(
-        name: branch['name'] ?? '',
-        latitude: double.parse(branch['latitude'].toString()),
-        longitude: double.parse(branch['longitude'].toString()),
-        address: branch['address'] ?? '',
-      );
-    } catch (e) {
-      developer.log("⚠️ Error getting place details: $e");
-      // Fallback
-      return PlaceDetailsModel(
+      if (branch.isNotEmpty) {
+        final model = PlaceDetailsModel(
+          name: branch['name'] ?? '',
+          latitude: double.tryParse(branch['latitude'].toString()) ?? 30.0444,
+          longitude: double.tryParse(branch['longitude'].toString()) ?? 31.2357,
+          address: branch['address'] ?? '',
+        );
+        return ApiSuccess(data: model);
+      }
+
+      final fallbackModel = PlaceDetailsModel(
         name: 'Branch Details',
         latitude: 30.0444,
         longitude: 31.2357,
         address: 'Unknown Address',
       );
+      return ApiSuccess(data: fallbackModel);
+    } on DioException catch (e) {
+      return ApiFailure(
+        error: e.response?.data['message'] ??
+            e.message ??
+            ApiConstants.unknownError,
+      );
+    } catch (_) {
+      return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
 }

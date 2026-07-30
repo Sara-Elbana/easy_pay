@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/services/biometric_service.dart';
 import '../../../transfer/data/models/mock_transfer_data.dart';
@@ -93,21 +94,21 @@ class WithdrawCubit extends Cubit<WithdrawState> {
             ? (double.tryParse(state.customAmount.trim()) ?? 0.0)
             : (state.selectedAmount?.toDouble() ?? 0.0);
 
-        final executeSuccess = await executeWithdrawUseCase(
+        final executeResult = await executeWithdrawUseCase(
           cardId: state.selectedCard!.id,
           phoneNumber: state.phoneNumber.trim(),
           amount: amount,
         );
 
-        if (executeSuccess) {
+        if (executeResult is ApiSuccess<bool>) {
           emit(state.copyWith(
             isSuccess: true,
             isLoading: false,
           ));
-        } else {
+        } else if (executeResult is ApiFailure<bool>) {
           emit(state.copyWith(
             isLoading: false,
-            errorMessage: () => 'Withdrawal execution failed',
+            errorMessage: () => executeResult.error,
           ));
         }
       } else {

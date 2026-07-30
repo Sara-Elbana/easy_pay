@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/auto__place_details_request.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/auto_complete_request.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/place_details.dart';
@@ -9,8 +10,8 @@ class GetAutocompleteUseCase {
 
   GetAutocompleteUseCase(this.repository);
 
-  Future<List<PlaceSuggestion>> call({required AutoCompleteRequest request}) {
-    return repository.getAutocomplete(request);
+  Future<ApiResult<List<PlaceSuggestion>>> call({required AutoCompleteRequest request}) async {
+    return await repository.getAutocomplete(request);
   }
 }
 
@@ -19,7 +20,7 @@ class GetPlaceDetailsUseCase {
 
   GetPlaceDetailsUseCase(this.repository);
 
-  Future<PlaceDetails> call(AutoPlaceDetailsRequest request) {
-    return repository.getPlaceDetails(request);
+  Future<ApiResult<PlaceDetails>> call(AutoPlaceDetailsRequest request) async {
+    return await repository.getPlaceDetails(request);
   }
 }

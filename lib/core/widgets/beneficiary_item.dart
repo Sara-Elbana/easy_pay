@@ -1,8 +1,8 @@
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/widgets/custom_avatar.dart';
+import 'package:easy_pay_app/features/beneficiary/domain/entities/beneficiary.dart';
 import 'package:flutter/material.dart';
-import '../../../beneficiary/domain/entities/beneficiary.dart';
 
 class BeneficiaryItem extends StatelessWidget {
   final Beneficiary? beneficiary;

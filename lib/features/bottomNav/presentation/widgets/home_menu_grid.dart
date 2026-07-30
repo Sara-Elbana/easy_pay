@@ -41,7 +41,9 @@ class HomeMenuGrid extends StatelessWidget {
         GridMenuItem(
           iconPath: AppAssets.prepaidIcon,
           title: "mobile_prepaid".tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutesName.mobilePrepaidScreen);
+          },
         ),
         GridMenuItem(
           iconPath: AppAssets.payTheBillIcon,

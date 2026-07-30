@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
@@ -50,8 +49,8 @@ class MessageScreen extends StatelessWidget {
                     return MessageCard(
                       iconAsset: notificationDetails['icon'],
                       iconBackgroundColor: notificationDetails['color'],
-                      title: notification.senderName ?? 'notification'.tr(),
-                      subtitle: notification.message ?? '',
+                      title: notification.senderName ,
+                      subtitle: notification.message,
                       date: notificationDetails['date'],
                       onTap: () {
                         Navigator.pushNamed(

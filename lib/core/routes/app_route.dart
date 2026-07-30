@@ -49,6 +49,9 @@ import 'package:easy_pay_app/features/withdraw/presentation/screens/withdraw_suc
 import 'package:easy_pay_app/features/Branch/presentation/cubit/map_cubit.dart';
 import 'package:easy_pay_app/features/Branch/presentation/screens/map_search_screen.dart';
 import 'package:easy_pay_app/features/transaction_report/presentation/screens/transaction_report_screen.dart';
+import 'package:easy_pay_app/features/mobile_prepaid/presentation/screens/mobile_prepaid_screen.dart';
+import 'package:easy_pay_app/features/mobile_prepaid/presentation/screens/mobile_prepaid_confirm_screen.dart';
+import 'package:easy_pay_app/features/mobile_prepaid/presentation/screens/mobile_prepaid_success_screen.dart';
 
 class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -148,6 +151,16 @@ class AppRoutes {
           child: const MapSearchScreen(),
         ),
     AppRoutesName.payTheBillScreen: (_) => const PayTheBillScreen(),
+    AppRoutesName.mobilePrepaidScreen: (_) => const MobilePrepaidScreen(),
+    AppRoutesName.mobilePrepaidConfirmScreen: (context) {
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      return MobilePrepaidConfirmScreen(
+        fromCard: args?['fromCard'] ?? '**** **** 6789',
+        toPhone: args?['toPhone'] ?? '+8564757899',
+        amount: args?['amount'] ?? '\$1000',
+      );
+    },
+    AppRoutesName.mobilePrepaidSuccessScreen: (_) => const MobilePrepaidSuccessScreen(),
     AppRoutesName.interestRateScreen: (_) => BlocProvider(
           create: (_) => getIt<InterestCubit>()..getInterestRates(),
           child: const InterestRateScreen(),

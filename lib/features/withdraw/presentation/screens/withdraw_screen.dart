@@ -10,9 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/withdraw_cubit.dart';
 import '../cubit/withdraw_state.dart';
 import '../widgets/withdraw_illustration.dart';
-import '../widgets/withdraw_card_dropdown.dart';
+import 'package:easy_pay_app/core/widgets/withdraw_card_dropdown.dart';
 import '../widgets/withdraw_phone_field.dart';
-import '../widgets/withdraw_amount_section.dart';
+import 'package:easy_pay_app/core/widgets/withdraw_amount_section.dart';
 import '../widgets/withdraw_verify_button.dart';
 
 class WithdrawScreen extends StatelessWidget {

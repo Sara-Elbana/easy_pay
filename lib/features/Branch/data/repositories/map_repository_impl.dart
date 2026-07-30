@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/features/Branch/data/datasources/map_mock_data.dart';
 import 'package:easy_pay_app/features/Branch/data/datasources/map_remote_data_source.dart';
+import 'package:easy_pay_app/features/Branch/data/models/place_details_model.dart';
+import 'package:easy_pay_app/features/Branch/data/models/place_suggestion_model.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/auto__place_details_request.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/auto_complete_request.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/place_details.dart';
@@ -13,22 +16,24 @@ class MapRepositoryImpl implements MapRepository {
   MapRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<PlaceSuggestion>> getAutocomplete(
+  Future<ApiResult<List<PlaceSuggestion>>> getAutocomplete(
       AutoCompleteRequest request) async {
-    try {
-      return await remoteDataSource.getAutocomplete(request.query);
-    } catch (_) {
-      return MapMockData.getMockSuggestions(request.query);
+    final result = await remoteDataSource.getAutocomplete(request.query);
+    if (result is ApiSuccess<List<PlaceSuggestionModel>>) {
+      return ApiSuccess(data: result.data, message: result.message);
     }
+    final mockData = MapMockData.getMockSuggestions(request.query);
+    return ApiSuccess(data: mockData);
   }
 
   @override
-  Future<PlaceDetails> getPlaceDetails(
+  Future<ApiResult<PlaceDetails>> getPlaceDetails(
       AutoPlaceDetailsRequest request) async {
-    try {
-      return await remoteDataSource.getPlaceDetails(request.placeId);
-    } catch (_) {
-      return MapMockData.getMockPlaceDetails(request.placeId);
+    final result = await remoteDataSource.getPlaceDetails(request.placeId);
+    if (result is ApiSuccess<PlaceDetailsModel>) {
+      return ApiSuccess(data: result.data, message: result.message);
     }
+    final mockData = MapMockData.getMockPlaceDetails(request.placeId);
+    return ApiSuccess(data: mockData);
   }
 }

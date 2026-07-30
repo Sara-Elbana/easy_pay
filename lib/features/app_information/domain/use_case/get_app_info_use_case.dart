@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/features/app_information/domain/entities/app_info_entity.dart';
 import 'package:easy_pay_app/features/app_information/domain/repository_interface/app_info_repository.dart';
 
@@ -6,7 +7,7 @@ class GetAppInfoUseCase {
 
   GetAppInfoUseCase(this.repository);
 
-  Future<AppInfoEntity> call() async {
+  Future<ApiResult<AppInfoEntity>> call() async {
     return await repository.getAppInfo();
   }
 }

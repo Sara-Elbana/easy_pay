@@ -2,6 +2,7 @@ import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:easy_pay_app/core/core.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/widgets/search_card_widget.dart';
+import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -37,7 +38,9 @@ class PayTheBillScreen extends StatelessWidget {
             title: "Mobile bill",
             subtitle: "Pay mobile bill this month",
             imageAsset: AppAssets.mobileBillImage,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutesName.mobilePrepaidScreen);
+            },
           ),
           SearchCardWidget(
             title: "Internet bill",

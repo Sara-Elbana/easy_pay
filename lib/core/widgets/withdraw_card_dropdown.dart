@@ -1,8 +1,8 @@
+import 'package:easy_pay_app/core/widgets/account_dropdown.dart';
+import 'package:easy_pay_app/features/withdraw/presentation/cubit/withdraw_cubit.dart';
+import 'package:easy_pay_app/features/withdraw/presentation/cubit/withdraw_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_pay_app/core/widgets/account_dropdown.dart';
-import '../cubit/withdraw_cubit.dart';
-import '../cubit/withdraw_state.dart';
 
 class WithdrawCardDropdown extends StatelessWidget {
   const WithdrawCardDropdown({super.key});

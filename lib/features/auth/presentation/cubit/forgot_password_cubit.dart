@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/features/auth/data/models/requests/reset_password_request.dart';
 import 'package:easy_pay_app/features/auth/data/models/requests/send_otp_request.dart';
 import 'package:easy_pay_app/features/auth/data/models/requests/verify_otp_request.dart';
@@ -28,57 +29,63 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
   Future<void> sendOtp(SendOtpRequest request) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
-    try {
-      if (sendOtpUseCase != null) {
-        await sendOtpUseCase!(request);
+    if (sendOtpUseCase != null) {
+      final result = await sendOtpUseCase!(request);
+      if (result is ApiSuccess<bool>) {
+        emit(state.copyWith(
+          isLoading: false,
+          isCodeSent: true,
+          phoneNumber: request.phoneNumber,
+        ));
+      } else if (result is ApiFailure<bool>) {
+        emit(state.copyWith(
+          isLoading: false,
+          errorMessage: result.error,
+        ));
       }
-      emit(state.copyWith(
-        isLoading: false,
-        isCodeSent: true,
-        phoneNumber: request.phoneNumber,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        isLoading: false,
-        errorMessage: e.toString(),
-      ));
+    } else {
+      emit(state.copyWith(isLoading: false));
     }
   }
 
   Future<void> verifyOtp(VerifyOtpRequest request) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
-    try {
-      if (verifyOtpUseCase != null) {
-        await verifyOtpUseCase!(request);
+    if (verifyOtpUseCase != null) {
+      final result = await verifyOtpUseCase!(request);
+      if (result is ApiSuccess<bool>) {
+        emit(state.copyWith(
+          isLoading: false,
+          isCodeVerified: true,
+          verificationCode: request.code,
+        ));
+      } else if (result is ApiFailure<bool>) {
+        emit(state.copyWith(
+          isLoading: false,
+          errorMessage: result.error,
+        ));
       }
-      emit(state.copyWith(
-        isLoading: false,
-        isCodeVerified: true,
-        verificationCode: request.code,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        isLoading: false,
-        errorMessage: e.toString(),
-      ));
+    } else {
+      emit(state.copyWith(isLoading: false));
     }
   }
 
   Future<void> resetPassword(ResetPasswordRequest request) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
-    try {
-      if (resetPasswordUseCase != null) {
-        await resetPasswordUseCase!(request);
+    if (resetPasswordUseCase != null) {
+      final result = await resetPasswordUseCase!(request);
+      if (result is ApiSuccess<bool>) {
+        emit(state.copyWith(
+          isLoading: false,
+          isPasswordReset: true,
+        ));
+      } else if (result is ApiFailure<bool>) {
+        emit(state.copyWith(
+          isLoading: false,
+          errorMessage: result.error,
+        ));
       }
-      emit(state.copyWith(
-        isLoading: false,
-        isPasswordReset: true,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        isLoading: false,
-        errorMessage: e.toString(),
-      ));
+    } else {
+      emit(state.copyWith(isLoading: false));
     }
   }
 

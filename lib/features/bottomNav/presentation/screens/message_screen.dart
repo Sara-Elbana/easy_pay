@@ -49,7 +49,7 @@ class MessageScreen extends StatelessWidget {
                     return MessageCard(
                       iconAsset: notificationDetails['icon'],
                       iconBackgroundColor: notificationDetails['color'],
-                      title: notification.senderName ,
+                      title: notification.senderName.isEmpty ? 'notification'.tr() : notification.senderName,
                       subtitle: notification.message,
                       date: notificationDetails['date'],
                       onTap: () {

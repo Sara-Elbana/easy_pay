@@ -32,4 +32,7 @@ class AppRoutesName {
   static const String profileScreen = "profileScreen";
   static const String transactionReportScreen = "transactionReportScreen";
   static const String messageScreen = "messageScreen";
+  static const String mobilePrepaidScreen = "mobilePrepaidScreen";
+  static const String mobilePrepaidConfirmScreen = "mobilePrepaidConfirmScreen";
+  static const String mobilePrepaidSuccessScreen = "mobilePrepaidSuccessScreen";
 }

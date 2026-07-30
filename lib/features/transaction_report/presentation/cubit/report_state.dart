@@ -29,3 +29,5 @@ class ReportError extends ReportState {
   @override
   List<Object?> get props => [message];
 }
+
+class BaseState<T> {}

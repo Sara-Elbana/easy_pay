@@ -1,5 +1,7 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/features/auth/data/models/requests/sign_in_request.dart';
 import 'package:easy_pay_app/features/auth/data/models/requests/sign_up_request.dart';
+import 'package:easy_pay_app/features/auth/domain/entities/user_entity.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/biometric_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_in_usecase.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_out_usecase.dart';
@@ -22,11 +24,11 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signIn(SignInRequest request) async {
     emit(const AuthLoading());
-    try {
-      final user = await signInUseCase(request);
-      emit(AuthSuccess(user));
-    } catch (e) {
-      emit(AuthFailure(e.toString()));
+    final result = await signInUseCase(request);
+    if (result is ApiSuccess<UserEntity>) {
+      emit(AuthSuccess(result.data));
+    } else if (result is ApiFailure<UserEntity>) {
+      emit(AuthFailure(result.error));
     }
   }
 
@@ -46,21 +48,21 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signUp(SignUpRequest request) async {
     emit(const AuthLoading());
-    try {
-      final user = await signUpUseCase(request);
-      emit(AuthSuccess(user));
-    } catch (e) {
-      emit(AuthFailure(e.toString()));
+    final result = await signUpUseCase(request);
+    if (result is ApiSuccess<UserEntity>) {
+      emit(AuthSuccess(result.data));
+    } else if (result is ApiFailure<UserEntity>) {
+      emit(AuthFailure(result.error));
     }
   }
 
   Future<void> signOut() async {
     emit(const AuthLoading());
-    try {
-      await signOutUseCase();
+    final result = await signOutUseCase();
+    if (result is ApiSuccess<bool>) {
       emit(const SignOutSuccess());
-    } catch (e) {
-      emit(AuthFailure(e.toString()));
+    } else if (result is ApiFailure<bool>) {
+      emit(AuthFailure(result.error));
     }
   }
 }

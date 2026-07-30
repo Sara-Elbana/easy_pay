@@ -1,3 +1,5 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/use_cases/add_card_use_case.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/use_cases/delete_card_use_case.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/use_cases/get_cardss_use_case.dart';
@@ -16,39 +18,35 @@ class CardCubit extends Cubit<CardState> {
     emit(CardLoading());
     final result = await getCardssUseCase();
     if (isClosed) return;
-    result.fold(
-      (failure) => emit(CardError(failure.message)),
-      (cards) => emit(CardSuccess(cards)),
-    );
+    if (result is ApiSuccess<List<CardEntity>>) {
+      emit(CardSuccess(result.data));
+    } else if (result is ApiFailure<List<CardEntity>>) {
+      emit(CardError(result.error));
+    }
   }
 
   Future<bool> addNewCard(Map<String, dynamic> cardData) async {
     emit(CardLoading());
     final result = await addCardUseCase(cardData);
     if (isClosed) return false;
-    return result.fold(
-      (failure) {
-        if (!isClosed) emit(CardError(failure.message));
-        return false;
-      },
-      (newCard) async {
-        await loadCards();
-        return true;
-      },
-    );
+    if (result is ApiSuccess<CardEntity>) {
+      await loadCards();
+      return true;
+    } else if (result is ApiFailure<CardEntity>) {
+      if (!isClosed) emit(CardError(result.error));
+      return false;
+    }
+    return false;
   }
 
   Future<void> removeCard(int cardId) async {
     emit(CardLoading());
     final result = await deleteCardUseCase(cardId);
     if (isClosed) return;
-    result.fold(
-      (failure) {
-        if (!isClosed) emit(CardError(failure.message));
-      },
-      (_) async {
-        await loadCards();
-      },
-    );
+    if (result is ApiSuccess<bool>) {
+      await loadCards();
+    } else if (result is ApiFailure<bool>) {
+      if (!isClosed) emit(CardError(result.error));
+    }
   }
 }

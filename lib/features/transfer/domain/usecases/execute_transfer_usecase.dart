@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import '../repositories/transfer_repository.dart';
 
 class ExecuteTransferUseCase {
@@ -5,7 +6,7 @@ class ExecuteTransferUseCase {
 
   ExecuteTransferUseCase(this.repository);
 
-  Future<bool> call({
+  Future<ApiResult<bool>> call({
     required String fromCardId,
     required String beneficiaryName,
     required String cardNumber,

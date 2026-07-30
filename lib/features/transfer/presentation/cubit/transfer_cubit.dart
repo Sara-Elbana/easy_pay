@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/core/services/biometric_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../beneficiary/domain/entities/beneficiary.dart';
@@ -24,15 +25,19 @@ class TransferCubit extends Cubit<TransferState> {
 
   Future<void> loadTransferData() async {
     emit(state.copyWith(isLoading: true, errorMessage: () => null));
-    try {
-      final cards = await getCardsUseCase();
-      final beneficiaries = await getBeneficiariesUseCase();
+    final cardsResult = await getCardsUseCase();
+    final beneficiariesResult = await getBeneficiariesUseCase();
+
+    final cards = cardsResult is ApiSuccess<List<TransferCard>> ? cardsResult.data : <TransferCard>[];
+    final beneficiaries = beneficiariesResult is ApiSuccess<List<Beneficiary>> ? beneficiariesResult.data : <Beneficiary>[];
+
+    if (cardsResult is ApiSuccess || beneficiariesResult is ApiSuccess) {
       emit(state.copyWith(
         cards: cards,
         beneficiaries: beneficiaries,
         isLoading: false,
       ));
-    } catch (e) {
+    } else {
       emit(state.copyWith(
         isLoading: false,
         errorMessage: () => 'Failed to load transfer data',
@@ -180,39 +185,33 @@ class TransferCubit extends Cubit<TransferState> {
     if (!state.isFormValid) return;
 
     emit(state.copyWith(isLoading: true, errorMessage: () => null));
-    try {
-      final amt =
-          double.tryParse(state.amount.replaceAll(RegExp(r'[^0-9.]'), '')) ??
-              0.0;
-      final result = await executeTransferUseCase(
-        fromCardId: state.selectedCard!.id,
-        beneficiaryName: state.name,
-        cardNumber: state.cardNumber,
-        amount: amt,
-        content: state.content,
-        saveBeneficiary: state.saveBeneficiary,
-        type: state.selectedTransactionType,
-        bank: state.selectedBank.isNotEmpty ? state.selectedBank : null,
-        branch: state.selectedBranch.isNotEmpty ? state.selectedBranch : null,
-      );
+    final amt =
+        double.tryParse(state.amount.replaceAll(RegExp(r'[^0-9.]'), '')) ??
+            0.0;
+    final result = await executeTransferUseCase(
+      fromCardId: state.selectedCard!.id,
+      beneficiaryName: state.name,
+      cardNumber: state.cardNumber,
+      amount: amt,
+      content: state.content,
+      saveBeneficiary: state.saveBeneficiary,
+      type: state.selectedTransactionType,
+      bank: state.selectedBank.isNotEmpty ? state.selectedBank : null,
+      branch: state.selectedBranch.isNotEmpty ? state.selectedBranch : null,
+    );
 
-      if (result) {
-        final beneficiaries = await getBeneficiariesUseCase();
-        emit(state.copyWith(
-          beneficiaries: beneficiaries,
-          isSuccess: true,
-          isLoading: false,
-        ));
-      } else {
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: () => 'Transfer failed. Please check details.',
-        ));
-      }
-    } catch (e) {
+    if (result is ApiSuccess<bool>) {
+      final beneficiariesResult = await getBeneficiariesUseCase();
+      final beneficiaries = beneficiariesResult is ApiSuccess<List<Beneficiary>> ? beneficiariesResult.data : state.beneficiaries;
+      emit(state.copyWith(
+        beneficiaries: beneficiaries,
+        isSuccess: true,
+        isLoading: false,
+      ));
+    } else if (result is ApiFailure<bool>) {
       emit(state.copyWith(
         isLoading: false,
-        errorMessage: () => 'An error occurred during transfer.',
+        errorMessage: () => result.error,
       ));
     }
   }

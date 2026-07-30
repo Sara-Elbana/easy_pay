@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
-import 'package:flutter/material.dart';
-import '../../domain/entities/transfer_card.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/features/transfer/domain/entities/transfer_card.dart';
+import 'package:flutter/material.dart';
 
 class AccountDropdown extends StatelessWidget {
   final List<TransferCard> cards;

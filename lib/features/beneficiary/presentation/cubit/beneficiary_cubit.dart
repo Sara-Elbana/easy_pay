@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/beneficiary.dart';
 import '../../domain/usecases/get_beneficiaries_usecase.dart';
@@ -17,16 +18,16 @@ class BeneficiaryCubit extends Cubit<BeneficiaryState> {
 
   Future<void> loadBeneficiaries() async {
     emit(state.copyWith(isLoading: true, errorMessage: () => null, isSuccess: false));
-    try {
-      final list = await getBeneficiariesUseCase();
+    final result = await getBeneficiariesUseCase();
+    if (result is ApiSuccess<List<Beneficiary>>) {
       emit(state.copyWith(
-        beneficiaries: list,
+        beneficiaries: result.data,
         isLoading: false,
       ));
-    } catch (e) {
+    } else if (result is ApiFailure<List<Beneficiary>>) {
       emit(state.copyWith(
         isLoading: false,
-        errorMessage: () => 'Failed to load beneficiaries',
+        errorMessage: () => result.error,
       ));
     }
   }
@@ -105,36 +106,31 @@ class BeneficiaryCubit extends Cubit<BeneficiaryState> {
     if (!state.isFormValid) return;
 
     emit(state.copyWith(isLoading: true, errorMessage: () => null));
-    try {
-      final id = state.editingBeneficiaryId ?? DateTime.now().millisecondsSinceEpoch.toString();
-      final beneficiary = Beneficiary(
-        id: id,
-        name: state.name,
-        cardNumber: state.cardNumber,
-        type: state.selectedType,
-        avatarUrl: state.avatarUrl ?? 'https://i.pravatar.cc/150?img=${id.hashCode % 70 + 1}',
-        bank: state.selectedType == 2 ? state.selectedBank : null,
-        branch: state.selectedType == 2 ? state.selectedBranch : null,
-      );
 
-      final success = await saveBeneficiaryUseCase(beneficiary);
-      if (success) {
-        final list = await getBeneficiariesUseCase();
-        emit(state.copyWith(
-          beneficiaries: list,
-          isSuccess: true,
-          isLoading: false,
-        ));
-      } else {
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: () => 'Failed to save beneficiary',
-        ));
-      }
-    } catch (e) {
+    final id = state.editingBeneficiaryId ?? DateTime.now().millisecondsSinceEpoch.toString();
+    final beneficiary = Beneficiary(
+      id: id,
+      name: state.name,
+      cardNumber: state.cardNumber,
+      type: state.selectedType,
+      avatarUrl: state.avatarUrl ?? 'https://i.pravatar.cc/150?img=${id.hashCode % 70 + 1}',
+      bank: state.selectedType == 2 ? state.selectedBank : null,
+      branch: state.selectedType == 2 ? state.selectedBranch : null,
+    );
+
+    final saveResult = await saveBeneficiaryUseCase(beneficiary);
+    if (saveResult is ApiSuccess<bool>) {
+      final listResult = await getBeneficiariesUseCase();
+      final list = listResult is ApiSuccess<List<Beneficiary>> ? listResult.data : state.beneficiaries;
+      emit(state.copyWith(
+        beneficiaries: list,
+        isSuccess: true,
+        isLoading: false,
+      ));
+    } else if (saveResult is ApiFailure<bool>) {
       emit(state.copyWith(
         isLoading: false,
-        errorMessage: () => 'An error occurred',
+        errorMessage: () => saveResult.error,
       ));
     }
   }

@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import '../../../beneficiary/domain/entities/beneficiary.dart';
 import '../../domain/entities/transfer_card.dart';
 import '../../domain/repositories/transfer_repository.dart';
@@ -9,14 +10,14 @@ class TransferRepositoryImpl implements TransferRepository {
   final List<Beneficiary> _mockBeneficiaries = mockBeneficiaries;
 
   @override
-  Future<List<TransferCard>> getCards() async {
+  Future<ApiResult<List<TransferCard>>> getCards() async {
     // Simulate API network delay
     await Future.delayed(const Duration(milliseconds: 300));
-    return _mockCards;
+    return ApiSuccess(data: _mockCards);
   }
 
   @override
-  Future<bool> executeTransfer({
+  Future<ApiResult<bool>> executeTransfer({
     required String fromCardId,
     required String beneficiaryName,
     required String cardNumber,
@@ -43,6 +44,6 @@ class TransferRepositoryImpl implements TransferRepository {
         );
       }
     }
-    return true;
+    return const ApiSuccess(data: true);
   }
 }

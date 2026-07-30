@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/network/api_result.dart';
 import '../entities/beneficiary.dart';
 import '../repositories/beneficiary_repository.dart';
 
@@ -6,7 +7,7 @@ class SaveBeneficiaryUseCase {
 
   SaveBeneficiaryUseCase(this.repository);
 
-  Future<bool> call(Beneficiary beneficiary) async {
+  Future<ApiResult<bool>> call(Beneficiary beneficiary) async {
     return await repository.saveBeneficiary(beneficiary);
   }
 }

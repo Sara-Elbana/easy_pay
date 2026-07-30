@@ -1,4 +1,5 @@
 import 'package:easy_pay_app/core/network/api_result.dart';
+import 'package:easy_pay_app/features/beneficiary/data/models/requests/save_beneficiary_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/beneficiary.dart';
 import '../../domain/usecases/get_beneficiaries_usecase.dart';
@@ -108,7 +109,7 @@ class BeneficiaryCubit extends Cubit<BeneficiaryState> {
     emit(state.copyWith(isLoading: true, errorMessage: () => null));
 
     final id = state.editingBeneficiaryId ?? DateTime.now().millisecondsSinceEpoch.toString();
-    final beneficiary = Beneficiary(
+    final request = SaveBeneficiaryRequest(
       id: id,
       name: state.name,
       cardNumber: state.cardNumber,
@@ -118,7 +119,7 @@ class BeneficiaryCubit extends Cubit<BeneficiaryState> {
       branch: state.selectedType == 2 ? state.selectedBranch : null,
     );
 
-    final saveResult = await saveBeneficiaryUseCase(beneficiary);
+    final saveResult = await saveBeneficiaryUseCase(request);
     if (saveResult is ApiSuccess<bool>) {
       final listResult = await getBeneficiariesUseCase();
       final list = listResult is ApiSuccess<List<Beneficiary>> ? listResult.data : state.beneficiaries;

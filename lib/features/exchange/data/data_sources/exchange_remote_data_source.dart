@@ -2,13 +2,10 @@ import 'package:dio/dio.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_result.dart';
 import '../../../../core/network/api_service.dart';
+import '../models/requests/convert_currency_request.dart';
 
 abstract class ExchangeRemoteDataSource {
-  Future<ApiResult<Map<String, dynamic>>> convertCurrency({
-    required String from,
-    required String to,
-    required double amount,
-  });
+  Future<ApiResult<Map<String, dynamic>>> convertCurrency(ConvertCurrencyRequest request);
 }
 
 class ExchangeRemoteDataSourceImpl implements ExchangeRemoteDataSource {
@@ -18,19 +15,11 @@ class ExchangeRemoteDataSourceImpl implements ExchangeRemoteDataSource {
       : _apiService = apiService;
 
   @override
-  Future<ApiResult<Map<String, dynamic>>> convertCurrency({
-    required String from,
-    required String to,
-    required double amount,
-  }) async {
+  Future<ApiResult<Map<String, dynamic>>> convertCurrency(ConvertCurrencyRequest request) async {
     try {
       final response = await _apiService.post(
         ApiConstants.convertCurrencyEndpoint,
-        data: {
-          'from_currency': from,
-          'to_currency': to,
-          'amount': amount,
-        },
+        data: request.toJson(),
       );
 
       if (response.data != null && response.data is Map) {

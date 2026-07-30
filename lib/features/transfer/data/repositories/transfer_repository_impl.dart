@@ -1,4 +1,5 @@
 import 'package:easy_pay_app/core/network/api_result.dart';
+import 'package:easy_pay_app/features/transfer/data/models/requests/transfer_request.dart';
 import '../../../beneficiary/domain/entities/beneficiary.dart';
 import '../../domain/entities/transfer_card.dart';
 import '../../domain/repositories/transfer_repository.dart';
@@ -17,29 +18,19 @@ class TransferRepositoryImpl implements TransferRepository {
   }
 
   @override
-  Future<ApiResult<bool>> executeTransfer({
-    required String fromCardId,
-    required String beneficiaryName,
-    required String cardNumber,
-    required double amount,
-    required String content,
-    required bool saveBeneficiary,
-    int? type,
-    String? bank,
-    String? branch,
-  }) async {
+  Future<ApiResult<bool>> executeTransfer(TransferRequest request) async {
     await Future.delayed(const Duration(seconds: 1)); // Simulate server api call
-    if (saveBeneficiary) {
-      final exists = _mockBeneficiaries.any((b) => b.cardNumber == cardNumber);
+    if (request.saveBeneficiary) {
+      final exists = _mockBeneficiaries.any((b) => b.cardNumber == request.cardNumber);
       if (!exists) {
         _mockBeneficiaries.add(
           Beneficiary(
             id: DateTime.now().millisecondsSinceEpoch.toString(),
-            name: beneficiaryName,
-            cardNumber: cardNumber,
-            type: type ?? 0,
-            bank: bank,
-            branch: branch,
+            name: request.beneficiaryName,
+            cardNumber: request.cardNumber,
+            type: request.type ?? 0,
+            bank: request.bank,
+            branch: request.branch,
           ),
         );
       }

@@ -1,4 +1,6 @@
 import 'package:easy_pay_app/core/network/api_result.dart';
+import 'package:easy_pay_app/features/account_and_card/data/models/requests/add_card_request.dart';
+import 'package:easy_pay_app/features/account_and_card/data/models/requests/delete_card_request.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/use_cases/add_card_use_case.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/use_cases/delete_card_use_case.dart';
@@ -27,7 +29,13 @@ class CardCubit extends Cubit<CardState> {
 
   Future<bool> addNewCard(Map<String, dynamic> cardData) async {
     emit(CardLoading());
-    final result = await addCardUseCase(cardData);
+    final request = AddCardRequest(
+      cardHolderName: cardData['card_holder_name'] ?? '',
+      cardNumber: cardData['card_number'] ?? '',
+      expirationDate: cardData['expiration_date'] ?? '',
+      cardType: cardData['card_type'] ?? '',
+    );
+    final result = await addCardUseCase(request);
     if (isClosed) return false;
     if (result is ApiSuccess<CardEntity>) {
       await loadCards();
@@ -41,7 +49,8 @@ class CardCubit extends Cubit<CardState> {
 
   Future<void> removeCard(int cardId) async {
     emit(CardLoading());
-    final result = await deleteCardUseCase(cardId);
+    final request = DeleteCardRequest(cardId: cardId);
+    final result = await deleteCardUseCase(request);
     if (isClosed) return;
     if (result is ApiSuccess<bool>) {
       await loadCards();

@@ -41,6 +41,7 @@ class ApiConstants {
   static const String reportsMonthlyEndpoint = '/reports/monthly';
   static const String notificationsEndpoint = '/notifications';
   static const String chatEndpoint = '/notifications/reply';
+  static const String savingEndpoint = '/savings';
 
   // HTTP Headers
   static const String contentTypeJson = 'application/json';

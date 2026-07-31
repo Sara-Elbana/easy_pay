@@ -39,7 +39,7 @@ class TransactionItemTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(context.scaleWidth(12)),
                   boxShadow: [
                     BoxShadow(
-                      color: iconBgColor.withValues(alpha: 0.2),
+                      color: iconBgColor.withAlpha(20),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),

@@ -1,3 +1,8 @@
+import 'package:easy_pay_app/features/save_online/presentation/cubit/savings_cubit.dart';
+import 'package:easy_pay_app/features/save_online/presentation/screens/add_screen.dart';
+import 'package:easy_pay_app/features/save_online/presentation/screens/management_screen.dart';
+import 'package:easy_pay_app/features/save_online/presentation/screens/save%20_online_screen.dart';
+import 'package:easy_pay_app/features/save_online/presentation/screens/save_online_successfully.dart';
 import 'package:easy_pay_app/features/transaction_report/presentation/cubit/report_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
 import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
@@ -62,9 +67,9 @@ class AppRoutes {
         ),
     AppRoutesName.welcomeScreen: (_) => const WelcomeScreen(),
     AppRoutesName.profileScreen: (_) => BlocProvider(
-      create: (context) => getIt<ProfileCubit>()..fetchProfile(),
-      child: const ProfileScreen(),
-    ),
+          create: (context) => getIt<ProfileCubit>()..fetchProfile(),
+          child: const ProfileScreen(),
+        ),
     AppRoutesName.signInScreen: (context) => BlocProvider(
           create: (_) => getIt<AuthCubit>(),
           child: const SignInScreen(),
@@ -107,9 +112,10 @@ class AppRoutes {
     AppRoutesName.appInformationScreen: (_) => const AppInformationScreen(),
     AppRoutesName.accountScreen: (_) => const AccountScreen(),
     AppRoutesName.chatScreen: (_) => BlocProvider(
-      create: (context) => getIt<ChatCubit>(),
-      child: const ChatScreen(),
-    ),    AppRoutesName.cardDetailsScreen: (context) {
+          create: (context) => getIt<ChatCubit>(),
+          child: const ChatScreen(),
+        ),
+    AppRoutesName.cardDetailsScreen: (context) {
       final arguments = ModalRoute.of(context)?.settings.arguments;
       if (arguments is Map<String, dynamic>) {
         final card = arguments['card'] as CardEntity?;
@@ -153,14 +159,26 @@ class AppRoutes {
     AppRoutesName.payTheBillScreen: (_) => const PayTheBillScreen(),
     AppRoutesName.mobilePrepaidScreen: (_) => const MobilePrepaidScreen(),
     AppRoutesName.mobilePrepaidConfirmScreen: (context) {
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       return MobilePrepaidConfirmScreen(
         fromCard: args?['fromCard'] ?? '**** **** 6789',
         toPhone: args?['toPhone'] ?? '+8564757899',
         amount: args?['amount'] ?? '\$1000',
       );
     },
-    AppRoutesName.mobilePrepaidSuccessScreen: (_) => const MobilePrepaidSuccessScreen(),
+    AppRoutesName.mobilePrepaidSuccessScreen: (_) =>
+        const MobilePrepaidSuccessScreen(),
+    AppRoutesName.saveOnlineScreen: (_) => const SaveOnlineScreen(),
+    AppRoutesName.addScreen: (_) => BlocProvider(
+      create: (_) => getIt<ManagementCubit>(),
+      child: const AddScreen(),
+    ),
+    AppRoutesName.saveOnlineSuccessfully: (_) => const SaveOnlineSuccessfully(),
+    AppRoutesName.managementScreen: (_) => BlocProvider(
+          create: (_) => getIt<ManagementCubit>()..fetchSavingsAccounts(),
+          child: const ManagementScreen(),
+        ),
     AppRoutesName.interestRateScreen: (_) => BlocProvider(
           create: (_) => getIt<InterestCubit>()..getInterestRates(),
           child: const InterestRateScreen(),

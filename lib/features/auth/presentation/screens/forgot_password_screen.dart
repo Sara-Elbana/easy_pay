@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/core/widgets/card_container.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
@@ -66,23 +67,12 @@ class ForgotPasswordScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: size.height * 0.01),
-                    Card(
-                      color: theme.brightness == Brightness.dark
-                          ? AppColors.gray800
-                          : Colors.white,
-                      elevation: 4,
-                      shadowColor: AppColors.gray200.withAlpha(50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(context.scaleWidth(24)),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(context.padHigh),
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          child: !state.isCodeSent
-                              ? _buildStep1(context, state, cubit, size)
-                              : _buildStep2(context, state, cubit, size),
-                        ),
+                    CardContainer(
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: !state.isCodeSent
+                            ? _buildStep1(context, state, cubit, size)
+                            : _buildStep2(context, state, cubit, size),
                       ),
                     ),
                   ],

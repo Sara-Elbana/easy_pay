@@ -21,6 +21,9 @@ class AppAssets {
   static const String electricBillImage = 'assets/images/electricBillImage.png';
   static const String bankCardYellow = 'assets/images/bankCardYellow.png';
   static const String bankCardBlue = 'assets/images/bankCardBlue.png';
+  static const String managementImage = 'assets/images/managementImage.png';
+  static const String addImage = 'assets/images/addImage.png';
+  static const String addVerifyImage = 'assets/images/addVerifyImage.png';
 
 
 

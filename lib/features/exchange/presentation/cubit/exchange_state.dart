@@ -45,13 +45,13 @@ class ExchangeState extends Equatable {
 
   @override
   List<Object?> get props => [
-        fromCurrency,
-        toCurrency,
-        fromAmount,
-        toAmount,
-        conversionRate,
-        isLoading,
-        errorMessage,
-        isExchangeSuccess,
-      ];
+    fromCurrency,
+    toCurrency,
+    fromAmount,
+    toAmount,
+    conversionRate,
+    isLoading,
+    errorMessage,
+    isExchangeSuccess,
+  ];
 }

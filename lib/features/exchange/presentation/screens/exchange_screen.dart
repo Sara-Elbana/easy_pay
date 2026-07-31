@@ -24,10 +24,10 @@ class ExchangeScreen extends StatelessWidget {
   ];
 
   void _showCurrencyDialog(
-    BuildContext context,
-    String selectedCurrencyCode,
-    ValueChanged<String> onSelected,
-  ) {
+      BuildContext context,
+      String selectedCurrencyCode,
+      ValueChanged<String> onSelected,
+      ) {
     showDialog(
       context: context,
       barrierColor: Colors.black.withAlpha(50),
@@ -74,7 +74,7 @@ class ExchangeScreen extends StatelessWidget {
         body: SafeArea(
           child: SingleChildScrollView(
             padding:
-                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+            const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -114,7 +114,7 @@ class ExchangeScreen extends StatelessWidget {
                             onCurrencyTap: () => _showCurrencyDialog(
                               context,
                               state.fromCurrency,
-                              (code) => cubit.changeFromCurrency(code),
+                                  (code) => cubit.changeFromCurrency(code),
                             ),
                           ),
                           SwapButton(
@@ -128,7 +128,7 @@ class ExchangeScreen extends StatelessWidget {
                             onCurrencyTap: () => _showCurrencyDialog(
                               context,
                               state.toCurrency,
-                              (code) => cubit.changeToCurrency(code),
+                                  (code) => cubit.changeToCurrency(code),
                             ),
                           ),
                           if (state.fromAmount.isNotEmpty &&
@@ -165,17 +165,17 @@ class ExchangeScreen extends StatelessWidget {
                             ),
                             child: state.isLoading
                                 ? const SizedBox(
-                                    height: 24,
-                                    width: 24,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ),
-                                  )
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
                                 : Text(
-                                    'exchange'.tr(),
-                                    style: AppTextStyles.bodyLargeSemiBold.copyWith(color: isButtonEnabled ? Colors.white : AppColors.textLight, fontFamily: 'Poppins'),
-                                  ),
+                              'exchange'.tr(),
+                              style: AppTextStyles.bodyLargeSemiBold.copyWith(color: isButtonEnabled ? Colors.white : AppColors.textLight, fontFamily: 'Poppins'),
+                            ),
                           ),
                         ],
                       ),

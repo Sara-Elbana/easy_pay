@@ -7,6 +7,7 @@ import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
 import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
+import 'package:easy_pay_app/features/save_online/data/models/requests/create_saving_request.dart';
 import 'package:easy_pay_app/features/save_online/presentation/cubit/savings_cubit.dart';
 import 'package:easy_pay_app/features/save_online/presentation/widgets/time_deposit_dialog.dart';
 import 'package:easy_pay_app/features/transfer/domain/entities/transfer_card.dart';
@@ -108,9 +109,11 @@ class _AddScreenState extends State<AddScreen> {
         _formKey.currentState!.validate() &&
         selectedAccountOrCard != null) {
       context.read<ManagementCubit>().createSaving(
-        bankAccountId: int.parse(selectedAccountOrCard!.id),
-        amount: double.parse(amountController.text.trim()),
-        termMonths: selectedTermMonths ?? 12,
+        CreateSavingRequest(
+          bankAccountId: int.parse(selectedAccountOrCard!.id),
+          amount: double.parse(amountController.text.trim()),
+          termMonths: selectedTermMonths ?? 12,
+        ),
       );
     }
   }

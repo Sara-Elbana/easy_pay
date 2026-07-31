@@ -20,8 +20,20 @@ class SaveOnlineScreen extends StatelessWidget {
         padding: EdgeInsets.all(context.scaleHeight(16)),
         child: Column(
           children: [
-            SearchCardWidget(title: "Add", subtitle: "Add new save online account", imageAsset:AppAssets.addImage, onTap: (){Navigator.pushNamed(context, AppRoutesName.addScreen);}),
-            SearchCardWidget(title: "Management", subtitle: "Manage your save online account", imageAsset:AppAssets.managementImage, onTap: (){Navigator.pushNamed(context, AppRoutesName.managementScreen);})
+            SearchCardWidget(
+                title: "Add",
+                subtitle: "Add new save online account",
+                imageAsset: AppAssets.addImage,
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutesName.addScreen);
+                }),
+            SearchCardWidget(
+                title: "Management",
+                subtitle: "Manage your save online account",
+                imageAsset: AppAssets.managementImage,
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutesName.managementScreen);
+                })
           ],
         ),
       ),

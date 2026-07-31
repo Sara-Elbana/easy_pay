@@ -1,7 +1,7 @@
 import 'package:easy_pay_app/features/save_online/presentation/cubit/savings_cubit.dart';
 import 'package:easy_pay_app/features/save_online/presentation/screens/add_screen.dart';
 import 'package:easy_pay_app/features/save_online/presentation/screens/management_screen.dart';
-import 'package:easy_pay_app/features/save_online/presentation/screens/save%20_online_screen.dart';
+import 'package:easy_pay_app/features/save_online/presentation/screens/save_online_screen.dart';
 import 'package:easy_pay_app/features/save_online/presentation/screens/save_online_successfully.dart';
 import 'package:easy_pay_app/features/transaction_report/presentation/cubit/report_cubit.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';

@@ -1,17 +1,28 @@
 import 'package:easy_pay_app/features/save_online/domain/entity/savings_account_entity.dart';
 
-class SavingsAccountModel extends SavingsAccountEntity {
-  SavingsAccountModel({
-    required super.id,
-    required super.userId,
-    required super.bankAccountId,
-    required super.accountNumber,
-    required super.amount,
-    required super.termMonths,
-    required super.interestRate,
-    required super.startDate,
-    required super.endDate,
-    required super.status,
+class SavingsAccountModel {
+  final int id;
+  final int userId;
+  final int bankAccountId;
+  final String accountNumber;
+  final String amount;
+  final int termMonths;
+  final String interestRate;
+  final String startDate;
+  final String endDate;
+  final String status;
+
+  const SavingsAccountModel({
+    required this.id,
+    required this.userId,
+    required this.bankAccountId,
+    required this.accountNumber,
+    required this.amount,
+    required this.termMonths,
+    required this.interestRate,
+    required this.startDate,
+    required this.endDate,
+    required this.status,
   });
 
   factory SavingsAccountModel.fromJson(Map<String, dynamic> json) {
@@ -28,14 +39,34 @@ class SavingsAccountModel extends SavingsAccountEntity {
       status: json['status'] ?? '',
     );
   }
+
   static List<SavingsAccountModel> fromJsonList(List jsonList) {
-    return jsonList.map((item) => SavingsAccountModel.fromJson(item)).toList();
+    return jsonList
+        .map((item) =>
+            SavingsAccountModel.fromJson(item as Map<String, dynamic>))
+        .toList();
   }
+
   Map<String, dynamic> toJson() {
     return {
       "bank_account_id": bankAccountId,
       "amount": amount,
       "term_months": termMonths,
     };
+  }
+
+  SavingsAccountEntity toEntity() {
+    return SavingsAccountEntity(
+      id: id,
+      userId: userId,
+      bankAccountId: bankAccountId,
+      accountNumber: accountNumber,
+      amount: amount,
+      termMonths: termMonths,
+      interestRate: interestRate,
+      startDate: startDate,
+      endDate: endDate,
+      status: status,
+    );
   }
 }

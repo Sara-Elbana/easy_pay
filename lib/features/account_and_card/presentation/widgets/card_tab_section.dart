@@ -18,10 +18,11 @@ class CardTabSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CardCubit, CardState>(
       builder: (context, state) {
-        if (state is CardLoading) {
+        if (state is BaseLoading) {
           return const CustomLoadingWidget();
-        } else if (state is CardSuccess) {
-          if (state.cards.isEmpty) {
+        } else if (state is BaseSuccess) {
+          final cards = (state as BaseSuccess).data;
+          if (cards.isEmpty) {
             return Center(
               child: Padding(
                 padding:
@@ -49,11 +50,11 @@ class CardTabSection extends StatelessWidget {
               ),
             );
           }
-          return CardTabView(cards: state.cards);
-        } else if (state is CardError) {
+          return CardTabView(cards: cards);
+        } else if (state is BaseError) {
 
           return CustomErrorWidget(
-            message: state.message,
+            message: (state as BaseError).message,
             onRetry: () {
               context.read<CardCubit>().loadCards();
             },

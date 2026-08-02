@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
-import 'package:easy_pay_app/core/widgets/account_dropdown.dart';
+import 'package:easy_pay_app/core/widgets/account_card_selector.dart';
 import 'package:easy_pay_app/core/widgets/selection_box.dart';
 import 'package:easy_pay_app/core/widgets/custom_selection_dialog.dart';
 import 'package:flutter/material.dart';
@@ -70,13 +70,7 @@ class ConfirmTransactionInfoSection extends StatelessWidget {
         // From
         Text('from'.tr(), style: AppTextStyles.labelSmallBoldLight),
         const SizedBox(height: 6),
-        AccountDropdown(
-          cards: state.cards,
-          selectedCard: state.selectedCard,
-          onChanged: (card) {
-            cubit.selectCard(card);
-          },
-        ),
+        const AccountCardSelector(),
         const SizedBox(height: 12),
 
         if (state.selectedTransactionType == 2) ...[

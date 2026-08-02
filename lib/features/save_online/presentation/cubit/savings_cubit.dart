@@ -19,6 +19,7 @@ class ManagementCubit extends Cubit<BaseState<List<SavingsAccountEntity>>> {
   Future<void> fetchSavingsAccounts() async {
     emit(const BaseLoading());
     final result = await getSavingsAccountsUseCase();
+    if (isClosed) return;
 
     if (result is ApiSuccess<List<SavingsAccountEntity>>) {
       emit(BaseSuccess(result.data));
@@ -31,6 +32,7 @@ class ManagementCubit extends Cubit<BaseState<List<SavingsAccountEntity>>> {
     emit(const BaseLoading());
 
     final result = await createSavingUseCase(request);
+    if (isClosed) return;
 
     if (result is ApiSuccess<SavingsAccountEntity>) {
       emit(BaseSuccess([result.data]));

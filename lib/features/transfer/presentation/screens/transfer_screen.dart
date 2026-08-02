@@ -12,7 +12,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/transfer_cubit.dart';
 import '../cubit/transfer_state.dart';
 import '../utils/transfer_controllers_manager.dart';
-import 'package:easy_pay_app/core/widgets/account_dropdown.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/account_entity.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
+import 'package:easy_pay_app/features/transfer/domain/entities/transfer_card.dart';
+import 'package:easy_pay_app/core/widgets/account_card_selector.dart';
 import 'package:easy_pay_app/core/widgets/beneficiary_form_fields.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_selection_dialog.dart';
@@ -93,11 +96,31 @@ class TransferScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AccountDropdown(
-                    cards: state.cards,
-                    selectedCard: state.selectedCard,
-                    onChanged: (card) {
-                      cubit.selectCard(card);
+                  AccountCardSelector(
+                    onSelectionChanged: (item) {
+                      if (item != null) {
+                        String cardNum = '';
+                        String cardBalance = '';
+                        String cardId = '1';
+                        if (item is AccountEntity) {
+                          cardNum = item.accountNumber;
+                          cardBalance = item.balance;
+                          cardId = item.id.toString();
+                        } else if (item is CardEntity) {
+                          cardNum = item.maskedCardNumber.isNotEmpty
+                              ? item.maskedCardNumber
+                              : item.cardNumber;
+                          cardBalance = item.bankAccount.balance;
+                          cardId = item.id.toString();
+                        }
+                        cubit.selectCard(TransferCard(
+                          id: cardId,
+                          cardNumber: cardNum,
+                          balance: cardBalance,
+                        ));
+                      } else {
+                        cubit.selectCard(null);
+                      }
                     },
                   ),
                   SizedBox(height: context.scaleHeight(24)),

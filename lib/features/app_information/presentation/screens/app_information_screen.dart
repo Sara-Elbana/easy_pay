@@ -24,10 +24,10 @@ class AppInformationScreen extends StatelessWidget {
         ),
         body: BlocBuilder<AppInfoCubit, AppInfoState>(
           builder: (context, state) {
-            if (state is AppInfoLoading) {
+            if (state is BaseLoading) {
               return const CustomLoadingWidget();
-            } else if (state is AppInfoSuccess) {
-              final info = state.appInfo;
+            } else if (state is BaseSuccess) {
+              final info = (state as BaseSuccess).data;
               return Padding(
                 padding: EdgeInsets.all(context.scaleWidth(24.0)),
                 child: Column(
@@ -81,8 +81,8 @@ class AppInformationScreen extends StatelessWidget {
                   ],
                 ),
               );
-            } else if (state is AppInfoError) {
-              return CustomErrorWidget(message: state.message);
+            } else if (state is BaseError) {
+              return CustomErrorWidget(message: (state as BaseError).message);
             }
             return const SizedBox.shrink();
           },

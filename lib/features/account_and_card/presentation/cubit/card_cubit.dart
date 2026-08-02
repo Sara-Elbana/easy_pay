@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/cubit/base_state.dart';
 import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/features/account_and_card/data/models/requests/add_card_request.dart';
 import 'package:easy_pay_app/features/account_and_card/data/models/requests/delete_card_request.dart';
@@ -6,29 +7,34 @@ import 'package:easy_pay_app/features/account_and_card/domain/use_cases/add_card
 import 'package:easy_pay_app/features/account_and_card/domain/use_cases/delete_card_use_case.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/use_cases/get_cardss_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_state.dart';
 
-class CardCubit extends Cubit<CardState> {
+class CardCubit extends Cubit<BaseState<List<CardEntity>>> {
   final GetCardssUseCase getCardssUseCase;
   final AddCardUseCase addCardUseCase;
   final DeleteCardUseCase deleteCardUseCase;
 
   CardCubit(this.getCardssUseCase, this.addCardUseCase, this.deleteCardUseCase)
-      : super(CardInitial());
+      : super(const BaseInitial());
 
-  Future<void> loadCards() async {
-    emit(CardLoading());
+  Future<void> loadCards({bool forceRefresh = false}) async {
+    if (!forceRefresh && state is BaseSuccess<List<CardEntity>>) return;
+    emit(const BaseLoading());
     final result = await getCardssUseCase();
     if (isClosed) return;
     if (result is ApiSuccess<List<CardEntity>>) {
-      emit(CardSuccess(result.data));
+      emit(BaseSuccess(result.data));
     } else if (result is ApiFailure<List<CardEntity>>) {
-      emit(CardError(result.error));
+      emit(BaseError(result.error));
     }
   }
 
+  void clear() {
+    emit(const BaseInitial());
+  }
+
   Future<bool> addNewCard(Map<String, dynamic> cardData) async {
-    emit(CardLoading());
+    if (isClosed) return false;
+    emit(const BaseLoading());
     final request = AddCardRequest(
       cardHolderName: cardData['card_holder_name'] ?? '',
       cardNumber: cardData['card_number'] ?? '',
@@ -41,21 +47,22 @@ class CardCubit extends Cubit<CardState> {
       await loadCards();
       return true;
     } else if (result is ApiFailure<CardEntity>) {
-      if (!isClosed) emit(CardError(result.error));
+      if (!isClosed) emit(BaseError(result.error));
       return false;
     }
     return false;
   }
 
   Future<void> removeCard(int cardId) async {
-    emit(CardLoading());
+    if (isClosed) return;
+    emit(const BaseLoading());
     final request = DeleteCardRequest(cardId: cardId);
     final result = await deleteCardUseCase(request);
     if (isClosed) return;
     if (result is ApiSuccess<bool>) {
       await loadCards();
     } else if (result is ApiFailure<bool>) {
-      if (!isClosed) emit(CardError(result.error));
+      if (!isClosed) emit(BaseError(result.error));
     }
   }
 }

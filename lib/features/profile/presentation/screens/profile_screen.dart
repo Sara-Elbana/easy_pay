@@ -23,12 +23,12 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
-          if (state is ProfileLoading) {
+          if (state is BaseLoading) {
             return const CustomLoadingWidget();
-          } else if (state is ProfileError) {
-            return CustomErrorWidget(message: state.message);
-          } else if (state is ProfileSuccess) {
-            final profile = state.profile;
+          } else if (state is BaseError) {
+            return CustomErrorWidget(message: (state as BaseError).message);
+          } else if (state is BaseSuccess) {
+            final profile = (state as BaseSuccess).data;
             return SingleChildScrollView(
               padding: EdgeInsets.all(context.scaleWidth(20)),
               child: Column(

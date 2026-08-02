@@ -66,8 +66,8 @@ class AppRoutes {
           child: const OnboardingScreen(),
         ),
     AppRoutesName.welcomeScreen: (_) => const WelcomeScreen(),
-    AppRoutesName.profileScreen: (_) => BlocProvider(
-          create: (context) => getIt<ProfileCubit>()..fetchProfile(),
+    AppRoutesName.profileScreen: (_) => BlocProvider.value(
+          value: getIt<ProfileCubit>()..fetchProfile(),
           child: const ProfileScreen(),
         ),
     AppRoutesName.signInScreen: (context) => BlocProvider(
@@ -127,13 +127,13 @@ class AppRoutes {
           );
         }
       } else if (arguments is CardEntity) {
-        return BlocProvider(
-          create: (_) => getIt<CardCubit>(),
+        return BlocProvider.value(
+          value: getIt<CardCubit>(),
           child: CardDetailsScreen(card: arguments),
         );
       }
-      return BlocProvider(
-        create: (_) => getIt<CardCubit>(),
+      return BlocProvider.value(
+        value: getIt<CardCubit>(),
         child: const CardDetailsScreen(),
       );
     },
@@ -145,8 +145,8 @@ class AppRoutes {
           child: const AddCardScreen(),
         );
       }
-      return BlocProvider(
-        create: (_) => getIt<CardCubit>(),
+      return BlocProvider.value(
+        value: getIt<CardCubit>(),
         child: const AddCardScreen(),
       );
     },

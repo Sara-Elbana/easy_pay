@@ -117,13 +117,13 @@ class TransactionReportScreen extends StatelessWidget {
             bottom: 0,
             child: BlocBuilder<ReportCubit, ReportState>(
               builder: (context, state) {
-                if (state is ReportLoading || state is ReportInitial) {
+                if (state is BaseLoading || state is BaseInitial) {
                   return const Center(
                     child: CircularProgressIndicator(
                       color: AppColors.primary,
                     ),
                   );
-                } else if (state is ReportError) {
+                } else if (state is BaseError) {
                   return Center(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
@@ -131,7 +131,7 @@ class TransactionReportScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            state.message,
+                            (state as BaseError).message,
                             textAlign: TextAlign.center,
                             style: AppTextStyles.bodyMediumGray,
                           ),
@@ -155,8 +155,8 @@ class TransactionReportScreen extends StatelessWidget {
                       ),
                     ),
                   );
-                } else if (state is ReportSuccess) {
-                  final report = state.report;
+                } else if (state is BaseSuccess) {
+                  final report = (state as BaseSuccess).data;
                   final todayList = report.reportTransactions.today;
                   final yesterdayList = report.reportTransactions.yesterday;
 

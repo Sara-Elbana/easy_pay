@@ -37,15 +37,15 @@ class CardDetailsScreen extends StatelessWidget {
         title: 'Card'.tr(),
       ),
       body: BlocConsumer<CardCubit, CardState>(listener: (context, state) {
-        if (state is CardSuccess) {
+        if (state is BaseSuccess) {
           Navigator.pop(context);
         }
       }, builder: (context, state) {
-        if (state is CardLoading) {
+        if (state is BaseLoading) {
           return const CustomLoadingWidget();
-        } else if (state is CardError) {
+        } else if (state is BaseError) {
           return CustomErrorWidget(
-            message: state.message,
+            message: (state as BaseError).message,
           );
         }
         return Padding(

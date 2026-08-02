@@ -18,16 +18,16 @@ class InterestRateScreen extends StatelessWidget {
       appBar: CustomAppBar(title: "interest_rate".tr()),
       body: BlocBuilder<InterestCubit, InterestState>(
         builder: (context, state) {
-          if (state is InterestLoading || state is InterestInitial) {
+          if (state is BaseLoading || state is BaseInitial) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is InterestFailure) {
+          if (state is BaseError) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Text(
-                  state.errorMessage,
+                  (state as BaseError).message,
                   style: AppTextStyles.bodyMediumError,
                   textAlign: TextAlign.center,
                 ),
@@ -35,8 +35,8 @@ class InterestRateScreen extends StatelessWidget {
             );
           }
 
-          if (state is InterestSuccess) {
-            final data = state.interestRates;
+          if (state is BaseSuccess) {
+            final data = (state as BaseSuccess).data;
             if (data.isEmpty) {
               return Center(
                 child: Text('no_data'.tr()),

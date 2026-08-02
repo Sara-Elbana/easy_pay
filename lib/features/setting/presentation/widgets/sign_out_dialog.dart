@@ -3,7 +3,10 @@ import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/account_cubit.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
 import 'package:easy_pay_app/features/auth/domain/use_cases/sign_out_usecase.dart';
+import 'package:easy_pay_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 
 class SignOutDialog extends StatelessWidget {
@@ -18,6 +21,9 @@ class SignOutDialog extends StatelessWidget {
       context: parentContext,
       builder: (dialogContext) => SignOutDialog(
         onConfirm: () async {
+          getIt<ProfileCubit>().clear();
+          getIt<AccountCubit>().clear();
+          getIt<CardCubit>().clear();
           Navigator.of(dialogContext).pop();
           Navigator.of(parentContext).pushNamedAndRemoveUntil(
             AppRoutesName.signInScreen,

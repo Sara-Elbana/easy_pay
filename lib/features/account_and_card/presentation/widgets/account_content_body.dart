@@ -38,14 +38,15 @@ class _AccountContentBodyState extends State<AccountContentBody> {
         Expanded(
           child: BlocBuilder<AccountCubit, AccountState>(
             builder: (context, state) {
-              if (state is AccountLoading) {
+              if (state is BaseLoading) {
                 return const CustomLoadingWidget();
-              } else if (state is AccountSuccess) {
-                if (state.accounts.isEmpty) {
+              } else if (state is BaseSuccess) {
+                final accounts = (state as BaseSuccess).data;
+                if (accounts.isEmpty) {
                   return Center(child: Text("no_accounts_found".tr()));
                 }
-                final holderName = state.accounts.first.bankCards.isNotEmpty
-                    ? state.accounts.first.bankCards.first.cardHolderName
+                final holderName = accounts.first.bankCards.isNotEmpty
+                    ? accounts.first.bankCards.first.cardHolderName
                     : "User";
 
                 return Column(
@@ -56,15 +57,15 @@ class _AccountContentBodyState extends State<AccountContentBody> {
                     ],
                     Expanded(
                       child: _currentTab == 0
-                          ? AccountTabSection(accounts: state.accounts)
+                          ? AccountTabSection(accounts: accounts)
                           : const CardTabSection(),
                     ),
                   ],
                 );
-              } else if (state is AccountError) {
+              } else if (state is BaseError) {
 
                 return CustomErrorWidget(
-                  message: state.message,
+                  message: (state as BaseError).message,
                   onRetry: () {
                     context.read<AccountCubit>().loadAccounts();
                   },

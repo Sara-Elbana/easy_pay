@@ -1,5 +1,6 @@
 import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/core/services/biometric_service.dart';
+import 'package:easy_pay_app/features/transfer/data/models/requests/transfer_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../beneficiary/domain/entities/beneficiary.dart';
 import '../../domain/entities/transfer_card.dart';
@@ -188,7 +189,7 @@ class TransferCubit extends Cubit<TransferState> {
     final amt =
         double.tryParse(state.amount.replaceAll(RegExp(r'[^0-9.]'), '')) ??
             0.0;
-    final result = await executeTransferUseCase(
+    final request = TransferRequest(
       fromCardId: state.selectedCard!.id,
       beneficiaryName: state.name,
       cardNumber: state.cardNumber,
@@ -199,6 +200,7 @@ class TransferCubit extends Cubit<TransferState> {
       bank: state.selectedBank.isNotEmpty ? state.selectedBank : null,
       branch: state.selectedBranch.isNotEmpty ? state.selectedBranch : null,
     );
+    final result = await executeTransferUseCase(request);
 
     if (result is ApiSuccess<bool>) {
       final beneficiariesResult = await getBeneficiariesUseCase();

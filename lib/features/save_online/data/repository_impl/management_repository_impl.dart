@@ -1,7 +1,8 @@
-import 'package:easy_pay_app/core/errors/exceptions.dart';
 import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/features/save_online/data/data_source/savings_remote_data_source.dart';
 import 'package:easy_pay_app/features/save_online/data/model/savings_account_model.dart';
+import 'package:easy_pay_app/features/save_online/data/models/requests/create_saving_request.dart';
+import 'package:easy_pay_app/features/save_online/domain/entity/savings_account_entity.dart';
 import 'package:easy_pay_app/features/save_online/domain/repository_interface/management_repository_interface.dart';
 
 class ManagementRepositoryImpl implements ManagementRepositoryInterface {
@@ -10,47 +11,29 @@ class ManagementRepositoryImpl implements ManagementRepositoryInterface {
   ManagementRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<ApiResult<List<SavingsAccountModel>>> getSavingsAccounts() async {
-    try {
-      final apiResult = await remoteDataSource.getSavingsAccounts();
+  Future<ApiResult<List<SavingsAccountEntity>>> getSavingsAccounts() async {
+    final result = await remoteDataSource.getSavingsAccounts();
 
-      if (apiResult is ApiSuccess<List<SavingsAccountModel>>) {
-        return ApiSuccess(data: apiResult.data ?? [], message: apiResult.message);
-      }
-
-      final failure = apiResult as ApiFailure<List<SavingsAccountModel>>;
-      return ApiFailure(error: failure.error, message: failure.message);
-
-    } on ServerException catch (e) {
-      return ApiFailure(error: e.message);
-    } catch (e) {
-      return ApiFailure(error: e.toString());
+    if (result is ApiSuccess<List<SavingsAccountModel>>) {
+      final entities = result.data.map((model) => model.toEntity()).toList();
+      return ApiSuccess(data: entities, message: result.message);
     }
+
+    final failure = result as ApiFailure<List<SavingsAccountModel>>;
+    return ApiFailure(error: failure.error, message: failure.message);
   }
+
   @override
-  Future<ApiResult<SavingsAccountModel>> createSaving({
-    required int bankAccountId,
-    required double amount,
-    required int termMonths,
-  }) async {
-    try {
-      final apiResult = await remoteDataSource.createSaving(
-        bankAccountId: bankAccountId,
-        amount: amount,
-        termMonths: termMonths,
-      );
+  Future<ApiResult<SavingsAccountEntity>> createSaving(
+    CreateSavingRequest request,
+  ) async {
+    final result = await remoteDataSource.createSaving(request);
 
-      if (apiResult is ApiSuccess<SavingsAccountModel>) {
-        return ApiSuccess(data: apiResult.data, message: apiResult.message);
-      }
-
-      final failure = apiResult as ApiFailure<SavingsAccountModel>;
-      return ApiFailure(error: failure.error, message: failure.message);
-
-    } on ServerException catch (e) {
-      return ApiFailure(error: e.message);
-    } catch (e) {
-      return ApiFailure(error: e.toString());
+    if (result is ApiSuccess<SavingsAccountModel>) {
+      return ApiSuccess(data: result.data.toEntity(), message: result.message);
     }
+
+    final failure = result as ApiFailure<SavingsAccountModel>;
+    return ApiFailure(error: failure.error, message: failure.message);
   }
 }

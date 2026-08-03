@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:easy_pay_app/core/network/api_result.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/auto__place_details_request.dart';
-import 'package:easy_pay_app/features/Branch/domain/entities/auto_complete_request.dart';
+import 'package:easy_pay_app/features/Branch/data/models/requests/auto_complete_request.dart';
+import 'package:easy_pay_app/features/Branch/data/models/requests/auto_place_details_request.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/place_details.dart';
 import 'package:easy_pay_app/features/Branch/domain/entities/place_suggestion.dart';
 import 'package:easy_pay_app/features/Branch/domain/usecases/get_autocomplete_usecase.dart';
@@ -28,8 +28,8 @@ class MapCubit extends Cubit<MapState> {
 
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       emit(AutocompleteLoading());
-      final result =
-          await getAutocompleteUseCase(request: AutoCompleteRequest(query: query));
+      final request = AutoCompleteRequest(query: query);
+      final result = await getAutocompleteUseCase(request);
       if (result is ApiSuccess<List<PlaceSuggestion>>) {
         emit(AutocompleteSuccess(result.data));
       } else if (result is ApiFailure<List<PlaceSuggestion>>) {
@@ -40,8 +40,8 @@ class MapCubit extends Cubit<MapState> {
 
   Future<void> selectPlace(String placeId) async {
     emit(PlaceDetailsLoading());
-    final result =
-        await getPlaceDetailsUseCase(AutoPlaceDetailsRequest(placeId: placeId));
+    final request = AutoPlaceDetailsRequest(placeId: placeId);
+    final result = await getPlaceDetailsUseCase(request);
     if (result is ApiSuccess<PlaceDetails>) {
       emit(PlaceDetailsSuccess(result.data));
     } else if (result is ApiFailure<PlaceDetails>) {

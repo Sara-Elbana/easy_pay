@@ -17,15 +17,16 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, profileState) {
-        final userName = profileState is ProfileSuccess
-            ? profileState.profile.name
+        final userName = profileState is BaseSuccess
+            ? (profileState as BaseSuccess).data.name
             : "User";
 
         return BlocBuilder<NotificationCubit, NotificationState>(
           builder: (context, notificationState) {
             int unreadCount = 0;
-            if (notificationState is NotificationSuccess) {
-              unreadCount = notificationState.notifications
+            if (notificationState is BaseSuccess) {
+              unreadCount = (notificationState as BaseSuccess)
+                  .data
                   .where((item) => item.isRead == 0)
                   .length;
             }

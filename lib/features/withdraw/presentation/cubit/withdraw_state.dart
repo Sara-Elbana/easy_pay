@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/utils/validators.dart';
 import 'package:equatable/equatable.dart';
 import '../../../transfer/domain/entities/transfer_card.dart';
 
@@ -30,6 +31,7 @@ class WithdrawState extends Equatable {
   bool get isFormValid {
     if (selectedCard == null) return false;
     if (phoneNumber.trim().isEmpty) return false;
+    if (Validators.validatePhone(phoneNumber) != null) return false;
     if (isOtherSelected) {
       return customAmount.trim().isNotEmpty;
     } else {
@@ -52,7 +54,8 @@ class WithdrawState extends Equatable {
       cards: cards ?? this.cards,
       selectedCard: selectedCard != null ? selectedCard() : this.selectedCard,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      selectedAmount: selectedAmount != null ? selectedAmount() : this.selectedAmount,
+      selectedAmount:
+          selectedAmount != null ? selectedAmount() : this.selectedAmount,
       customAmount: customAmount ?? this.customAmount,
       isOtherSelected: isOtherSelected ?? this.isOtherSelected,
       isLoading: isLoading ?? this.isLoading,

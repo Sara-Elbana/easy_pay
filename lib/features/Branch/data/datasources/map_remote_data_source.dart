@@ -4,10 +4,12 @@ import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/Branch/data/models/place_details_model.dart';
 import 'package:easy_pay_app/features/Branch/data/models/place_suggestion_model.dart';
+import 'package:easy_pay_app/features/Branch/data/models/requests/auto_complete_request.dart';
+import 'package:easy_pay_app/features/Branch/data/models/requests/auto_place_details_request.dart';
 
 abstract class MapRemoteDataSource {
-  Future<ApiResult<List<PlaceSuggestionModel>>> getAutocomplete(String query);
-  Future<ApiResult<PlaceDetailsModel>> getPlaceDetails(String placeId);
+  Future<ApiResult<List<PlaceSuggestionModel>>> getAutocomplete(AutoCompleteRequest request);
+  Future<ApiResult<PlaceDetailsModel>> getPlaceDetails(AutoPlaceDetailsRequest request);
 }
 
 class MapRemoteDataSourceImpl implements MapRemoteDataSource {
@@ -17,11 +19,11 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
   MapRemoteDataSourceImpl(this.apiService);
 
   @override
-  Future<ApiResult<List<PlaceSuggestionModel>>> getAutocomplete(String query) async {
+  Future<ApiResult<List<PlaceSuggestionModel>>> getAutocomplete(AutoCompleteRequest request) async {
     try {
       final response = await apiService.get(
         ApiConstants.branchesEndpoint,
-        queryParameters: query.isNotEmpty ? {'query': query} : null,
+        queryParameters: request.query.isNotEmpty ? request.toJson() : null,
       );
 
       if (response.data != null && response.data is List) {
@@ -52,14 +54,14 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
   }
 
   @override
-  Future<ApiResult<PlaceDetailsModel>> getPlaceDetails(String placeId) async {
+  Future<ApiResult<PlaceDetailsModel>> getPlaceDetails(AutoPlaceDetailsRequest request) async {
     try {
       if (_cachedBranches.isEmpty) {
-        await getAutocomplete('');
+        await getAutocomplete(const AutoCompleteRequest(query: ''));
       }
 
       final branch = _cachedBranches.firstWhere(
-        (b) => b['id'].toString() == placeId,
+        (b) => b['id'].toString() == request.placeId,
         orElse: () => {},
       );
 

@@ -18,8 +18,8 @@ class UserNameText extends StatelessWidget {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         String userName = fallbackText;
-        if (state is ProfileSuccess) {
-          userName = state.profile.name;
+        if (state is BaseSuccess) {
+          userName = (state as BaseSuccess).data.name;
         }
         return Text(
           userName,

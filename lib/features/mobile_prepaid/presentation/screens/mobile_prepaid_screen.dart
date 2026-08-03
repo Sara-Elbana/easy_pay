@@ -4,14 +4,15 @@ import 'package:easy_pay_app/core/theme/app_colors.dart';
 import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/utils/validators.dart';
-import 'package:easy_pay_app/core/widgets/account_dropdown.dart';
+import 'package:easy_pay_app/core/widgets/account_card_selector.dart';
 import 'package:easy_pay_app/core/widgets/amount_selector_grid.dart';
 import 'package:easy_pay_app/core/widgets/choose_beneficiary_section.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/account_entity.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
 import 'package:easy_pay_app/features/beneficiary/domain/entities/beneficiary.dart';
-import 'package:easy_pay_app/features/transfer/domain/entities/transfer_card.dart';
 import 'package:flutter/material.dart';
 
 class MobilePrepaidScreen extends StatefulWidget {
@@ -26,24 +27,11 @@ class _MobilePrepaidScreenState extends State<MobilePrepaidScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _customAmountController = TextEditingController();
 
-  TransferCard? _selectedCard;
+  dynamic _selectedCard;
   Beneficiary? _selectedBeneficiary;
   bool _isManualBeneficiary = false;
   int? _selectedAmount;
   bool _isOtherSelected = false;
-
-  final List<TransferCard> _cards = const [
-    TransferCard(
-      id: '1',
-      cardNumber: 'VISA **** **** **** 1234',
-      balance: 'Available balance : 10,000\$',
-    ),
-    TransferCard(
-      id: '2',
-      cardNumber: 'Mastercard **** **** **** 5678',
-      balance: 'Available balance : 5,500\$',
-    ),
-  ];
 
   final List<Beneficiary> _beneficiaries = const [
     Beneficiary(
@@ -81,11 +69,19 @@ class _MobilePrepaidScreenState extends State<MobilePrepaidScreen> {
       final amountStr = _selectedAmount != null
           ? '\$$_selectedAmount'
           : '\$${_customAmountController.text}';
+
+      String fromCardStr = '**** **** 6789';
+      if (_selectedCard is AccountEntity) {
+        fromCardStr = (_selectedCard as AccountEntity).accountNumber;
+      } else if (_selectedCard is CardEntity) {
+        fromCardStr = (_selectedCard as CardEntity).maskedCardNumber;
+      }
+
       Navigator.pushNamed(
         context,
         AppRoutesName.mobilePrepaidConfirmScreen,
         arguments: {
-          'fromCard': _selectedCard?.cardNumber ?? '**** **** 6789',
+          'fromCard': fromCardStr,
           'toPhone': _phoneController.text.isNotEmpty
               ? _phoneController.text
               : (_selectedBeneficiary?.cardNumber ?? '+8564757899'),
@@ -116,11 +112,9 @@ class _MobilePrepaidScreenState extends State<MobilePrepaidScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 1. Account Dropdown
-                      AccountDropdown(
-                        cards: _cards,
-                        selectedCard: _selectedCard,
-                        onChanged: (card) {
+                      // 1. Account / Card Selector
+                      AccountCardSelector(
+                        onSelectionChanged: (card) {
                           setState(() {
                             _selectedCard = card;
                           });

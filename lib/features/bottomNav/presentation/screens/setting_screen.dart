@@ -18,8 +18,8 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<ProfileCubit>()..fetchProfile(),
+    return BlocProvider.value(
+      value: getIt<ProfileCubit>()..fetchProfile(),
       child: Scaffold(
         backgroundColor: AppColors.primary,
         body: Column(

@@ -4,7 +4,6 @@ import 'package:easy_pay_app/core/widgets/card_container.dart';
 import 'package:easy_pay_app/features/account_and_card/domain/entities/account_entity.dart';
 import 'package:easy_pay_app/features/save_online/presentation/widgets/management_item_card.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_pay_app/core/theme/app_text_styles.dart';
 
 class AccountCardItem extends StatelessWidget {
   final AccountEntity account;

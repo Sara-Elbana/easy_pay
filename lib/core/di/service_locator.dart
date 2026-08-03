@@ -304,7 +304,7 @@ Future<void> setupDependencies() async {
     () => GetProfileUseCase(getIt()),
   );
 
-  getIt.registerFactory<ProfileCubit>(
+  getIt.registerLazySingleton<ProfileCubit>(
     () => ProfileCubit(getIt()),
   );
 
@@ -318,7 +318,7 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton(
     () => GetAccountsUseCase(getIt()),
   );
-  getIt.registerFactory<AccountCubit>(
+  getIt.registerLazySingleton<AccountCubit>(
     () => AccountCubit(getAccountsUseCase: getIt()),
   );
 
@@ -336,7 +336,7 @@ Future<void> setupDependencies() async {
 
   getIt.registerLazySingleton(() => AddCardUseCase(getIt()));
   getIt.registerLazySingleton(() => DeleteCardUseCase(getIt()));
-  getIt.registerFactory(
+  getIt.registerLazySingleton<CardCubit>(
     () => CardCubit(getIt(), getIt(), getIt()),
   );
   getIt.registerLazySingleton<AddCardRemoteDataSource>(

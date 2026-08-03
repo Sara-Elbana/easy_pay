@@ -5,7 +5,7 @@ import 'package:easy_pay_app/core/widgets/card_container.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
 import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
-import 'package:easy_pay_app/features/save_online/data/model/savings_account_model.dart';
+import 'package:easy_pay_app/features/save_online/domain/entity/savings_account_entity.dart';
 import 'package:easy_pay_app/features/save_online/presentation/cubit/savings_cubit.dart';
 import 'package:easy_pay_app/features/save_online/presentation/widgets/management_item_card.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class ManagementScreen extends StatelessWidget {
           title: "Management",
         ),
         body:
-            BlocBuilder<ManagementCubit, BaseState<List<SavingsAccountModel>>>(
+            BlocBuilder<ManagementCubit, BaseState<List<SavingsAccountEntity>>>(
           builder: (context, state) {
             if (state is BaseLoading) {
               return const CustomLoadingWidget();
@@ -32,7 +32,7 @@ class ManagementScreen extends StatelessWidget {
               return CustomErrorWidget(message: (state as BaseError).message);
             }
 
-            if (state is BaseSuccess<List<SavingsAccountModel>>) {
+            if (state is BaseSuccess<List<SavingsAccountEntity>>) {
               final items = state.data;
 
               if (items.isEmpty) {

@@ -19,8 +19,8 @@ class HomeScreen extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt<NotificationCubit>()..fetchNotifications(),
         ),
-        BlocProvider(
-          create: (context) => getIt<ProfileCubit>()..fetchProfile(),
+        BlocProvider.value(
+          value: getIt<ProfileCubit>()..fetchProfile(),
         ),
       ],
       child: Scaffold(

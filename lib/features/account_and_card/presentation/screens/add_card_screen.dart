@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
+import 'package:easy_pay_app/core/utils/card_number_formatter.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
 import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
@@ -57,8 +58,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 hintText: 'Card Number',
                 controller: _cardNumberController,
                 keyboardType: TextInputType.number,
-                validator: (value) =>
-                value!.length < 16 ? 'Enter a valid card number' : null,
+                inputFormatters: [CardNumberFormatter()],
+                validator: (value) {
+                  final clean = value?.replaceAll(RegExp(r'\D'), '') ?? '';
+                  return clean.length < 16 ? 'Enter a valid card number' : null;
+                },
               ),
               SizedBox(height: context.scaleHeight(16)),
               CustomTextField(
@@ -80,11 +84,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 builder: (context, state) {
                   return Column(
                     children: [
-                      if (state is CardError) ...[
-                        CustomErrorWidget(message: state.message),
+                      if (state is BaseError) ...[
+                        CustomErrorWidget(message: (state as BaseError).message),
                         SizedBox(height: context.scaleHeight(16)),
                       ],
-                      state is CardLoading
+                      state is BaseLoading
                           ? const Center(child: CustomLoadingWidget())
                           : CustomButton(
                         text: 'save_card'.tr(),

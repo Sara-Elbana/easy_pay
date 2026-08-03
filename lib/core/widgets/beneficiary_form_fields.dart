@@ -1,3 +1,4 @@
+import 'package:easy_pay_app/core/utils/card_number_formatter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
@@ -171,6 +172,7 @@ class _BeneficiaryFormFieldsState extends State<BeneficiaryFormFields> {
           enabled: widget.isEnabled,
           onChanged: widget.onCardNumberChanged,
           keyboardType: TextInputType.number,
+          inputFormatters: [CardNumberFormatter()],
         ),
 
         if (widget.isAmountContentVisible) ...[

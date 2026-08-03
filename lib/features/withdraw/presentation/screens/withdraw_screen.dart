@@ -10,6 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/withdraw_cubit.dart';
 import '../cubit/withdraw_state.dart';
 import '../widgets/withdraw_illustration.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/account_entity.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
+import 'package:easy_pay_app/features/transfer/domain/entities/transfer_card.dart';
 import 'package:easy_pay_app/core/widgets/withdraw_card_dropdown.dart';
 import '../widgets/withdraw_phone_field.dart';
 import 'package:easy_pay_app/core/widgets/withdraw_amount_section.dart';
@@ -116,7 +119,33 @@ class WithdrawView extends StatelessWidget {
                       SizedBox(height: context.scaleHeight(8)),
                       const WithdrawIllustration(),
                       SizedBox(height: context.scaleHeight(32)),
-                      const WithdrawCardDropdown(),
+                      WithdrawCardDropdown(
+                        onSelectionChanged: (item) {
+                          if (item != null) {
+                            String cardNum = '';
+                            String cardBalance = '';
+                            String cardId = '1';
+                            if (item is AccountEntity) {
+                              cardNum = item.accountNumber;
+                              cardBalance = item.balance;
+                              cardId = item.id.toString();
+                            } else if (item is CardEntity) {
+                              cardNum = item.maskedCardNumber.isNotEmpty
+                                  ? item.maskedCardNumber
+                                  : item.cardNumber;
+                              cardBalance = item.bankAccount.balance;
+                              cardId = item.id.toString();
+                            }
+                            context.read<WithdrawCubit>().selectCard(TransferCard(
+                                  id: cardId,
+                                  cardNumber: cardNum,
+                                  balance: cardBalance,
+                                ));
+                          } else {
+                            context.read<WithdrawCubit>().selectCard(null);
+                          }
+                        },
+                      ),
                       SizedBox(height: context.scaleHeight(20)),
                       const WithdrawPhoneField(),
                       SizedBox(height: context.scaleHeight(24)),

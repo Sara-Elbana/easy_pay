@@ -2,14 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/constants/app_assets.dart';
 import 'package:easy_pay_app/core/cubit/base_state.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
-import 'package:easy_pay_app/core/widgets/account_dropdown.dart';
+import 'package:easy_pay_app/core/widgets/account_card_selector.dart';
 import 'package:easy_pay_app/core/widgets/custom_button.dart';
 import 'package:easy_pay_app/core/widgets/custom_error_widget.dart';
 import 'package:easy_pay_app/core/widgets/custom_loading_widget.dart';
 import 'package:easy_pay_app/core/widgets/custom_text_field.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/account_entity.dart';
+import 'package:easy_pay_app/features/account_and_card/domain/entities/card_entity.dart';
+import 'package:easy_pay_app/features/save_online/data/models/requests/create_saving_request.dart';
 import 'package:easy_pay_app/features/save_online/presentation/cubit/savings_cubit.dart';
 import 'package:easy_pay_app/features/save_online/presentation/widgets/time_deposit_dialog.dart';
-import 'package:easy_pay_app/features/transfer/domain/entities/transfer_card.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/core/core.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
@@ -26,21 +28,7 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
   final _formKey = GlobalKey<FormState>();
-  TransferCard? selectedAccountOrCard;
-
-  // تأكدي من إعطاء كل عنصر ID فريد وصحيح للسيرفر
-  final List<TransferCard> dummyCards = [
-    const TransferCard(
-      id: '13',
-      cardNumber: 'Account 1900 8988 5456',
-      balance: 'Available balance: 10000\$',
-    ),
-    const TransferCard(
-      id: '14',
-      cardNumber: 'Card **** **** **** 4321',
-      balance: 'Available balance: 5000\$',
-    ),
-  ];
+  dynamic selectedAccountOrCard;
 
   final TextEditingController timeDepositController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
@@ -107,10 +95,18 @@ class _AddScreenState extends State<AddScreen> {
     if (_formKey.currentState != null &&
         _formKey.currentState!.validate() &&
         selectedAccountOrCard != null) {
+      int bankAccountId = 1;
+      if (selectedAccountOrCard is AccountEntity) {
+        bankAccountId = (selectedAccountOrCard as AccountEntity).id;
+      } else if (selectedAccountOrCard is CardEntity) {
+        bankAccountId = (selectedAccountOrCard as CardEntity).bankAccount.id;
+      }
       context.read<ManagementCubit>().createSaving(
-        bankAccountId: int.parse(selectedAccountOrCard!.id),
-        amount: double.parse(amountController.text.trim()),
-        termMonths: selectedTermMonths ?? 12,
+        CreateSavingRequest(
+          bankAccountId: bankAccountId,
+          amount: double.parse(amountController.text.trim()),
+          termMonths: selectedTermMonths ?? 12,
+        ),
       );
     }
   }
@@ -155,12 +151,10 @@ class _AddScreenState extends State<AddScreen> {
                   CardContainer(
                     child: Column(
                       children: [
-                        AccountDropdown(
-                          cards: dummyCards,
-                          selectedCard: selectedAccountOrCard,
-                          onChanged: (card) {
+                        AccountCardSelector(
+                          onSelectionChanged: (item) {
                             setState(() {
-                              selectedAccountOrCard = card;
+                              selectedAccountOrCard = item;
                               _checkFormFilled();
                             });
                           },

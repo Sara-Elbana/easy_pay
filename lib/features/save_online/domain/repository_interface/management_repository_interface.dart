@@ -1,12 +1,8 @@
-
 import 'package:easy_pay_app/core/network/api_result.dart';
-import 'package:easy_pay_app/features/save_online/data/model/savings_account_model.dart';
+import 'package:easy_pay_app/features/save_online/data/models/requests/create_saving_request.dart';
+import 'package:easy_pay_app/features/save_online/domain/entity/savings_account_entity.dart';
 
 abstract class ManagementRepositoryInterface {
-  Future<ApiResult<List<SavingsAccountModel>>> getSavingsAccounts();
-  Future<ApiResult<SavingsAccountModel>> createSaving({
-    required int bankAccountId,
-    required double amount,
-    required int termMonths,
-  });
+  Future<ApiResult<List<SavingsAccountEntity>>> getSavingsAccounts();
+  Future<ApiResult<SavingsAccountEntity>> createSaving(CreateSavingRequest request);
 }

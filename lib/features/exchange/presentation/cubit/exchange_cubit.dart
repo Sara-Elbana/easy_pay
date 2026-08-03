@@ -1,5 +1,6 @@
 import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data/models/requests/convert_currency_request.dart';
 import '../../domain/repositories/exchange_repository.dart';
 import 'exchange_state.dart';
 
@@ -11,11 +12,12 @@ class ExchangeCubit extends Cubit<ExchangeState> {
   }
 
   Future<void> updateConversionRate() async {
-    final result = await repository.convertCurrency(
+    final request = ConvertCurrencyRequest(
       from: state.fromCurrency,
       to: state.toCurrency,
       amount: 1.0,
     );
+    final result = await repository.convertCurrency(request);
     if (result is ApiSuccess<Map<String, dynamic>>) {
       final rate = (result.data['rate'] as num).toDouble();
       emit(state.copyWith(conversionRate: rate));
@@ -68,11 +70,12 @@ class ExchangeCubit extends Cubit<ExchangeState> {
 
     emit(state.copyWith(fromAmount: amountStr, isLoading: true));
 
-    final resultData = await repository.convertCurrency(
+    final request = ConvertCurrencyRequest(
       from: state.fromCurrency,
       to: state.toCurrency,
       amount: amount,
     );
+    final resultData = await repository.convertCurrency(request);
 
     if (resultData is ApiSuccess<Map<String, dynamic>>) {
       final result = resultData.data['result'];

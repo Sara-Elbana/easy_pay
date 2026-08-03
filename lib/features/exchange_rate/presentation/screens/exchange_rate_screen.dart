@@ -31,13 +31,13 @@ class ExchangeRateScreen extends StatelessWidget {
             Expanded(
               child: BlocBuilder<ExchangeRateCubit, ExchangeRateState>(
                 builder: (context, state) {
-                  if (state is ExchangeRateLoading) {
+                  if (state is BaseLoading) {
                     return const Center(
                       child: CircularProgressIndicator(
                         color: AppColors.primary,
                       ),
                     );
-                  } else if (state is ExchangeRateError) {
+                  } else if (state is BaseError) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -56,8 +56,8 @@ class ExchangeRateScreen extends StatelessWidget {
                         ],
                       ),
                     );
-                  } else if (state is ExchangeRateLoaded) {
-                    final rates = state.exchangeRates;
+                  } else if (state is BaseSuccess) {
+                    final rates = (state as BaseSuccess).data;
                     return ListView.separated(
                       itemCount: rates.length,
                       separatorBuilder: (context, index) => const Divider(

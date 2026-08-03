@@ -66,10 +66,10 @@ class _SignInScreenState extends State<SignInScreen> {
       backgroundColor: AppColors.primary,
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) async {
-          if (state is AuthSuccess) {
+          if (state is BaseSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("welcome_user".tr(args: [state.user.name])),
+                content: Text("welcome_user".tr(args: [(state as BaseSuccess).data.name])),
                 backgroundColor: Colors.green,
               ),
             );
@@ -82,17 +82,17 @@ class _SignInScreenState extends State<SignInScreen> {
             );
           } else if (state is BiometricSuccess) {
             // Biometric authentication validated successfully; no navigation or action taken.
-          } else if (state is AuthFailure) {
+          } else if (state is BaseError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage),
+                content: Text((state as BaseError).message),
                 backgroundColor: Colors.red,
               ),
             );
           }
         },
         builder: (context, state) {
-          final bool isLoading = state is AuthLoading;
+          final bool isLoading = state is BaseLoading;
           return Column(
             children: [
               HeaderWidget(

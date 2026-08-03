@@ -29,12 +29,12 @@ class MessageScreen extends StatelessWidget {
           padding: EdgeInsets.all(context.scaleWidth(24.0)),
           child: BlocBuilder<NotificationCubit, NotificationState>(
             builder: (context, state) {
-              if (state is NotificationLoading) {
+              if (state is BaseLoading) {
                 return const CustomLoadingWidget();
-              } else if (state is NotificationError) {
-                return CustomErrorWidget(message: state.message);
-              } else if (state is NotificationSuccess) {
-                final notifications = state.notifications;
+              } else if (state is BaseError) {
+                return CustomErrorWidget(message: (state as BaseError).message);
+              } else if (state is BaseSuccess) {
+                final notifications = (state as BaseSuccess).data;
 
                 if (notifications.isEmpty) {
                   return const Center(child: Text("No messages found"));

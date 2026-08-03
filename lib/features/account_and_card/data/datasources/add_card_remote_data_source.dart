@@ -3,17 +3,18 @@ import 'package:easy_pay_app/core/constants/api_constants.dart';
 import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/core/network/api_service.dart';
 import 'package:easy_pay_app/features/account_and_card/data/models/card_model.dart';
+import 'package:easy_pay_app/features/account_and_card/data/models/requests/add_card_request.dart';
 
 class AddCardRemoteDataSource {
   final ApiService apiService;
 
   AddCardRemoteDataSource(this.apiService);
 
-  Future<ApiResult<CardModel>> addCard(Map<String, dynamic> cardData) async {
+  Future<ApiResult<CardModel>> addCard(AddCardRequest request) async {
     try {
       final response = await apiService.post(
         ApiConstants.cardsEndpoint,
-        data: cardData,
+        data: request.toJson(),
       );
       if (response.data == null) {
         return const ApiFailure(error: 'Invalid response format');

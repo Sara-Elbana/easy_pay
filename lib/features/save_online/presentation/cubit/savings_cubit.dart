@@ -1,6 +1,9 @@
 import 'dart:developer' as developer;
 import 'package:easy_pay_app/core/cubit/base_state.dart';
 import 'package:easy_pay_app/core/network/api_result.dart';
+import 'package:easy_pay_app/core/di/service_locator.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/account_cubit.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
 import 'package:easy_pay_app/features/save_online/data/models/requests/create_saving_request.dart';
 import 'package:easy_pay_app/features/save_online/domain/entity/savings_account_entity.dart';
 import 'package:easy_pay_app/features/save_online/domain/use_cases/create_saving_use_case.dart';
@@ -35,6 +38,8 @@ class ManagementCubit extends Cubit<BaseState<List<SavingsAccountEntity>>> {
     if (isClosed) return;
 
     if (result is ApiSuccess<SavingsAccountEntity>) {
+      getIt<AccountCubit>().loadAccounts(forceRefresh: true);
+      getIt<CardCubit>().loadCards(forceRefresh: true);
       emit(BaseSuccess([result.data]));
     } else if (result is ApiFailure<SavingsAccountEntity>) {
       developer.log('Server Error Details: ${result.error}');

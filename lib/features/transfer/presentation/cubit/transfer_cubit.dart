@@ -1,4 +1,7 @@
 import 'package:easy_pay_app/core/network/api_result.dart';
+import 'package:easy_pay_app/core/di/service_locator.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/account_cubit.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
 import 'package:easy_pay_app/core/services/biometric_service.dart';
 import 'package:easy_pay_app/features/transfer/data/models/requests/transfer_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -203,6 +206,8 @@ class TransferCubit extends Cubit<TransferState> {
     final result = await executeTransferUseCase(request);
 
     if (result is ApiSuccess<bool>) {
+      getIt<AccountCubit>().loadAccounts(forceRefresh: true);
+      getIt<CardCubit>().loadCards(forceRefresh: true);
       final beneficiariesResult = await getBeneficiariesUseCase();
       final beneficiaries = beneficiariesResult is ApiSuccess<List<Beneficiary>> ? beneficiariesResult.data : state.beneficiaries;
       emit(state.copyWith(

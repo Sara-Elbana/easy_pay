@@ -1,4 +1,6 @@
 import 'package:easy_pay_app/features/save_online/data/data_source/savings_remote_data_source.dart';
+import 'package:easy_pay_app/features/withdraw/data/datasources/withdraw_remote_data_source.dart';
+
 import 'package:easy_pay_app/features/save_online/data/repository_impl/management_repository_impl.dart';
 import 'package:easy_pay_app/features/save_online/domain/repository_interface/management_repository_interface.dart';
 import 'package:easy_pay_app/features/save_online/domain/use_cases/create_saving_use_case.dart';
@@ -255,8 +257,11 @@ Future<void> setupDependencies() async {
     () => ExchangeCubit(repository: getIt()),
   );
   // Withdraw Feature
+  getIt.registerLazySingleton<WithdrawRemoteDataSource>(
+    () => WithdrawRemoteDataSourceImpl(apiService: getIt()),
+  );
   getIt.registerLazySingleton<WithdrawRepository>(
-    () => WithdrawRepositoryImpl(),
+    () => WithdrawRepositoryImpl(remoteDataSource: getIt()),
   );
   getIt.registerLazySingleton(
     () => ExecuteWithdrawUseCase(getIt()),

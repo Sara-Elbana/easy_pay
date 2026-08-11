@@ -42,6 +42,8 @@ class ApiConstants {
   static const String notificationsEndpoint = '/notifications';
   static const String chatEndpoint = '/notifications/reply';
   static const String savingEndpoint = '/savings';
+  static const String withdrawEndpoint = '/withdraw';
+
 
   // HTTP Headers
   static const String contentTypeJson = 'application/json';

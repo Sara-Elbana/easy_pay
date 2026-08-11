@@ -1,4 +1,7 @@
 import 'package:easy_pay_app/core/network/api_result.dart';
+import 'package:easy_pay_app/core/di/service_locator.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/account_cubit.dart';
+import 'package:easy_pay_app/features/account_and_card/presentation/cubit/card_cubit.dart';
 import 'package:easy_pay_app/features/withdraw/data/models/requests/withdraw_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/services/biometric_service.dart';
@@ -96,7 +99,7 @@ class WithdrawCubit extends Cubit<WithdrawState> {
             : (state.selectedAmount?.toDouble() ?? 0.0);
 
         final request = WithdrawRequest(
-          cardId: state.selectedCard!.id,
+          accountId: state.selectedCard!.id,
           phoneNumber: state.phoneNumber.trim(),
           amount: amount,
         );
@@ -104,6 +107,8 @@ class WithdrawCubit extends Cubit<WithdrawState> {
         final executeResult = await executeWithdrawUseCase(request);
 
         if (executeResult is ApiSuccess<bool>) {
+          getIt<AccountCubit>().loadAccounts(forceRefresh: true);
+          getIt<CardCubit>().loadCards(forceRefresh: true);
           emit(state.copyWith(
             isSuccess: true,
             isLoading: false,

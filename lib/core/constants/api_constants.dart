@@ -1,6 +1,10 @@
+import 'package:easy_pay_app/core/config/environment_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class ApiConstants {
   // API Base Configuration
-  static const String baseUrl = 'https://ebank.dotlaa.com/api';
+  static String get baseUrl => EnvironmentConfig.baseUrl;
+
   static const String apiVersion = 'v1';
 
   // Timeouts (in seconds)
@@ -43,7 +47,6 @@ class ApiConstants {
   static const String chatEndpoint = '/notifications/reply';
   static const String savingEndpoint = '/savings';
   static const String withdrawEndpoint = '/withdraw';
-
 
   // HTTP Headers
   static const String contentTypeJson = 'application/json';

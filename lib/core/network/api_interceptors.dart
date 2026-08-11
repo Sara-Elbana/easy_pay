@@ -1,106 +1,303 @@
 import 'package:dio/dio.dart';
+import 'package:easy_pay_app/core/constants/api_constants.dart';
 import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/services/secure_storage_service.dart';
-import 'package:easy_pay_app/core/constants/api_constants.dart';
+
 import '../errors/errors.dart';
 import '../services/logger_service.dart';
 
+/// ===============================================================
+/// Logging Interceptor
+/// ===============================================================
+/// Responsible for logging API requests, responses, and errors.
+///
+/// IMPORTANT:
+/// Sensitive information is sanitized before being logged.
+/// This prevents passwords, tokens, card numbers, etc. from
+/// appearing in the application logs.
+/// ===============================================================
 class LoggingInterceptor extends Interceptor {
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    logger.info('📤 REQUEST: ${options.method} ${options.path}');
-    logger.info('Headers: ${options.headers}');
-    if (options.data != null) {
-      logger.info('Body: ${options.data}');
+  static const Set<String> _sensitiveKeys = {
+    'password',
+    'token',
+    'access_token',
+    'refresh_token',
+    'authorization',
+    'card_number',
+    'account_number',
+    'pin',
+    'otp',
+    'cvv',
+    'secret',
+    'client_secret',
+  };
+
+  /// Sanitizes sensitive data before logging it.
+  dynamic _sanitizeData(dynamic data) {
+    if (data is Map) {
+      final result = <String, dynamic>{};
+
+      for (final entry in data.entries) {
+        final key = entry.key.toString();
+        final normalizedKey = key.toLowerCase();
+
+        if (_sensitiveKeys.contains(normalizedKey)) {
+          result[key] = '***REDACTED***';
+        } else {
+          result[key] = _sanitizeData(entry.value);
+        }
+      }
+
+      return result;
     }
-    super.onRequest(options, handler);
+
+    if (data is List) {
+      return data.map(_sanitizeData).toList();
+    }
+
+    return data;
   }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    logger.info(
-      '📥 RESPONSE: ${response.statusCode} ${response.requestOptions.path}',
-    );
-    logger.info('Data: ${response.data}');
-    super.onResponse(response, handler);
-  }
-
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    logger.error('❌ ERROR: ${err.message}');
-    logger.error('Type: ${err.type}');
-    super.onError(err, handler);
-  }
-}
-
-/// Authorization Interceptor - handles token injection and refresh
-class AuthorizationInterceptor extends Interceptor {
-  final String? accessToken;
-
-  AuthorizationInterceptor({this.accessToken});
 
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
-    // Add authorization header if token exists
-    final secureStorage = getIt<SecureStorageService>();
-    final storedToken = await secureStorage.getAccessToken();
-    final token = (storedToken != null && storedToken.isNotEmpty)
-        ? storedToken
-        : accessToken;
-    if (token != null && token.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $token';
+      RequestOptions options,
+      RequestInterceptorHandler handler,
+      ) {
+    logger.info(
+      '📤 REQUEST: ${options.method} ${options.path}',
+    );
+
+    // Sanitize headers before logging.
+    logger.info(
+      'Headers: ${_sanitizeData(options.headers)}',
+    );
+
+    // Sanitize request body before logging.
+    if (options.data != null) {
+      logger.info(
+        'Body: ${_sanitizeData(options.data)}',
+      );
     }
+
+    // Sanitize query parameters before logging.
+    if (options.queryParameters.isNotEmpty) {
+      logger.info(
+        'Query: ${_sanitizeData(options.queryParameters)}',
+      );
+    }
+
     handler.next(options);
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
-    // Handle 401 Unauthorized - Token expired or invalid
-    if (err.response?.statusCode == 401) {
-      logger.warning('⚠️ Token expired or invalid - 401 received');
-      final secureStorage = getIt<SecureStorageService>();
-      final refreshToken = await secureStorage.getRefreshToken();
-      if (refreshToken != null && refreshToken.isNotEmpty) {
-        try {
-          // Attempt to refresh token using a new simple Dio instance
-          final response = await Dio().post(
-            '${ApiConstants.baseUrl}${ApiConstants.refreshTokenEndpoint}',
-            data: {'refresh_token': refreshToken},
-          );
-          if (response.statusCode == 200 || response.statusCode == 201) {
-            final newAccessToken = response.data['access_token'] as String;
-            final newRefreshToken = response.data['refresh_token'] as String?;
+  void onResponse(
+      Response response,
+      ResponseInterceptorHandler handler,
+      ) {
+    logger.info(
+      '📥 RESPONSE: ${response.statusCode} '
+          '${response.requestOptions.path}',
+    );
 
-            await secureStorage.saveAccessToken(newAccessToken);
-            if (newRefreshToken != null) {
-              await secureStorage.saveRefreshToken(newRefreshToken);
-            }
+    // Sanitize response data before logging.
+    logger.info(
+      'Data: ${_sanitizeData(response.data)}',
+    );
 
-            // Retry the original request with new token
-            final options = err.requestOptions;
-            options.headers['Authorization'] = 'Bearer $newAccessToken';
+    handler.next(response);
+  }
 
-            final retryResponse = await Dio().fetch(options);
-            return handler.resolve(retryResponse);
-          }
-        } catch (e) {
-          logger.error('Token refresh failed: $e');
-          // If refresh fails, redirect to login / clear sensitive data
-          await secureStorage.clearSensitiveData();
-        }
-      }
+  @override
+  void onError(
+      DioException err,
+      ErrorInterceptorHandler handler,
+      ) {
+    logger.error(
+      '❌ ERROR: ${err.message}',
+    );
+
+    logger.error(
+      'Type: ${err.type}',
+    );
+
+    logger.error(
+      'Status Code: ${err.response?.statusCode}',
+    );
+
+    // Sanitize error response before logging.
+    if (err.response?.data != null) {
+      logger.error(
+        'Response: ${_sanitizeData(err.response?.data)}',
+      );
     }
+
     handler.next(err);
   }
 }
 
-/// Error Interceptor - converts DioException to custom exceptions
+/// ===============================================================
+/// Authorization Interceptor
+/// ===============================================================
+/// Responsible for:
+/// 1. Adding the access token to requests.
+/// 2. Handling 401 responses.
+/// 3. Refreshing the access token.
+/// 4. Retrying the failed request.
+/// ===============================================================
+class AuthorizationInterceptor extends Interceptor {
+  final String? accessToken;
+
+  AuthorizationInterceptor({
+    this.accessToken,
+  });
+
+  @override
+  void onRequest(
+      RequestOptions options,
+      RequestInterceptorHandler handler,
+      ) async {
+    try {
+      final secureStorage = getIt<SecureStorageService>();
+
+      final storedToken = await secureStorage.getAccessToken();
+
+      final token = (storedToken != null && storedToken.isNotEmpty)
+          ? storedToken
+          : accessToken;
+
+      if (token != null && token.isNotEmpty) {
+        options.headers['Authorization'] = 'Bearer $token';
+      }
+    } catch (e) {
+      logger.error(
+        'Failed to retrieve access token from secure storage.',
+      );
+    }
+
+    handler.next(options);
+  }
+
+  @override
+  void onError(
+      DioException err,
+      ErrorInterceptorHandler handler,
+      ) async {
+    // Handle unauthorized requests.
+    if (err.response?.statusCode == 401) {
+      logger.warning(
+        '⚠️ Token expired or invalid - 401 received',
+      );
+
+      final secureStorage = getIt<SecureStorageService>();
+
+      try {
+        final refreshToken = await secureStorage.getRefreshToken();
+
+        if (refreshToken != null && refreshToken.isNotEmpty) {
+          logger.info(
+            '🔄 Attempting to refresh access token...',
+          );
+
+          // Use a separate Dio instance so we don't trigger
+          // the same interceptors again.
+          final refreshDio = Dio(
+            BaseOptions(
+              baseUrl: ApiConstants.baseUrl,
+              contentType: ApiConstants.contentTypeJson,
+              headers: {
+                'Content-Type': ApiConstants.contentTypeJson,
+              },
+            ),
+          );
+
+          final response = await refreshDio.post(
+            ApiConstants.refreshTokenEndpoint,
+            data: {
+              'refresh_token': refreshToken,
+            },
+          );
+
+          if (response.statusCode == 200 ||
+              response.statusCode == 201) {
+            final newAccessToken =
+            response.data['access_token'] as String?;
+
+            final newRefreshToken =
+            response.data['refresh_token'] as String?;
+
+            if (newAccessToken != null &&
+                newAccessToken.isNotEmpty) {
+              await secureStorage.saveAccessToken(
+                newAccessToken,
+              );
+
+              if (newRefreshToken != null &&
+                  newRefreshToken.isNotEmpty) {
+                await secureStorage.saveRefreshToken(
+                  newRefreshToken,
+                );
+              }
+
+              logger.info(
+                '✅ Access token refreshed successfully',
+              );
+
+              // Retry original request with the new token.
+              final requestOptions = err.requestOptions;
+
+              requestOptions.headers['Authorization'] =
+              'Bearer $newAccessToken';
+
+              final retryDio = Dio();
+
+              final retryResponse =
+              await retryDio.fetch(requestOptions);
+
+              return handler.resolve(retryResponse);
+            }
+          }
+
+          logger.warning(
+            '⚠️ Token refresh failed',
+          );
+        }
+
+        // No refresh token available.
+        logger.warning(
+          '⚠️ No valid refresh token found',
+        );
+
+        await secureStorage.clearSensitiveData();
+      } catch (e) {
+        // NEVER log the actual token or sensitive response here.
+        logger.error(
+          '❌ Token refresh failed',
+        );
+
+        await secureStorage.clearSensitiveData();
+      }
+    }
+
+    handler.next(err);
+  }
+}
+
+/// ===============================================================
+/// Error Interceptor
+/// ===============================================================
+/// Converts DioException into application-specific exceptions.
+/// ===============================================================
 class ErrorInterceptor extends Interceptor {
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  void onError(
+      DioException err,
+      ErrorInterceptorHandler handler,
+      ) {
     final exception = _mapDioExceptionToException(err);
-    logger.error('Mapped exception: ${exception.runtimeType}');
+
+    logger.error(
+      'Mapped exception: ${exception.runtimeType}',
+    );
 
     final modifiedError = err.copyWith(
       error: exception,
@@ -109,8 +306,10 @@ class ErrorInterceptor extends Interceptor {
     handler.reject(modifiedError);
   }
 
-  /// Maps DioException to custom exceptions
-  Exception _mapDioExceptionToException(DioException dioException) {
+  /// Maps Dio exceptions to application exceptions.
+  Exception _mapDioExceptionToException(
+      DioException dioException,
+      ) {
     switch (dioException.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.receiveTimeout:
@@ -122,7 +321,8 @@ class ErrorInterceptor extends Interceptor {
 
       case DioExceptionType.connectionError:
         return NetworkException(
-          message: 'Network connection failed. Please check your internet.',
+          message:
+          'Network connection failed. Please check your internet.',
           originalException: dioException,
         );
 
@@ -149,11 +349,20 @@ class ErrorInterceptor extends Interceptor {
     }
   }
 
-  /// Maps HTTP status codes to specific exceptions
-  Exception _mapHttpException(DioException dioException) {
+  /// Maps HTTP status codes to specific exceptions.
+  Exception _mapHttpException(
+      DioException dioException,
+      ) {
     final statusCode = dioException.response?.statusCode;
-    final message = dioException.response?.data?['message'] as String? ??
-        'HTTP Error $statusCode';
+
+    final responseData = dioException.response?.data;
+
+    String message = 'HTTP Error $statusCode';
+
+    if (responseData is Map &&
+        responseData['message'] is String) {
+      message = responseData['message'] as String;
+    }
 
     switch (statusCode) {
       case 400:
@@ -171,7 +380,8 @@ class ErrorInterceptor extends Interceptor {
 
       case 403:
         return ForbiddenException(
-          message: 'Access forbidden. You do not have permission.',
+          message:
+          'Access forbidden. You do not have permission.',
           originalException: dioException,
         );
 
@@ -184,7 +394,8 @@ class ErrorInterceptor extends Interceptor {
 
       case 409:
         return ServerException(
-          message: 'Conflict. Resource already exists.',
+          message:
+          'Conflict. Resource already exists.',
           statusCode: statusCode,
           originalException: dioException,
         );
@@ -198,7 +409,8 @@ class ErrorInterceptor extends Interceptor {
 
       case 429:
         return ServerException(
-          message: 'Too many requests. Please try again later.',
+          message:
+          'Too many requests. Please try again later.',
           statusCode: statusCode,
           originalException: dioException,
         );
@@ -208,7 +420,8 @@ class ErrorInterceptor extends Interceptor {
       case 503:
       case 504:
         return ServerException(
-          message: 'Server error. Please try again later.',
+          message:
+          'Server error. Please try again later.',
           statusCode: statusCode,
           originalException: dioException,
         );

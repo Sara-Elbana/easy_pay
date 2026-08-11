@@ -4,6 +4,7 @@ import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/custom_app_bar.dart';
 import 'package:easy_pay_app/features/bottomNav/presentation/widgets/search_card_widget.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class SaveOnlineScreen extends StatelessWidget {
@@ -33,7 +34,7 @@ class SaveOnlineScreen extends StatelessWidget {
                 imageAsset: AppAssets.managementImage,
                 onTap: () {
                   Navigator.pushNamed(context, AppRoutesName.managementScreen);
-                })
+                }),
           ],
         ),
       ),

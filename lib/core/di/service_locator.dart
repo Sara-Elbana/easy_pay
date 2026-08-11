@@ -1,3 +1,5 @@
+import 'package:easy_pay_app/core/services/crashlytics/crashlytics_service.dart';
+import 'package:easy_pay_app/core/services/crashlytics/firebase_crashlytics_service.dart';
 import 'package:easy_pay_app/features/save_online/data/data_source/savings_remote_data_source.dart';
 import 'package:easy_pay_app/features/withdraw/data/datasources/withdraw_remote_data_source.dart';
 
@@ -411,5 +413,9 @@ Future<void> setupDependencies() async {
   );
   getIt.registerFactory<ManagementCubit>(
         () => ManagementCubit(getSavingsAccountsUseCase: getIt(),createSavingUseCase: getIt()),
+  );
+
+  getIt.registerLazySingleton<CrashlyticsService>(
+        () => FirebaseCrashlyticsService(),
   );
 }

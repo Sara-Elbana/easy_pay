@@ -1,37 +1,66 @@
 import 'package:flutter/foundation.dart';
+import 'package:easy_pay_app/core/di/service_locator.dart';
+import 'package:easy_pay_app/core/services/crashlytics/crashlytics_service.dart';
 
-/// Global logger instance
 final logger = AppLogger();
 
-/// Simple logger service for debug logging
 class AppLogger {
+  CrashlyticsService? get _crashlytics {
+    if (!getIt.isRegistered<CrashlyticsService>()) {
+      return null;
+    }
+
+    return getIt<CrashlyticsService>();
+  }
+
   void info(String message) {
     if (kDebugMode) {
-      print('ℹ️ INFO: $message');
+      debugPrint('ℹ️ INFO: $message');
     }
+
+    _crashlytics?.log('INFO: $message');
   }
 
   void warning(String message) {
     if (kDebugMode) {
-      print('⚠️ WARNING: $message');
+      debugPrint('⚠️ WARNING: $message');
     }
+
+    _crashlytics?.log('WARNING: $message');
   }
 
-  void error(String message) {
+  void error(
+      String message, {
+        Object? error,
+        StackTrace? stackTrace,
+      }) {
     if (kDebugMode) {
-      print('❌ ERROR: $message');
+      debugPrint('❌ ERROR: $message');
+    }
+
+    if (error != null && stackTrace != null) {
+      _crashlytics?.recordError(
+        error,
+        stackTrace,
+        fatal: false,
+        reason: message,
+      );
+    } else {
+      _crashlytics?.log('ERROR: $message');
     }
   }
 
   void debug(String message) {
     if (kDebugMode) {
-      print('🐛 DEBUG: $message');
+      debugPrint('🐛 DEBUG: $message');
     }
   }
 
   void success(String message) {
     if (kDebugMode) {
-      print('✅ SUCCESS: $message');
+      debugPrint('✅ SUCCESS: $message');
     }
+
+    _crashlytics?.log('SUCCESS: $message');
   }
 }

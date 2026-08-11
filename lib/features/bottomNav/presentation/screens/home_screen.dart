@@ -38,16 +38,18 @@ class HomeScreen extends StatelessWidget {
                     topRight: Radius.circular(context.scaleWidth(30)),
                   ),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.padMedium,
-                    vertical: context.scaleHeight(4),
-                  ),
-                  child: const Column(
-                    children: [
-                      CreditCardStack(),
-                      HomeMenuGrid(),
-                    ],
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.padMedium,
+                      vertical: context.scaleHeight(4),
+                    ),
+                    child: const Column(
+                      children: [
+                        CreditCardStack(),
+                        HomeMenuGrid(),
+                      ],
+                    ),
                   ),
                 ),
               ),

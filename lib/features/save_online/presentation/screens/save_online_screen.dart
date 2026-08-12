@@ -35,6 +35,12 @@ class SaveOnlineScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(context, AppRoutesName.managementScreen);
                 }),
+                  ElevatedButton(
+              onPressed: () {
+                FirebaseCrashlytics.instance.crash();
+              },
+              child: const Text('Test Crash'),
+            )
           ],
         ),
       ),

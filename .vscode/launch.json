@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Easy Pay",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart"
+        },
+    
+        {
+            "name": "Easy Pay Dev",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_dev.dart",
+            "args": ["--flavor", "dev", "--target","lib/main_dev.dart"]
+
+        },
+        {
+            "name": "Easy Pay Prod",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_prod.dart",
+            "args": ["--flavor", "prod", "--target","lib/main_prod.dart"]
+        }
+    ]
+}

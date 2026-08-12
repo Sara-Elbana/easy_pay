@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "561507158686",
-    "project_id": "easy-pay-prod",
-    "storage_bucket": "easy-pay-prod.firebasestorage.app"
+    "project_number": "767746412356",
+    "project_id": "easy-pay-5a55e",
+    "storage_bucket": "easy-pay-5a55e.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:561507158686:android:72a51244beba30f4d5498f",
+        "mobilesdk_app_id": "1:767746412356:android:0ff3931d8f98353f57d111",
         "android_client_info": {
           "package_name": "com.example.easy_pay_app"
         }
@@ -15,7 +15,45 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA5SICcgNQ6P4Tmh9CZwvinaseUj9PZ3ok"
+          "current_key": "AIzaSyBd2FKWKo0JTdRCTVJ9LCf7YNhe_23zImU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767746412356:android:3f29982abfd5c77c57d111",
+        "android_client_info": {
+          "package_name": "com.example.easy_pay_app.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd2FKWKo0JTdRCTVJ9LCf7YNhe_23zImU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767746412356:android:c52c3cf5c9add34857d111",
+        "android_client_info": {
+          "package_name": "com.example.easy_pay_app.prod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd2FKWKo0JTdRCTVJ9LCf7YNhe_23zImU"
         }
       ],
       "services": {

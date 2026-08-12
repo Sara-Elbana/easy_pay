@@ -1,5 +1,4 @@
 import 'package:easy_pay_app/core/config/environment_config.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiConstants {
   // API Base Configuration

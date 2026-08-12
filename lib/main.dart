@@ -1,10 +1,8 @@
-import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_pay_app/core/config/app_flavor.dart';
 import 'package:easy_pay_app/core/routes/app_route.dart';
 import 'package:easy_pay_app/core/routes/app_routes_name.dart';
 import 'package:easy_pay_app/core/core.dart';
-import 'package:easy_pay_app/core/services/crashlytics/crashlytics_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -26,26 +24,6 @@ void main() async {
   // Initialize dependencies
   await setupDependencies();
 
-  final crashlytics = getIt<CrashlyticsService>();
-
-  // Report Flutter framework errors to Crashlytics
-  FlutterError.onError = (errorDetails) {
-    crashlytics.recordFlutterError(
-      errorDetails,
-      fatal: true,
-    );
-  };
-
-  // Report uncaught asynchronous errors to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    crashlytics.recordError(
-      error,
-      stack,
-      fatal: true,
-    );
-
-    return true;
-  };
 
   runApp(
     EasyLocalization(

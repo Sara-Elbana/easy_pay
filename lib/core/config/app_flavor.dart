@@ -41,4 +41,8 @@ class FlavorConfig {
         return prod_firebase.DefaultFirebaseOptions.currentPlatform;
     }
   }
+  
+  static bool get isTransferEnabled {
+    return flavor == AppFlavor.prod;
+  }
 }

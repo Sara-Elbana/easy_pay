@@ -9,6 +9,7 @@ import 'package:easy_pay_app/features/beneficiary/presentation/widgets/add_benef
 import 'package:flutter/material.dart';
 import 'package:easy_pay_app/features/beneficiary/domain/entities/beneficiary.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/config/app_flavor.dart';
 import '../cubit/transfer_cubit.dart';
 import '../cubit/transfer_state.dart';
 import '../utils/transfer_controllers_manager.dart';
@@ -64,7 +65,8 @@ class TransferScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<TransferCubit>();
 
-    return Scaffold(
+    return FlavorConfig.isTransferEnabled ?  
+     Scaffold(
       backgroundColor: AppColors.background,
       appBar: CustomAppBar(
         title: 'transfer'.tr(),
@@ -211,6 +213,7 @@ class TransferScreen extends StatelessWidget {
           );
         },
       ),
-    );
+    )
+     : const  SizedBox.shrink();
   }
 }

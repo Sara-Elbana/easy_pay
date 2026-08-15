@@ -1,6 +1,6 @@
 import 'package:easy_pay_app/features/save_online/data/data_source/savings_remote_data_source.dart';
 import 'package:easy_pay_app/features/withdraw/data/datasources/withdraw_remote_data_source.dart';
-
+import '../services/crashlytics_service.dart';
 import 'package:easy_pay_app/features/save_online/data/repository_impl/management_repository_impl.dart';
 import 'package:easy_pay_app/features/save_online/domain/repository_interface/management_repository_interface.dart';
 import 'package:easy_pay_app/features/save_online/domain/use_cases/create_saving_use_case.dart';
@@ -258,7 +258,10 @@ Future<void> setupDependencies() async {
   );
   // Withdraw Feature
   getIt.registerLazySingleton<WithdrawRemoteDataSource>(
-    () => WithdrawRemoteDataSourceImpl(apiService: getIt()),
+    () => WithdrawRemoteDataSourceImpl(
+      apiService: getIt(),
+      crashlytics: getIt<CrashlyticsService>(),
+    ),
   );
   getIt.registerLazySingleton<WithdrawRepository>(
     () => WithdrawRepositoryImpl(remoteDataSource: getIt()),
@@ -269,6 +272,7 @@ Future<void> setupDependencies() async {
   getIt.registerFactory<WithdrawCubit>(
     () => WithdrawCubit(
       executeWithdrawUseCase: getIt(),
+      crashlytics: getIt<CrashlyticsService>(),
     ),
   );
 
@@ -399,17 +403,22 @@ Future<void> setupDependencies() async {
 
   // Management Feature
   getIt.registerLazySingleton<SavingsRemoteDataSource>(
-        () => SavingsRemoteDataSource(getIt()),
+    () => SavingsRemoteDataSource(getIt()),
   );
   getIt.registerLazySingleton<ManagementRepositoryInterface>(
-        () => ManagementRepositoryImpl(remoteDataSource: getIt()),
+    () => ManagementRepositoryImpl(remoteDataSource: getIt()),
   );
   getIt.registerLazySingleton(
-        () => GetSavingsAccountsUseCase(getIt()),
-  );getIt.registerLazySingleton(
-        () => CreateSavingUseCase(getIt()),
+    () => GetSavingsAccountsUseCase(getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => CreateSavingUseCase(getIt()),
   );
   getIt.registerFactory<ManagementCubit>(
-        () => ManagementCubit(getSavingsAccountsUseCase: getIt(),createSavingUseCase: getIt()),
+    () => ManagementCubit(
+        getSavingsAccountsUseCase: getIt(), createSavingUseCase: getIt()),
+  );
+  getIt.registerLazySingleton<CrashlyticsService>(
+    () => CrashlyticsService(),
   );
 }

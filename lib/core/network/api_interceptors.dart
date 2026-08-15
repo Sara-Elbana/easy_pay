@@ -3,6 +3,7 @@ import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/services/secure_storage_service.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
 import '../errors/errors.dart';
+import '../services/crashlytics_service.dart';
 import '../services/logger_service.dart';
 
 class LoggingInterceptor extends Interceptor {
@@ -99,6 +100,8 @@ class AuthorizationInterceptor extends Interceptor {
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    _reportUnexpectedErrorsToCrashlytics(err);
+
     final exception = _mapDioExceptionToException(err);
     logger.error('Mapped exception: ${exception.runtimeType}');
 
@@ -107,6 +110,31 @@ class ErrorInterceptor extends Interceptor {
     );
 
     handler.reject(modifiedError);
+  }
+
+  void _reportUnexpectedErrorsToCrashlytics(DioException err) {
+    try {
+      final statusCode = err.response?.statusCode;
+      final isServerError = statusCode != null && statusCode >= 500;
+      final isUnknownError = err.type == DioExceptionType.unknown;
+
+      if (isServerError || isUnknownError) {
+        final crashlytics = getIt<CrashlyticsService>();
+        final method = err.requestOptions.method;
+        final path = err.requestOptions.path;
+
+        crashlytics.recordError(
+          err,
+          err.stackTrace,
+          reason: isServerError
+              ? 'Server error (HTTP $statusCode) on $method $path'
+              : 'Unexpected network/infrastructure error on $method $path',
+          fatal: false,
+        );
+      }
+    } catch (_) {
+      // Prevent monitoring failures from disrupting network error handling
+    }
   }
 
   /// Maps DioException to custom exceptions

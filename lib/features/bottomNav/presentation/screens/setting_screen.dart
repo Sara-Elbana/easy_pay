@@ -7,6 +7,7 @@ import 'package:easy_pay_app/core/widgets/header_widget.dart';
 import 'package:easy_pay_app/core/utils/responsive_helper.dart';
 import 'package:easy_pay_app/core/widgets/user_name_text.dart';
 import 'package:easy_pay_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:easy_pay_app/features/setting/presentation/widgets/crashlytics_test_buttons.dart';
 import 'package:easy_pay_app/features/setting/presentation/widgets/setting_row_item.dart';
 import 'package:easy_pay_app/features/setting/presentation/widgets/sign_out_dialog.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class SettingScreen extends StatelessWidget {
           children: [
             HeaderWidget(
               title: 'setting'.tr(),
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, AppRoutesName.profileScreen);
               },
             ),
@@ -44,56 +45,63 @@ class SettingScreen extends StatelessWidget {
                         topRight: Radius.circular(context.scaleWidth(30)),
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: context.scaleHeight(72)),
-                        UserNameText(
-                          style: AppTextStyles.bodyLargeSemiBold.copyWith(
-                            fontSize: context.scaleWidth(AppTextStyles.bodyLargeSemiBold.fontSize ?? 16),
-                            color: AppColors.primary,
-                            fontFamily: 'Poppins',
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          SizedBox(height: context.scaleHeight(72)),
+                          UserNameText(
+                            style: AppTextStyles.bodyLargeSemiBold.copyWith(
+                              fontSize: context.scaleWidth(
+                                  AppTextStyles.bodyLargeSemiBold.fontSize ?? 16),
+                              color: AppColors.primary,
+                              fontFamily: 'Poppins',
+                            ),
                           ),
-                        ),
-                        SizedBox(height: context.scaleHeight(24)),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: context.scaleWidth(24)),
-                          child: Column(
-                            children: [
-                              SettingRowItem(
-                                title: 'password'.tr(),
-                                onTap: () {},
-                              ),
-                              SettingRowItem(
-                                title: 'touch_id'.tr(),
-                                onTap: () {},
-                              ),
-                              SettingRowItem(
-                                title: 'languages'.tr(),
-                                onTap: () {},
-                              ),
-                              SettingRowItem(
-                                title: 'app_information'.tr(),
-                                onTap: () {
-                                  Navigator.pushNamed(context,
-                                      AppRoutesName.appInformationScreen);
-                                },
-                              ),
-                              SettingRowItem(
-                                title: 'customer_care'.tr(),
-                                subtitle: '19008989',
-                                onTap: () {},
-                                showArrow: false,
-                              ),
-                              SettingRowItem(
-                                title: 'sign_out'.tr(),
-                                onTap: () => SignOutDialog.show(context),
-                                showArrow: false,
-                              ),
-                            ],
+                          SizedBox(height: context.scaleHeight(24)),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: context.scaleWidth(24)),
+                            child: Column(
+                              children: [
+                                SettingRowItem(
+                                  title: 'password'.tr(),
+                                  onTap: () {},
+                                ),
+                                SettingRowItem(
+                                  title: 'touch_id'.tr(),
+                                  onTap: () {},
+                                ),
+                                SettingRowItem(
+                                  title: 'languages'.tr(),
+                                  onTap: () {},
+                                ),
+                                SettingRowItem(
+                                  title: 'app_information'.tr(),
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        AppRoutesName.appInformationScreen);
+                                  },
+                                ),
+                                SettingRowItem(
+                                  title: 'customer_care'.tr(),
+                                  subtitle: '19008989',
+                                  onTap: () {},
+                                  showArrow: false,
+                                ),
+                                SettingRowItem(
+                                  title: 'sign_out'.tr(),
+                                  onTap: () => SignOutDialog.show(context),
+                                  showArrow: false,
+                                ),
+                                SizedBox(height: context.scaleHeight(16)),
+                                const CrashlyticsTestButtons(),
+                                SizedBox(height: context.scaleHeight(80)),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Positioned(

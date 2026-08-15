@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:easy_pay_app/core/constants/api_constants.dart';
+import 'package:easy_pay_app/core/di/service_locator.dart';
 import 'package:easy_pay_app/core/network/api_result.dart';
 import 'package:easy_pay_app/core/network/api_service.dart';
+import 'package:easy_pay_app/core/services/crashlytics_service.dart';
 import 'package:easy_pay_app/features/withdraw/data/models/requests/withdraw_request.dart';
 
 abstract class WithdrawRemoteDataSource {
@@ -10,8 +12,12 @@ abstract class WithdrawRemoteDataSource {
 
 class WithdrawRemoteDataSourceImpl implements WithdrawRemoteDataSource {
   final ApiService apiService;
+  final CrashlyticsService _crashlytics;
 
-  WithdrawRemoteDataSourceImpl({required this.apiService});
+  WithdrawRemoteDataSourceImpl({
+    required this.apiService,
+    CrashlyticsService? crashlytics,
+  }) : _crashlytics = crashlytics ?? getIt<CrashlyticsService>();
 
   @override
   Future<ApiResult<bool>> executeWithdraw(WithdrawRequest request) async {
@@ -27,7 +33,13 @@ class WithdrawRemoteDataSourceImpl implements WithdrawRemoteDataSource {
       return const ApiFailure(error: 'Failed to process withdrawal');
     } on DioException catch (e) {
       return ApiFailure(error: _extractErrorMessage(e));
-    } catch (_) {
+    } catch (e, stackTrace) {
+      await _crashlytics.recordError(
+        e,
+        stackTrace,
+        reason: 'Unexpected error in WithdrawRemoteDataSource',
+        fatal: false,
+      );
       return const ApiFailure(error: ApiConstants.unknownError);
     }
   }
